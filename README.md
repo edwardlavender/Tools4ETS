@@ -73,9 +73,9 @@ ecology; namely:
     `simulate_posterior_mu()` can be used to simulate from the posterior
     of a GAM to compute ecologically-meaningful metrics, with confidence
     intervals, which are not directly estimated by a model.
-  - \*\*Posterior simulation of new ‘observed values.\*\*
+  - **Posterior simulation of new observed values.**
     `simulate_posterior_obs()` can be used to simulate new
-    ’observations’ from a model, accounting for uncertainty in
+    ‘observations’ from a model, accounting for uncertainty in
     fitted coefficients, expected values, predictions and
     autocorrelation.
   - **Summarising the posterior distribution.** `summarise_posterior()`
