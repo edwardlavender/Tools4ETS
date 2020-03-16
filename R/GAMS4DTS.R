@@ -1566,11 +1566,8 @@ server <- function(input, output) {
  # histogram of depths:
  output$depth_hist <- renderPlot(
    pretty_hist(x = dat_model()$depth,
-               select = "counts",
-               pretty_axis_args = list(side = 1:2,
-                                       pretty = list(list(n = 5), list(n = 10)),
-                                       axis = list(las = TRUE, cex.axis = cex.axis)
-                                       ),
+               xaxis = list(cex.axis = cex.axis),
+               yaxis = list(las = TRUE, cex.axis = cex.axis),
                mtext_args = list(list(side = 1, text = "Depth (m)", line = 2.5, cex = cex.lab),
                                  list(side = 2, text = "Frequency", line = 2.5, cex = cex.lab))
                )
