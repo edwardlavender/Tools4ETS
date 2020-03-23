@@ -355,7 +355,11 @@ define_recapture <-
     if(remove_recaptures){
       recapture_rows_all <- sapply(out$recapture_event_details,
                                    function(elem) elem$recapture_rows) %>% unlist() %>% as.vector()
-      data_depth_rem_recap <- data_depth[-c(recapture_rows_all), ]
+      if(length(recapture_rows_all) > 0){
+        data_depth_rem_recap <- data_depth[-c(recapture_rows_all), ]
+      } else{
+        data_depth_rem_recap <- data_depth
+      }
       out$recapture_rows_all <- recapture_rows_all
       out$data_depth_rem_recap <- data_depth_rem_recap
     }
