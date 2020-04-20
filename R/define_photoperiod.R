@@ -95,10 +95,17 @@ define_photoperiod <-
     dates <- seq.Date(start_date, end_date, by = 1)
 
     #### Define a dataframe with the photoperiod on each date
-    photoperiod_df <- suncalc::getSunlightTimes(date = dates,
-                                                lat = lat,
-                                                lon = lon,
-                                                keep = interval)
+    loc <- 1:length(lat)
+    dat <- expand.grid(dates, loc)
+    colnames(dat) <- c("date", "loc")
+    dat$lat <- lat[match(dat$loc, 1:length(lat))]
+    dat$lon <- lon[match(dat$loc, 1:length(lon))]
+    dat$loc <- NULL
+    photoperiod_df <- suncalc::getSunlightTimes(data = dat, keep = interval)
+    # photoperiod_df <- suncalc::getSunlightTimes(date = dates,
+    #                                            lat = lat,
+    #                                            lon = lon,
+    #                                            keep = interval)
 
     #### Calculate photoperiod in user-specified units :
     photoperiod_df$photoperiod <-
