@@ -193,6 +193,12 @@ ui <-
                   # Define the 1st response variable
                   uiOutput("variable_choices"),
 
+                  #### Define line type
+                  radioButtons(inputId = "line_type",
+                               label = strong("Define the line type."),
+                               choices = c("l", "b", "p"),
+                               selected = "l"),
+
                    #### Define second response variable
                    # Choose whether or not to add a second variable
                    # Define second variable
@@ -536,7 +542,7 @@ server <- function(input, output) {
   #### Define add_lines_args depending on inputted data
   add_lines_args <- reactive({
     if(input$variable2_yn & input$variable2_method == "by_colour"){
-      ala <- list(lwd = lwd,
+      ala <- list(lwd = lwd, type = input$line_type,
                   pretty_axis_args = list(pretty = list(n = 5),
                                           axis = list(las = TRUE, cex.axis = cex.axis)
                                           )
@@ -547,7 +553,7 @@ server <- function(input, output) {
       #  ala$pretty_axis_args$lim <- list(var2_range())
       #}
     } else{
-      ala <- list(lwd = lwd)
+      ala <- list(lwd = lwd, type = input$line_type)
     }
     return(ala)
   })
