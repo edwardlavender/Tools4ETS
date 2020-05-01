@@ -67,6 +67,11 @@ define_time_blocks <-
     #### diel blocks
     if(type == "diel"){
 
+      # Check that type_args have been correctly supplied
+      if(!all(c("lat", "lon") %in% names(type_args))){
+        stop("'lat' and 'lon' need to be specified in 'type_args' list for type = 'diel'.")
+      }
+
       # Define dataframe
       dat_block <- data.frame(date = sort(rep(dates_block, 2)), level = c(rep(1:2, length(dates_block))))
       dat_block$level <- factor(dat_block$level)
