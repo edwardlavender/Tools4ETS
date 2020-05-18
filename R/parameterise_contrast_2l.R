@@ -8,7 +8,7 @@
 #' @param model The model.
 #' @param term A character input which defines the name of the term in the model.
 #' @param cex.axis A numeric input which defines the size of the font for axis tick labels.
-#' @param mtext_args A named list of arguments which are passed to \code{\link[graphics]{mtext}} to produce axis labels. A nested list can be used to control each axis (see also \code{\link[Tools4ETS]{plot_ts}}).
+#' @param mtext_args A named list of arguments which are passed to \code{\link[graphics]{mtext}} to produce axis labels. A nested list can be used to control each axis (see also \code{\link[Tools4ETS]{pretty_ts}}).
 #'
 #' @return The function returns a plot showing the size of the contrast between factor levels, possibly in relation to that estimated by an \code{mgcv} GAM model.
 #'

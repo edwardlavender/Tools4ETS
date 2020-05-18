@@ -6,7 +6,7 @@
 #' @import shinyWidgets
 #' @import plot.pretty
 #'
-#' @description Interactive visualisation and exploration of one dimensional timeseries, based on \code{\link[Tools4ETS]{plot_ts}}.
+#' @description Interactive visualisation and exploration of one dimensional timeseries, based on \code{\link[Tools4ETS]{pretty_ts}}.
 #'
 #' @param data A dataframe containing a response variable, timestamps (and, optionally) explanatory variables. Timestamps can be integer/numeric, \code{\link[base]{DateTimeClasses}} or a \code{\link[base]{Date}} objects.
 #'
@@ -24,7 +24,7 @@
 #'                 y2 <- rnorm(length(x), lubridate::yday(x) * 0.5 +20, 0.5)
 #' dat <- data.frame(x = x, y1 = y1, y2 = y2)
 #' #### Launch shiny
-#' visTS(data = dat)
+#' vis_ts(data = dat)
 #'}
 #'
 #'\dontrun{
@@ -32,7 +32,7 @@
 #' x <- 1:1000
 #' y <- rnorm(length(x), x*0.1- 500, 1000)
 #' y2 <- rnorm(length(x), x*0.5, 500)
-#' visTS(data = data.frame(x = x, y = y, y2 = y2))
+#' vis_ts(data = data.frame(x = x, y = y, y2 = y2))
 #'}
 #'
 #' @author Edward Lavender
@@ -41,9 +41,9 @@
 
 ################################################
 ################################################
-#### visTS()
+#### vis_ts()
 
-visTS <- function(data){
+vis_ts <- function(data){
 
 
 ################################################
@@ -850,7 +850,7 @@ server <- function(input, output) {
 
       #### Create plot
       p <-
-        plot_ts(x = data[, input$timestamp_column],
+        pretty_ts(x = data[, input$timestamp_column],
                 y1 = data[, input$variable],
                 y2 = y2(),
                 fct = data[, fct()],
@@ -912,7 +912,7 @@ server <- function(input, output) {
       #### Create plot
       # Note that it is not possible to add plot_input() here; instead, the whole
       # ... plot command need to be repeated; as such, this is copied directly from above:
-        plot_ts(x = data[, input$timestamp_column],
+        pretty_ts(x = data[, input$timestamp_column],
                 y1 = data[, input$variable],
                 y2 = y2(),
                 fct = data[, fct()],

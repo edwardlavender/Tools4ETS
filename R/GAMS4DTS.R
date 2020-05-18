@@ -1599,7 +1599,7 @@ server <- function(input, output) {
  #### Plot depth_timeseries
  output$depth_timeseries <-
    renderPlot(
-     plot_ts(x = dat_model()$timestamp,
+     pretty_ts(x = dat_model()$timestamp,
              y1 = dat_model()$depth*-1,
              fct = dat_model()$individual,
              fct_level = input$selected_individual,
@@ -1616,7 +1616,7 @@ server <- function(input, output) {
  #### Sun angle time series
  output$sun_angle_timeseries <-
    renderPlot(
-     plot_ts(x = dat_model()$timestamp,
+     pretty_ts(x = dat_model()$timestamp,
              y1 = dat_model()$sun_angle,
              fct = dat_model()$individual,
              fct_level = input$selected_individual,
@@ -1633,7 +1633,7 @@ server <- function(input, output) {
  #### Lunar phase
  output$lunar_phase_timeseries <-
    renderPlot(
-     plot_ts(x = dat_model()$timestamp,
+     pretty_ts(x = dat_model()$timestamp,
              y1 = dat_model()$lunar_phase,
              fct = dat_model()$individual,
              fct_level = input$selected_individual,
@@ -1658,7 +1658,7 @@ server <- function(input, output) {
  #### julian_day
  output$julian_day_timeseries <-
    renderPlot(
-     plot_ts(x = dat_model()$timestamp,
+     pretty_ts(x = dat_model()$timestamp,
              y1 = dat_model()$julian_day,
              fct = dat_model()$individual,
              fct_level = input$selected_individual,
@@ -1999,7 +1999,7 @@ server <- function(input, output) {
  #### Define a plot which shows predictions
  output$depth_timeseries_preds <-
    renderPlot(
-     plot_ts(x = dat_model()$timestamp,
+     pretty_ts(x = dat_model()$timestamp,
              y1 = dat_model()$depth *-1,
              fct = dat_model()$individual,
              fct_level = input$selected_individual_preds,
@@ -2092,7 +2092,7 @@ server <- function(input, output) {
 # output$uresid_plots <- renderPlot({
 #   #if(input$rho_model == 0 | input$rho > 0 & input$make_uresid_plots){
  #     pp <- graphics::par(mfcol = par_mfcol(), oma = c(2, 2, 2, 2))
- #     plot.pretty::plot_residuals(residuals = stats::resid(m1()),
+ #     plot.pretty::pretty_residuals(residuals = stats::resid(m1()),
  #                    fv = stats::fitted(m1()),
  #                    lp = stats::fitted(m1()),
  #                    vars = unique(c(input$covariates, input$covariates_model)),
@@ -2111,7 +2111,7 @@ server <- function(input, output) {
 
      pp <- graphics::par(mfcol = par_mfcol())
 
-     plot.pretty::plot_residuals(residuals = stats::resid(m1()),
+     plot.pretty::pretty_residuals(residuals = stats::resid(m1()),
                     fv = stats::fitted(m1()),
                     lp = stats::fitted(m1()),
                     vars = unique(c(input$covariates, input$covariates_model)),
@@ -2123,7 +2123,7 @@ server <- function(input, output) {
      )
 
      if(input$rho_model > 0){
-     plot.pretty::plot_residuals(residuals = m1()$std.rsd,
+     plot.pretty::pretty_residuals(residuals = m1()$std.rsd,
                     fv = stats::fitted(m1()),
                     lp = stats::fitted(m1()),
                     vars = unique(c(input$covariates, input$covariates_model)),

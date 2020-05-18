@@ -7,9 +7,9 @@
 launch_shiny(app, data = NULL)
 }
 \arguments{
-\item{app}{A character vector defining the name of the application to be launched. The currently supported options are: \code{"visTS"}, which calls \code{\link[Tools4ETS]{visTS}}; \code{"GAMS4DTS"}, which calls \code{\link[Tools4ETS]{GAMS4DTS}}.}
+\item{app}{A character vector defining the name of the application to be launched. The currently supported options are: \code{"vis_ts"}, which calls \code{\link[Tools4ETS]{vis_ts}}; \code{"GAMS4DTS"}, which calls \code{\link[Tools4ETS]{GAMS4DTS}}.}
 
-\item{data}{A dataframe passed to \code{\link[Tools4ETS]{visTS}}. As a minimum, this should includes a column defining timestamps.}
+\item{data}{A dataframe passed to \code{\link[Tools4ETS]{vis_ts}}. As a minimum, this should includes a column defining timestamps.}
 }
 \value{
 An interactive Shiny-Dashboard interface.
@@ -19,9 +19,9 @@ A wrapper function for Shiny applications which enables these to be launched usi
 }
 \examples{
 
-#### Example (1) visTS
+#### Example (1) vis_ts
 \dontrun{
-launch_shiny("visTS", data = dat_flapper)
+launch_shiny("vis_ts", data = dat_flapper)
 }
 
 #### Example (2) GAMS4DTS

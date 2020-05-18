@@ -31,7 +31,7 @@ body{
 
 # Abstract
 
-In ecology, the need to move beyond the consideration of patterns at snapshots in time to consider of how patterns change through time is an omnipresent challenge. Fortunately, in some fields (such as biologging), the collection of large volumes of data through time (such as depth timeseries) is increasingly possible. R provides a powerful language and environment for analysing timeseries, including data visualisation, processing and modelling. However, these steps can be cumbersome, particularly for the ecologist whose focus lies with detailed ecological inferences. For example, base R functionality for rapid timeseries visualisation in relation to covariates, across factor levels (e.g. individuals) and timescales (i.e., the level of detail required to address ecological hypotheses) is limited. More importantly, the consequences of decisions made during data collection, processing and modelling for ecological inferences can be challenging to evaluate and often receive insufficient attention. For example, to simplify timeseries, ecologists often thin timeseries, but rarely evaluate the consequences of such post-processing for model-based inferences. Here, I introduce an R package which provides tools for ecological timeseries in R (`Tools4ETS`) to facilitate visualisation, post-processing and this evaluation. Package development has been particularly driven by new, high resolution, depth timeseries collected for a Critically Endangered benthopelagic elasmobranch, the flapper skate (_Dipturus intermedius_). Notable functionality includes: (a) `Tools4ETS::visTS()`, an interactive application which facilitates detailed exploration of timeseries data, powered by a flexible function for plotting publication-quality timeseries (`Tools4ETS::plot_ts()`); (b) functions which facilitate common data processing steps (e.g. flagging independent segments of timeseries, thinning timeseries and, for depth timeseries, identifying recapture events); and (c) `Tools4ETS::GAMS4DTS()`, an interactive application which helps to elucidate the consequences of data structure, post-processing and model structure for ecological inferences via comparisons of simulated relationships and generalised additive model-based inferences under different scenarios. 
+In ecology, the need to move beyond the consideration of patterns at snapshots in time to consider of how patterns change through time is an omnipresent challenge. Fortunately, in some fields (such as biologging), the collection of large volumes of data through time (such as depth timeseries) is increasingly possible. R provides a powerful language and environment for analysing timeseries, including data visualisation, processing and modelling. However, these steps can be cumbersome, particularly for the ecologist whose focus lies with detailed ecological inferences. For example, base R functionality for rapid timeseries visualisation in relation to covariates, across factor levels (e.g. individuals) and timescales (i.e., the level of detail required to address ecological hypotheses) is limited. More importantly, the consequences of decisions made during data collection, processing and modelling for ecological inferences can be challenging to evaluate and often receive insufficient attention. For example, to simplify timeseries, ecologists often thin timeseries, but rarely evaluate the consequences of such post-processing for model-based inferences. Here, I introduce an R package which provides tools for ecological timeseries in R (`Tools4ETS`) to facilitate visualisation, post-processing and this evaluation. Package development has been particularly driven by new, high resolution, depth timeseries collected for a Critically Endangered benthopelagic elasmobranch, the flapper skate (_Dipturus intermedius_). Notable functionality includes: (a) `Tools4ETS::vis_ts()`, an interactive application which facilitates detailed exploration of timeseries data, powered by a flexible function for plotting publication-quality timeseries (`Tools4ETS::pretty_ts()`); (b) functions which facilitate common data processing steps (e.g. flagging independent segments of timeseries, thinning timeseries and, for depth timeseries, identifying recapture events); and (c) `Tools4ETS::GAMS4DTS()`, an interactive application which helps to elucidate the consequences of data structure, post-processing and model structure for ecological inferences via comparisons of simulated relationships and generalised additive model-based inferences under different scenarios. 
 
 # Keywords
 $\circ$ ecology $\circ$ benthic $\circ$ data exploration $\circ$ simulation  $\circ$ generalised additive model $\circ$
@@ -88,18 +88,18 @@ dA <- dat_flapper[which(dat_flapper$id == "A"), ]
 
 # Part 1: The data exploration -- processing -- modelling workflow for real ecological data
 
-## Data exploration with `plot_ts()`
+## Data exploration with `pretty_ts()`
 
 The first stage in ecological analysis, even prior to data processing (if possible), is data exploration. Thorough data exploration elucidates data structure, potential processing requirements and the extent to which ecological hypotheses are supported by the data. This contexualises later analyses (e.g. via modelling) and can guide model interpretation. In the case of ecological timeseries, the first stage is to plot raw timeseries. A later step is to overlay covariate timeseries and/or environmental conditions to explore hypothesised relationships between a response and covariates. 
 
-`plot_ts()` makes the exploration of ecological timeseries straightforward. This function is based on multiple 'building block' functions within the `plot.pretty` package with which it is helpful to be to be familiar (see the vignette for `plot.pretty`). In brief, `plot_ts()` includes the following functionality:
+`pretty_ts()` makes the exploration of ecological timeseries straightforward. This function is based on multiple 'building block' functions within the `plot.pretty` package with which it is helpful to be to be familiar (see the vignette for `plot.pretty`). In brief, `pretty_ts()` includes the following functionality:
 
 * Flexible and/or automated definition of pretty axes for numeric or timeseries data at different scales;
 * Flexible relationship exploration via the addition of multiple variables to a plot, either by the inclusion of additional axes, line colouration or shading; 
 * Flexible summarisation of trends to clarify signal from noise;
 * Flexible addition of model predictions (e.g. fitted values, confidence intervals, prediction intervals) to observed timeseries;
 
-Here, I cut to the chase and create a collection of plots to demonstrate the power of `plot_ts()` for the exploration of ecological timeseries. 
+Here, I cut to the chase and create a collection of plots to demonstrate the power of `pretty_ts()` for the exploration of ecological timeseries. 
 
 ```{r, fig.width = 7, fig.height = 10}
 #### Set plotting parameters
@@ -111,7 +111,7 @@ pp <- par(mfrow = c(4, 2), oma = c(2, 2, 2, 2), mar = c(3, 3, 3, 3))
 pretty_axis_args <- list(side = c(3, 2), pretty = list(n = 5), axis = list(las = TRUE))
 
 #### Plot a simple timeseries for the individual of interest with pretty axes
-plot_ts(x = dat_flapper$timestamp,
+pretty_ts(x = dat_flapper$timestamp,
         y1 = dat_flapper$dn,
         fct = dat_flapper$id,
         fct_level = "A",
@@ -119,7 +119,7 @@ plot_ts(x = dat_flapper$timestamp,
         return_list = FALSE)
 
 #### The result is identical to plot.pretty::pretty_plot()
-# ... but plot_ts() employs other functions in the plot.pretty package 
+# ... but pretty_ts() employs other functions in the plot.pretty package 
 # ... for maximum flexibility
 plot.pretty::pretty_plot(dA$timestamp,
                          dA$dn,
@@ -134,7 +134,7 @@ plot.pretty::pretty_plot(dA$timestamp,
 # ... subplot_args.
 # Note the axis on the colour bar is controlled by add_lines_args
 # ... via pretty_axis_args
-plot_ts(x = dat_flapper$timestamp,
+pretty_ts(x = dat_flapper$timestamp,
         y1 = dat_flapper$dn,
         y2 = dat_flapper$temp,
         fct = dat_flapper$id,
@@ -148,7 +148,7 @@ plot_ts(x = dat_flapper$timestamp,
 #### E.g. Add a second variable as a new axis by adjusting
 # ... y2_method. The properties of the new axis can be set via
 # ... pretty_axis_args_y2
-plot_ts(x = dat_flapper$timestamp,
+pretty_ts(x = dat_flapper$timestamp,
         y1 = dat_flapper$dn,
         y2 = dat_flapper$temp,
         fct = dat_flapper$id,
@@ -165,7 +165,7 @@ plot_ts(x = dat_flapper$timestamp,
 # ... add_shading_type
 # ... add_shading_dtb_args
 # ... add_shading_args
-plot_ts(x = dat_flapper$timestamp,
+pretty_ts(x = dat_flapper$timestamp,
         y1 = dat_flapper$dn,
         fct = dat_flapper$id,
         fct_level = "A",
@@ -178,7 +178,7 @@ plot_ts(x = dat_flapper$timestamp,
 
 #### E.g. Add summary statistics
 # ... via summarise_in_bins_args and add_lines_args_summaries
-plot_ts(x = dat_flapper$timestamp,
+pretty_ts(x = dat_flapper$timestamp,
         y1 = dat_flapper$dn,
         fct = dat_flapper$id,
         fct_level = "A",
@@ -196,7 +196,7 @@ plot_ts(x = dat_flapper$timestamp,
 # Example model for demonstration purposes only
 m1 <- mgcv::bam(depth ~ s(as.numeric(timestamp), k = 10, bs = "cr"), rho = 0.99, data = dA)
 pred <- mgcv::predict.gam(m1, se.fit = TRUE)
-plot_ts(x = dat_flapper$timestamp,
+pretty_ts(x = dat_flapper$timestamp,
         y1 = dat_flapper$dn,
         fct = dat_flapper$id,
         fct_level = "A",
@@ -209,7 +209,7 @@ plot_ts(x = dat_flapper$timestamp,
 #### Zooming in and out is easy via the power of pretty_axis()
 t1 <- min(dA$timestamp)
 t2 <- t1 + 3*24*60*60
-plot_ts(x = dat_flapper$timestamp,
+pretty_ts(x = dat_flapper$timestamp,
         y1 = dat_flapper$dn,
         fct = dat_flapper$id,
         fct_level = "A",
@@ -221,7 +221,7 @@ plot_ts(x = dat_flapper$timestamp,
         ) 
 
 #### There are a lot more customisation options
-# ... see ?plot_ts()
+# ... see ?pretty_ts()
 
 #### Add global axes titles
 mtext(side = 3, text = "Time (days)", outer = TRUE, font = 2)
@@ -229,16 +229,16 @@ mtext(side = 2, text = "Depth (m)", outer = TRUE, font = 2)
 par(pp)
 ```
 
-Function arguments and the building blocks are covered in more detail in the `pretty.plot` vignette and the help files (e.g. `?plot_ts()`).
+Function arguments and the building blocks are covered in more detail in the `pretty.plot` vignette and the help files (e.g. `?pretty_ts()`).
 
-## Data exploration with `visTS()`
+## Data exploration with `vis_ts()`
 
-Some of the functions within `Tools4ETS` are are wrapped inside interactive Shiny applications. These can be called using the `Tools4ETS::launch_shiny()` function which offers a consistent framework from which to load applications. For data exploration, Visualise Timeseries (`visTS`) is an R Shiny application which aims to enable the rapid visualisation of a response through time alongside corresponding trends in covariates. This harnesses the power of `plot_ts()` in an interactive environment, which enhances the ability to easily and rapidly create visualisations, including across multiple factor levels (e.g. timeseries for multiple individuals), in relation to multiple covariates and at multiple temporal scales. This enables the user to focus on the ecological questions at hand which, without an interactive environment, would require considerable programming address satisfactorily. This application is powered by the function `Tools4ETS::visDTS()` and can be called directly via this function or via `Tools4ETS::launch_shiny(app = "visDTS", data)` where `data` is a dataframe containing the timeseries to be visualised. For example, you could run the following code to explore `dat_flapper` interactively:
+Some of the functions within `Tools4ETS` are are wrapped inside interactive Shiny applications. These can be called using the `Tools4ETS::launch_shiny()` function which offers a consistent framework from which to load applications. For data exploration, Visualise Timeseries (`vis_ts`) is an R Shiny application which aims to enable the rapid visualisation of a response through time alongside corresponding trends in covariates. This harnesses the power of `pretty_ts()` in an interactive environment, which enhances the ability to easily and rapidly create visualisations, including across multiple factor levels (e.g. timeseries for multiple individuals), in relation to multiple covariates and at multiple temporal scales. This enables the user to focus on the ecological questions at hand which, without an interactive environment, would require considerable programming address satisfactorily. This application is powered by the function `Tools4ETS::visDTS()` and can be called directly via this function or via `Tools4ETS::launch_shiny(app = "visDTS", data)` where `data` is a dataframe containing the timeseries to be visualised. For example, you could run the following code to explore `dat_flapper` interactively:
 
 ```{r, eval = FALSE}
 # Launch interactive shiny via one of two methods:
-visTS(dat_flapper)
-launch_shiny(app = "visTS", dat_flapper)
+vis_ts(dat_flapper)
+launch_shiny(app = "vis_ts", dat_flapper)
 ```
 
 ## Data processing
@@ -398,8 +398,8 @@ paa_acf <- list(side = 1:2,
                 lim = list(x = NULL, y = c(0, 1)),
                 axis = list(las = TRUE)
                 )
-# Use plot_residuals to create ACF
-plot.pretty::plot_residuals(stats::resid(m1_dfp),
+# Use pretty_residuals to create ACF
+plot.pretty::pretty_residuals(stats::resid(m1_dfp),
                             plot = 7,
                             pretty_axis_args = paa_acf)
 ```
@@ -423,7 +423,7 @@ dfp_thin1 <- dfp_thin[[1]]
 
 #### Re-implement the model with the thinned dataset and examine the ACF
 m1_dfp_thin <- mgcv::bam(depth ~ s(sun_angle) + id, data = dfp_thin1)
-plot.pretty::plot_residuals(stats::resid(m1_dfp_thin),
+plot.pretty::pretty_residuals(stats::resid(m1_dfp_thin),
                             plot = 7,
                             pretty_axis_args = paa_acf)
 ```
@@ -510,13 +510,13 @@ mods_dfp_thin <-
 par(pp)
 ```
 
-In this case, model inferences from different thinned datasets are similar. Both thinned subsets suggest that individuals tend to be slightly deeper during the day (high sun angle) than at night. This pattern is commonly observed in marine systems and may be a reflection of diel vertical migration, but the biological importance of the effect here seems small. Remembering that we still need to consider the effect of removing recaptures and thinning on ecological inferences, let's proceed to examine how well this model captures observed timeseries using `plot_ts()`, `pretty.plot::plot_residuals()` and some useful functions for simulating from an GAM in `Tools4ETS`. 
+In this case, model inferences from different thinned datasets are similar. Both thinned subsets suggest that individuals tend to be slightly deeper during the day (high sun angle) than at night. This pattern is commonly observed in marine systems and may be a reflection of diel vertical migration, but the biological importance of the effect here seems small. Remembering that we still need to consider the effect of removing recaptures and thinning on ecological inferences, let's proceed to examine how well this model captures observed timeseries using `pretty_ts()`, `pretty.plot::pretty_residuals()` and some useful functions for simulating from an GAM in `Tools4ETS`. 
 
-## Evaluating model predictions and performance: `plot_ts()`, `plot_residuals()`, `simulate_posterior_mu()`, `simulate_posterior_obs()`, `simulate_posterior_obs()`
+## Evaluating model predictions and performance: `pretty_ts()`, `pretty_residuals()`, `simulate_posterior_mu()`, `simulate_posterior_obs()`, `simulate_posterior_obs()`
 
 ### Observed and fitted values
 
-One of the best ways to evaluate the performance of a model is to overlay observed and expected timeseries. `plot.pretty::add_model_predictions()` makes this easy, and this is incorporated into `plot_ts()`:
+One of the best ways to evaluate the performance of a model is to overlay observed and expected timeseries. `plot.pretty::add_model_predictions()` makes this easy, and this is incorporated into `pretty_ts()`:
 
 ```{r, fig.width = 7, fig.height = 5}
 #### Select the first data as an example 
@@ -528,8 +528,8 @@ dfp_thin1_A <- dfp_thin1[which(dfp_thin1$id == "A"), ]
 dfp_thin1_A$flag3 <- factor(dfp_thin1_A$flag3)
 pred <- mgcv::predict.bam(mod_dfp_thin1, newdata = dfp_thin1_A, se.fit = TRUE)
 
-#### Plot observed and expected timeseries for individual "A" using plot_ts()
-plot_ts(x = dfp_thin1$timestamp,
+#### Plot observed and expected timeseries for individual "A" using pretty_ts()
+pretty_ts(x = dfp_thin1$timestamp,
         y1 = dfp_thin1$dn,
         fct = dfp_thin1$id,
         fct_level = "A",
@@ -570,7 +570,7 @@ utils::str(spmu)
 spmu <- lapply(spmu, function(elm){elm * - 1})
 
 #### Plot 
-plot_ts(x = dfp_thin1$timestamp,
+pretty_ts(x = dfp_thin1$timestamp,
         y1 = dfp_thin1$dn,
         fct = dfp_thin1$id,
         fct_level = "A",
@@ -627,7 +627,7 @@ PI <- simulate_posterior_obs(model = mod_dfp_thin1,
                              mu_method = 2,
                              n = 1000,
                              return = "summary")
-# Adjust PI list so that it can be plotted with add_model_predictions() via plot_ts()
+# Adjust PI list so that it can be plotted with add_model_predictions() via pretty_ts()
 names(PI)[1] <- "fit"
 PI <- lapply(PI, function(x){ x * -1 })
 utils::str(PI)
@@ -637,7 +637,7 @@ pp <- par(mfrow = c(3, 1), oma = c(2, 2, 2, 1), mar = c(2, 2, 2, 2))
 paa <- list(side = c(3, 2), axis = list(las = TRUE))
 
 #### Plot observed (thinned) timeseries for context
-plot_ts(x = dfp_thin1_A$timestamp,
+pretty_ts(x = dfp_thin1_A$timestamp,
         y1 = dfp_thin1_A$dn,
         pretty_axis_args = paa, 
         return_list = FALSE, 
@@ -648,14 +648,14 @@ plot_ts(x = dfp_thin1_A$timestamp,
         )
 
 #### Plot a realisation from the model 
-plot_ts(x = dfp_thin1_A$timestamp,
+pretty_ts(x = dfp_thin1_A$timestamp,
         y1 = PS$obs_sim*-1,
         pretty_axis_args = paa, 
         return_list = FALSE
         )
 
 #### Plot prediction intervals 
-plot_ts(x = dfp_thin1_A$timestamp,
+pretty_ts(x = dfp_thin1_A$timestamp,
         y1 = dfp_thin1_A$dn,
         add_model_predictions_args = list(x = dfp_thin1_A$timestamp,
                                           CI = PI,
@@ -676,11 +676,11 @@ The first figure shows the observed (thinned) timeseries used for modelling, wit
 
 ### Diagnostic residual plots
 
-To examine the extent to which model assumptions are met, diagnostic residual plots are also useful. `plot.pretty::plot_residuals()` contains a useful function for plotting standard residual plots, as well as residuals against one or more variables, timestamps and the autocorrelation function of residuals. 
+To examine the extent to which model assumptions are met, diagnostic residual plots are also useful. `plot.pretty::pretty_residuals()` contains a useful function for plotting standard residual plots, as well as residuals against one or more variables, timestamps and the autocorrelation function of residuals. 
 
 ```{r, fig.width = 7, fig.height = 10}
 pp <- par(mfrow = c(4, 2), oma = c(2, 2, 1, 1), mar = c(3, 3, 3, 3))
-plot.pretty::plot_residuals(residuals = mod_dfp_thin1$std.rsd,
+plot.pretty::pretty_residuals(residuals = mod_dfp_thin1$std.rsd,
                             fv = stats::fitted(mod_dfp_thin1),
                             lp = stats::fitted(mod_dfp_thin1),
                             vars = c("sun_angle", "temp"),
@@ -879,15 +879,15 @@ dat1$error_arima <-
 sqrt(var(dat1$mu) + var(dat1$error_arima)); sqrt(var(dat1$mu + dat1$error_arima)); residual_sd
 ```
 
-### Visualise simulated timeseries: `plot_ts()`
+### Visualise simulated timeseries: `pretty_ts()`
 
-We can now visualise simulated timeseries with `plot_ts()`:
+We can now visualise simulated timeseries with `pretty_ts()`:
 
 ```{r, fig.width = 7, fig.height = 10}
 #Plot all simulated timeseries for an example individual
 pp <- par(mfrow = c(2, 1), oma = c(1, 2, 2, 1), mar = c(3, 3, 3, 3))
 lapply(list("depthAR0", "depthAR1"), function(response){
-  plot_ts(x = dat1$timestamp,
+  pretty_ts(x = dat1$timestamp,
           y1 = dat1[, response] * -1,
           fct = dat1$individual,
           fct_level = "1",
@@ -1010,7 +1010,7 @@ pbapply::pbmapply(list(mod_dat1_depthAR0, mod_dat1_depthAR1),
   #### Plot observations and prediction intervals
   # ... use fCI = "lines" for speed
   # ... set y limits for comparability.
-  plot_ts(nd$timestamp, nd[, response]*-1,
+  pretty_ts(nd$timestamp, nd[, response]*-1,
           pretty_axis_args = list(side = c(3, 2), lim = list(NULL, c(-300, 100)), axis= list(las = TRUE)),
           add_lines_args = list(lwd = 0.5),
           add_model_predictions_args = list(x = nd$timestamp,
@@ -1441,7 +1441,7 @@ Now, we can visualise simulated timeseries and relationships:
 #### Visualise simulated timeseries
 pp <- par(mfrow = c(3, 2))
 mapply(depth_ls, names(depth_ls), FUN = function(depth, driver){
-  plot_ts(dat1_cs3$timestamp, depth,
+  pretty_ts(dat1_cs3$timestamp, depth,
           add_lines_args = list(lwd = 0.5),
           pretty_axis_args = list(side = 1:2, axis = list(las = TRUE)),
           return_list = FALSE)
@@ -1517,7 +1517,7 @@ Simulation is a valuable tool in ecology. Simulation can be used to clarify the 
 
 # Conclusions 
 
-`Tool4DTS` is an R package which aims to facilitate and streamline the data exploration – data processing – modelling pipeline for (ecological) timeseries data in R. Key functionality includes the following: data exploration via `plot_ts()` and `visTS()` which use functions in a complementary package (`plot.pretty`); data processing, including flagging independent timeseries (`flag_ts()`), thinning timeseries (`thin_ts()` and `thin_ts_iter()`), breaking timeseries (`break_ts()`) and, for depth timeseries, identifying recapture events (`suggest_recapture()` and `define_recapture()`); and simulation to guide ecological inference, by simulating from a model (with `simulate_posterior_mu()`, `simulate_posterior_obs()`, `summarise_posterior()`) or simulating de novo timeseries with known properties (via `assemble_ts()`, `parameterise_smooth()`, `sigma_arima()`, `sim_ts()` and, for depth timeseries, an interactive application (`GAMS4DTS()`). 
+`Tool4DTS` is an R package which aims to facilitate and streamline the data exploration – data processing – modelling pipeline for (ecological) timeseries data in R. Key functionality includes the following: data exploration via `pretty_ts()` and `vis_ts()` which use functions in a complementary package (`plot.pretty`); data processing, including flagging independent timeseries (`flag_ts()`), thinning timeseries (`thin_ts()` and `thin_ts_iter()`), breaking timeseries (`break_ts()`) and, for depth timeseries, identifying recapture events (`suggest_recapture()` and `define_recapture()`); and simulation to guide ecological inference, by simulating from a model (with `simulate_posterior_mu()`, `simulate_posterior_obs()`, `summarise_posterior()`) or simulating de novo timeseries with known properties (via `assemble_ts()`, `parameterise_smooth()`, `sigma_arima()`, `sim_ts()` and, for depth timeseries, an interactive application (`GAMS4DTS()`). 
 
 # Future developments 
 

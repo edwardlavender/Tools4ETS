@@ -1,7 +1,7 @@
 #' @title Create publication-quality plots
 #' @import plot.pretty
 #'
-#' @description This function facilitates the creation of publication quality plots for timeseries. The function pulls lots of the functions provided in a complementary R package, \code{plot.pretty}, which can be implemented sequentially, into a single framework. While it is often useful to call functions sequentially, this can make data exploration quicker and simpler. The function underlies \code{\link[Tools4ETS]{visTS}}.
+#' @description This function facilitates the creation of publication quality plots for timeseries. The function pulls lots of the functions provided in a complementary R package, \code{plot.pretty}, which can be implemented sequentially, into a single framework. While it is often useful to call functions sequentially, this can make data exploration quicker and simpler. The function underlies \code{\link[Tools4ETS]{vis_ts}}.
 #'
 #' @param x The x coordinates.
 #' @param y1 The y coordinates.
@@ -27,7 +27,7 @@
 #' @param add_shading_dtb_args A named list of arguments that are passed to \code{\link[Tools4ETS]{define_time_blocks}} to compute diel/seasonal shading. These include a named list of arguments passed to \code{type_args} and colours.
 #' @param add_shading_args A named list of arguments passed to a\code{\link[plot.pretty]{add_shading}} to add shading to a plot. 'x1', 'x2', and 'lim' are computed automatically if \code{add_shading_type} is specified, but other graphical parameters passed to \code{\link[graphics]{rect}} (e.g. \code{border = "red"}) can be included here.
 #' @param add_moons_args A named list of arguments passed to \code{\link[Tools4ETS]{add_moons}} to add moons to a plot.
-#' @param return_list A logical input which defines whether or not to return the list of axis parameters computed by \code{\link[plot.pretty]{pretty_axis}}. This can be useful for the addition of elements to a plot created by \code{plot_ts()}.
+#' @param return_list A logical input which defines whether or not to return the list of axis parameters computed by \code{\link[plot.pretty]{pretty_axis}}. This can be useful for the addition of elements to a plot created by \code{pretty_ts()}.
 #'
 #' @examples
 #'
@@ -42,19 +42,19 @@
 #'
 #' #### (1) The default options plot y1 against x
 #' pp <- par(oma = c(2, 2, 2, 4))
-#' plot_ts(x = x, y1 = y1)
+#' pretty_ts(x = x, y1 = y1)
 #'
 #' ##### (2) A dataframe can be supplied instead with 'x' and 'y1' columns (and others, see below)
-#' plot_ts(dat = data.frame(x = x, y1 = y1))
+#' pretty_ts(dat = data.frame(x = x, y1 = y1))
 #'
 #' ##### (3) Plots can be created for different levels of a factor by providing 'fct' and 'fct_level'
 #' # These can be provided via the arguments:
-#' plot_ts(x = x, y1 = y1, fct = fct, fct_level = fct_level)
+#' pretty_ts(x = x, y1 = y1, fct = fct, fct_level = fct_level)
 #' # Or via dat, although fct_level should be specified separately:
-#' plot_ts(dat = data.frame(x = x, y1 = y1, fct = fct), fct_level = fct_level)
+#' pretty_ts(dat = data.frame(x = x, y1 = y1, fct = fct), fct_level = fct_level)
 #'
 #' #### (4) Axes can be adjusted by supplying arguments to pretty_axis() via pretty_axis_args
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             pretty_axis_args = list(side = 1:2,
 #'                                     pretty = list(n = 5),
@@ -63,7 +63,7 @@
 
 #' #### (5) Axes labels can be supplied via arguments to mtext() via mtext_args
 #' # each axes can be controlled separately via a nested list:
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             pretty_axis_args = list(side = 1:2,
 #'                                     pretty = list(n = 5),
@@ -73,7 +73,7 @@
 #'             )
 #'
 #' #### (6) Points can be added by supplying arguments to points() via add_points_args
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             pretty_axis_args = list(side = 1:2,
 #'                                     pretty = list(n = 5),
@@ -84,7 +84,7 @@
 #'             )
 #'
 #' #### (7) Lines are contolled by supplying arguments to add_lines() via add_lines_args
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             pretty_axis_args = list(side = 1:2,
 #'                                     pretty = list(n = 5),
@@ -94,7 +94,7 @@
 #'             add_lines_args = list(col = "red", lwd = 2))
 #'
 #' #### (8) To colour a line by a second variable, specify y2 and y2_method = "by_colour"
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             y2 = y2,
 #'             pretty_axis_args = list(side = 1:2,
@@ -106,7 +106,7 @@
 #'             y2_method = "by_colour")
 #'
 #' #### (9) We can supply further arguments to add_lines() via add_lines_args() to control colouration
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             y2 = y2,
 #'             pretty_axis_args = list(side = 1:2,
@@ -121,7 +121,7 @@
 #' #### (10) If y2 is specified along with y2_method = "by_colour", a colour bar is automatically added
 #' # ... This is because insert_colour_bar is TRUE by default.
 #' # This can be turned off with insert_colour_bar = FALSE
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             y2 = y2,
 #'             pretty_axis_args = list(side = 1:2,
@@ -134,7 +134,7 @@
 #'             insert_colour_bar = FALSE)
 #'
 #' #### (12) The axis of the colour bar can be adjusted by adjusting the call to add_lines_args
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             y2 = y2,
 #'             pretty_axis_args = list(side = 1:2,
@@ -152,7 +152,7 @@
 #'
 #' #### (13) Other adjustments (e.g. add a title) can made by passing arguments to add_colour_bar()
 #' # ... via add_colour_bar_args
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             y2 = y2,
 #'             pretty_axis_args = list(side = 1:2,
@@ -171,7 +171,7 @@
 #'
 #' #### (14) The size placement of the colour bar is controlled by passing arguments
 #' # ... to TeachingDemos::subplot() via subplot_args
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             y2 = y2,
 #'             pretty_axis_args = list(side = 1:2,
@@ -191,7 +191,7 @@
 #'
 #' #### (15) Instead of via colouration, a second variable can be added using a new axis
 #' # ... by specifying y2_method = "by_new_axis"
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             y2 = y2,
 #'             pretty_axis_args = list(side = 1:2,
@@ -205,7 +205,7 @@
 #'
 #' #### (16) The colour of the second line is controlled by another call to add_lines() via
 #' # ... add_lines_args_y2. This will add an axis to the fourth side by default:
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             y2 = y2,
 #'             pretty_axis_args = list(side = 1:2,
@@ -220,7 +220,7 @@
 #'
 #' #### (17) The second axis can be controlled via another call to pretty_axis()
 #' # ... via pretty_axis_args_y2 and we can update mtext_args to add a label:
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             y2 = y2,
 #'             pretty_axis_args = list(side = 1:2,
@@ -240,7 +240,7 @@
 #' m1 <- lm(y1 ~ x)
 #' p <- predict(m1, se.fit = TRUE)
 #' # Make plot and add predictions
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             y2 = y2,
 #'             pretty_axis_args = list(side = 1:2,
@@ -257,7 +257,7 @@
 #'
 #' #### (19) The visualisation of model predictions can be controlled by supplying
 #' # ... arguments to add_model_predictions() via add_model_predictions_args
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             y2 = y2,
 #'             pretty_axis_args = list(side = 1:2,
@@ -276,7 +276,7 @@
 #'
 #'
 #' #### (20) Statistical summarise of y1 in bins can be added
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             pretty_axis_args = list(side = 1:2,
 #'                                     pretty = list(n = 5),
@@ -291,7 +291,7 @@
 #'             )
 #'
 #' #### (23) The graphical parameters of each summary statistic can be controlled using a nested list:
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             pretty_axis_args = list(side = 1:2,
 #'                                     pretty = list(n = 5),
@@ -312,7 +312,7 @@
 #' # ... add_shading_args. If add_shading_type = "diel" or "season", Tools4ETS::define_time_blocks()
 #' # ...  is used to define x1, x2 and lim that are passed to add_shading() internally.
 #' # ... Otherwise, custom shading can be added.
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             pretty_axis_args = list(side = 1:2,
 #'                                     pretty = list(n = 5),
@@ -325,7 +325,7 @@
 #'
 #' #### (23) Shading can be adjusted by supplying additional arguments to add_shading()
 #' # ... (and, in turn, graphics::rect()) via add_shading_args:
-#' plot_ts(x = x,
+#' pretty_ts(x = x,
 #'             y1 = y1,
 #'             pretty_axis_args = list(side = 1:2,
 #'                                     pretty = list(n = 5),
@@ -345,7 +345,7 @@
 #######################################
 #### plot_continuous
 
-plot_ts <-
+pretty_ts <-
   function(
     # Data
     x,
