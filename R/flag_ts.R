@@ -120,10 +120,7 @@ flag_ts <-
       lapply(dat_id_ls, function(df){
         # Check the dataframe is sorted by time...
         if(is.unsorted(df$x)){
-          stop(paste0(
-            "The inputted dataframe into dat.independent() must be ordered by the fct, then by x",
-            "Try using the dplyr package `require(dplyr)` and then typing dat <- dat %>% arrange(fct_column, x_column)",
-            "where dat is your dataframe"))
+          stop("Inputted data ('x' (and 'fct', if applicable) or 'dat', must be ordered by 'fct', if applicable', then 'x'.")
         }
         # Use the utils.add::serial_difference function to define the duration from one timestamp to the next.
         # If timestamp input, we'll implement units = "mins"
