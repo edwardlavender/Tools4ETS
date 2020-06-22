@@ -111,9 +111,9 @@ define_photoperiod <-
     photoperiod_df$photoperiod <-
       as.numeric(difftime(photoperiod_df$dusk, photoperiod_df$dawn, units = units))
     # difference
-    photoperiod_df$difference <- utils.add::serial_difference(photoperiod_df$photoperiod)
+    photoperiod_df$difference <- serial_difference(photoperiod_df$photoperiod)
     # units (e.g. hours) per day
-    photoperiod_df$rate <- photoperiod_df$difference/as.numeric(utils.add::serial_difference(photoperiod_df$date, units = "days"))
+    photoperiod_df$rate <- photoperiod_df$difference/as.numeric(serial_difference(photoperiod_df$date, units = "days"))
 
     #### Return the dataframe or a vector of photoperiod durations which
     # ... matches an inputted dataset.

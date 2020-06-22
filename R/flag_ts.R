@@ -122,9 +122,9 @@ flag_ts <-
         if(is.unsorted(df$x)){
           stop("Inputted data ('x' (and 'fct', if applicable) or 'dat', must be ordered by 'fct', if applicable', then 'x'.")
         }
-        # Use the utils.add::serial_difference function to define the duration from one timestamp to the next.
+        # Use the serial_difference function to define the duration from one timestamp to the next.
         # If timestamp input, we'll implement units = "mins"
-        df$duration <- utils.add::serial_difference(df$x, units = "mins")
+        df$duration <- serial_difference(df$x, units = "mins")
         # Define the positions at which duration minutes exceeds the inputted threshold
         # Add one to these positions because the serial_duration returns the duration from one position
         # ... to the next one. And we want to distinguish that next one with the previous one

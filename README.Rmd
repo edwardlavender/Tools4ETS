@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-`Tools4ETS` is an R package which provides tools for ecological timeseries. This includes (1) data exploration, (2) timeseries processing and (3) simulations to guide model-based ecological inference. This functionality is provided by functions and two interactive R Shiny applications. `Tools4ETS` was motivated by analyses of new new, high resolution depth timeseries for a Critically Endangered elasmobranch. 
+`Tools4ETS` is an R package which provides tools for ecological timeseries. This includes (1) data exploration, (2) timeseries processing and (3) simulations to guide model-based ecological inference. This functionality is provided by functions and two interactive R Shiny applications. `Tools4ETS` was motivated by analyses of new new, high-resolution depth timeseries for a Critically Endangered elasmobranch. 
 
 ## Installation
 
@@ -32,14 +32,17 @@ install.packages("Tools4ETS")
 devtools::install_github("edwardlavender/Tools4ETS")
 ```
 
-## Data Visualisation
+## Data visualisation
 
-`Tools4ETS` facilitates rapid timeseries visualisation in relation to covariates, across factor levels (e.g. individuals) and timescales with `plot_ts()` (a function based on the complementary `plot.pretty` package) and an interactive R Shiny application (`visTS()`). 
+`Tools4ETS` facilitates rapid timeseries visualisation in relation to covariates, across factor levels (e.g. individuals) and timescales with `pretty_ts()` (a function based on the complementary `plot.pretty` package) and an interactive R Shiny application (`vis_ts()`). 
 
 ## Data processing
 
 `Tools4ETS` streamlines common data processing operations for ecological timeseries. These include: 
 
+* **Define time categories**. `hour_nearest()` and `hour_dbl()` define the nearest integer hour and the time of day respectively. `mm_yy()` defines (ordered) month-year categories. `yday2date()` flicks from Julian days to dates/months/seasons. 
+* **Rates of change.** `difference()` and `serial_difference()` compute the difference between two values and consecutive pairs of values in a sequence (numbers or timestamps) respectively. 
+* **Matching timeseries.** `match_ts_nearest()`, `match_ts_nearest_by_key()` and `pair_ts()` match timeseries (i.e., to add observations from one timeseries into another).  
 * **Flagging timeseries.** `flag_ts()` can be used to flag independent sections of timeseries in a dataset due to the presence of different factor levels (e.g. individuals) and/or breaks in timeseries. Different flag typescan be added, reflecting the requirements of different modelling approaches.  
 * **Thinning timeseries.** `thin_ts()`  can be used to thin a dataset, accounting for independent timeseries. `thin_ts_iter()` implements `thin_ts()` iteratively to explore the change in autocorrelation and data volume with thinning. 
 * **Breaking timeseries.** `break_ts()` can be used to induce breaks in timeseries. 

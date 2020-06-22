@@ -32,7 +32,7 @@ d <- data.frame(x = x, y = y)
 m1 <- mgcv::gam(y ~ s(x), data = d)
 
 #### Simulate the posterior distribution matrix with simulate_posterior_mu()
-nd <- data.frame(x = utils.add::seq_range(range(d$x), length.out = 100))
+nd <- data.frame(x = seq(min(d$x), max(d$x), length.out = 100))
 sim1 <- simulate_posterior_mu(
   model = m1,
   newdata = nd,

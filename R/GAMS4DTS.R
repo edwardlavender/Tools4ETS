@@ -1207,7 +1207,7 @@ server <- function(input, output) {
   length_smooth <- reactive({
     if("length" %in% input$covariates){
       length_smooth <- parameterise_smooth(x = seq(-60, 60, length.out = 100),
-                                              f = utils.add::linear,
+                                              f = linear,
                                               param = list(a = 0, b = input$length_beta),
                                               plot = FALSE
       )
@@ -1238,10 +1238,10 @@ server <- function(input, output) {
     if("sun_angle" %in% input$covariates){
            if(input$sun_angle_type == "sigmoidal"){
              sun_angle_pars <- list("x0" = input$sun_angle_x0, "L" = input$sun_angle_L, "k" = input$sun_angle_K)
-             fsa <- utils.add::sigmoid
+             fsa <- sigmoid
            } else if(input$sun_angle_type == "quadratic"){
              sun_angle_pars <- list("a" = input$sun_angle_a, "b" = input$sun_angle_b, "h" = input$sun_angle_h, "k" = input$sun_angle_k)
-             fsa <- utils.add::quadratic
+             fsa <- quadratic
            }
       sun_angle_smooth <- parameterise_smooth(x = seq(-60, 60, length.out = 100),
                                               f = fsa,
@@ -1279,13 +1279,13 @@ server <- function(input, output) {
     if("sun_angle" %in% input$covariates){
       if(input$lunar_phase_type == "sigmoidal"){
         lunar_phase_pars <- list("x0" = input$lunar_phase_x0, "L" = input$lunar_phase_L, "k" = input$lunar_phase_K)
-        fsa <- utils.add::sigmoid
+        fsa <- sigmoid
       } else if(input$lunar_phase_type == "quadratic"){
         lunar_phase_pars <- list("a" = input$lunar_phase_a,
                                  "b" = input$lunar_phase_b,
                                  "h" = input$lunar_phase_h,
                                  "k" = input$lunar_phase_k)
-        fsa <- utils.add::quadratic
+        fsa <- quadratic
       }
       lunar_phase_smooth <- parameterise_smooth(x = seq(0, 2*pi, length.out = 100),
                                               f = fsa,
@@ -1333,13 +1333,13 @@ server <- function(input, output) {
     if("sun_angle" %in% input$covariates){
       if(input$julian_day_type == "sigmoidal"){
         julian_day_pars <- list("x0" = input$julian_day_x0, "L" = input$julian_day_L, "k" = input$julian_day_K)
-        fsa <- utils.add::sigmoid
+        fsa <- sigmoid
       } else if(input$julian_day_type == "quadratic"){
         julian_day_pars <- list("a" = input$julian_day_a,
                                  "b" = input$julian_day_b,
                                  "h" = input$julian_day_h,
                                  "k" = input$julian_day_k)
-        fsa <- utils.add::quadratic
+        fsa <- quadratic
       }
       julian_day_smooth <- parameterise_smooth(x = seq(0, 366, length.out = 100),
                                                 f = fsa,
@@ -1395,7 +1395,7 @@ server <- function(input, output) {
    #### sex
    # Add the list of parameters for sex
    if("sex" %in% input$covariates){
-     lp_ls <- append(lp_ls, list(sex = list(f = utils.add::linear,
+     lp_ls <- append(lp_ls, list(sex = list(f = linear,
                                            param = list(a = 0, b = input$sex_contrast))
                                            ))}
    #### length

@@ -1,3 +1,7 @@
+################################################
+################################################
+#### gams4dts_bam_model()
+
 #' @title Evaluate an \code{mgcv::bam()} model for GAMS4DTS
 #' @import mgcv
 #'
@@ -14,13 +18,6 @@
 #' @author Edward Lavender
 #'
 
-################################################
-################################################
-#### gams4dts_bam_model()
-
-# define a function which outputs the bam model object
-# depending on the formula inputted, the likelihood distribution and link function
-# ... and the rho value
 gams4dts_bam_model <-
   function(
     # define the formula

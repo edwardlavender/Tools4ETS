@@ -36,7 +36,7 @@
 #'
 #' #### We can use simulate_posterior_mu to add a fitted line and CIs from posterior simulation
 #' # ... This shows our confidence in the fitted line; but what about our confidence in predictions?
-#' nd <- data.frame(x = utils.add::seq_range(range(d$x), length.out = 100))
+#' nd <- data.frame(x = seq(min(d$x), max(d$x), length.out = 100))
 #' sim_mu <-
 #'   simulate_posterior_mu(
 #'     model = m1,
@@ -336,7 +336,7 @@
 #' summary(m2.2)$dev.expl
 #'
 #' #### Posterior simulation from each model:
-#' nd <- data.frame(x2 = utils.add::seq_range(range(d2$x2), length.out = 100))
+#' nd <- data.frame(x2 = seq(min(d2$x2), max(d2$x2), length.out = 100))
 #' sim_pos_prob1.1 <-
 #'   simulate_posterior_obs(
 #'     model = m2.1,
@@ -657,7 +657,7 @@ simulate_posterior_obs <-
 #'
 #' #### Example (4): The function can be used in combination with add_model_predictions()
 #' # This can be plotted using plot.pretty::add_model_predictions()
-#' nd <- data.frame(x = utils.add::seq_range(range(d$x), length.out = 100))
+#' nd <- data.frame(x = seq(min(d$x), max(d$x), length.out = 100))
 #' sim4 <-
 #'   simulate_posterior_mu(
 #'     model = m1,
@@ -775,7 +775,7 @@ simulate_posterior_mu <-
 #' m1 <- mgcv::gam(y ~ s(x), data = d)
 #'
 #' #### Simulate the posterior distribution matrix with simulate_posterior_mu()
-#' nd <- data.frame(x = utils.add::seq_range(range(d$x), length.out = 100))
+#' nd <- data.frame(x = seq(min(d$x), max(d$x), length.out = 100))
 #' sim1 <- simulate_posterior_mu(
 #'   model = m1,
 #'   newdata = nd,

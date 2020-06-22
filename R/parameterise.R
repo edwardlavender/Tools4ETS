@@ -1,3 +1,123 @@
+########################################
+########################################
+#### parameterise_contrast_2l()
+
+#' @title Define and visualise a contrast between two factor levels
+#' @description This function is used to define and visualise a contrast between two factor levels (e.g. the difference in depth between males and females). Simulated contrasts can be compared to estimated contrasts from an \code{mgcv} generalised additive model (GAM). The function is intended primarily for use behind-the-scenes in \code{\link[Tools4ETS]{GAMS4DTS}}.
+#'
+#' @param x A vector of two factor levels for which to define a contrast.
+#' @param param A numeric input which defines the size of the contrast between two factor levels.
+#' @param plot_gam A logical input which defines whether or not to add model estimates to the plot.
+#' @param dat The dataframe used to fit the model.
+#' @param model The model.
+#' @param term A character input which defines the name of the term in the model.
+#' @param cex.axis A numeric input which defines the size of the font for axis tick labels.
+#' @param mtext_args A named list of arguments which are passed to \code{\link[graphics]{mtext}} to produce axis labels. A nested list can be used to control each axis (see also \code{\link[Tools4ETS]{pretty_ts}}).
+#'
+#' @return The function returns a plot showing the size of the contrast between factor levels, possibly in relation to that estimated by an \code{mgcv} GAM model.
+#'
+#' @author Edward Lavender
+#' @export
+#'
+
+parameterise_contrast_2l <-
+  function(
+    x = factor(c("F", "M")),
+    param = 0,
+    plot_gam = FALSE,
+    dat,
+    model,
+    term = "sex",
+    cex.axis = 1,
+    mtext_args = list(list(side = 1, text = "Sex (F, female; M, male)", line = 2.5),
+                      list(side = 2, text = "Contrast (m)", line = 2.5)
+    )
+  ){
+
+
+    ################################################
+    #### Define y axis limits
+
+    # If we're not making predictions,
+    # Then we'll set the limits between the minimum and maximum values ± 2 as appropriate
+    if(!plot_gam){
+      # check whether 0 or the contrast is lower; minut 2
+      ymin <- min(c(0, param))-2
+      # check whether 0 or the contrast is higher; add 2
+      ymax <- max(c(0, param))+2
+      # define y values using ymin and ymax
+      yat <- pretty(c(ymin, ymax), 5)
+
+      # Else If we are making predictions, then we can set the limits
+      # ... based on our confidence intervals around the fitted values
+    } else if(plot_gam){
+
+      # extract all of the covariates included in the model:
+      terms_smooth <- sapply(model$smooth, function(element){return(element$term)})
+      terms_fixed <- attr(model$pterms, "term.labels")
+      terms <- c(terms_smooth, terms_fixed)
+      # remove the covariate of interest (sex here)
+      terms <- terms[which(terms != term)]
+
+      # create a new data dataframe containing sex:
+      nd <- data.frame(fct = levels(dat[, term]))
+      colnames(nd) <- term
+      # add other covariates, giving them values of 0
+      for(q in terms){
+        nd[, q] <- 0}
+
+      # Obtain predictions from the model using the predict function:
+      preds <- stats::predict(model, newdata = nd, type = "terms", se = T)
+
+      # Obtain the fitted values for sex
+      fits <- preds$fit[, term]
+
+      # Obtain the SEs for sex (*2, as in termsplot - the function which plots these plots by default in plot.gam())
+      ses <- preds$se.fit[, term]
+      se_lower <- fits[2]-ses*1.96
+      se_upper <- fits[2]+ses*2
+
+      # define ymin, ymax and yat as above:
+      ymin <- min(c(0, se_lower, param))
+      ymax <- max(c(0, se_upper, param))
+      yat <- pretty(c(ymin, ymax), 5)
+    }
+
+    # create a boxplot of the param ~ sex, hiding axes:
+    graphics::boxplot(c(0, param) ~ c(0, 1),
+                      axes = F,
+                      xlim = c(0.5, 2.5),
+                      ylim = c(min(yat), max(yat)),
+                      xlab = "", ylab = "")
+
+    # add the y axis
+    # set pos = 0.5, which we set as the minimum point on the graph above
+    graphics::axis(side = 2, at = yat, las = 2, cex.axis = cex.axis, pos = 0.5)
+
+    # add the x axis
+    # note that the final at = 3, is beyond the upper x limit (2.5), for neatness (avoid uneven ticks)
+    # set the position to be the minimum value of yaxis
+    graphics::axis(side = 1, at = c(0.5, 1, 2, 3), labels = c("", as.character(x), ""), pos = min(yat), cex.axis = cex.axis)
+
+    # add axis labels
+    implement_mtext_args(mtext_args)
+
+    if(plot_gam){
+      graphics::points(c(1, 2), fits, pch = 21, bg = "darkgrey", col = "darkgrey")
+      graphics::segments(x0 = 2, y0 = se_lower, y1 = se_upper,
+                         col = scales::alpha("darkgrey", 0.4),
+                         lwd = 2,
+                         lty = 1)
+    }
+
+    # close the function
+  }
+
+
+########################################
+########################################
+#### parameterise_smooth()
+
 #' @title Parameterise smooth functions and compare simulated and inferred smooths
 #' @description This function helps the user to define reasonable functions for the effect of a covariate on a linear predictor/response for simulations. Then, model-based inferences of the effect of that covariate can be plotted on top of simulated effects to examine the performance of a model in terms of its ability to correctly estimate the simulated function under different scenarios.
 #'
@@ -24,7 +144,7 @@
 #' @param add_rug A logical input which defines whether or not to plot a rug. If so, \code{dat}, the dataframe used to fit the model, should be provided (see above).
 #' @param add_rug_args A named list of arguments passed to \code{\link[graphics]{rug}} to customise the rug.
 #' @param add_moons A logical input which defines whether or not to add moons to a plot. This is useful for visualising the effects of lunar phase in models of animal movement timeseries.
-#' @param add_moons_args A named list of arguments passed to \code{\link[Tools4ETS]{add_moons}}.
+#' @param add_moons_args A named list of arguments passed to \code{\link[plot.pretty]{add_moons}}.
 #'
 #' @param pretty_axis_args A named list of arguments, passed to \code{\link[plot.pretty]{pretty_axis}} to customise axes().
 #' @param mtext_args A named list of arguments, passed to \code{\link[graphics]{mtext}}, to add axis labels.
@@ -36,7 +156,7 @@
 #' # .... until we're happy with the shape:
 #' smooth_julian_day <-
 #'   parameterise_smooth(x = 0:365,
-#'                       f = utils.add::quadratic,
+#'                       f = quadratic,
 #'                       param = list(a = -0.001, b = 1, h = 183, k = 15),
 #'                       plot = TRUE)
 #' # The function returns a list containing x, f, the parameters we chose and y values:
@@ -45,11 +165,6 @@
 #' @author Edward Lavender
 #' @export
 #'
-
-
-########################################
-########################################
-#### parameterise_smooth()
 
 parameterise_smooth <-
   function(
@@ -144,7 +259,7 @@ parameterise_smooth <-
 
       #### Add parameterisation
       asa <- list(x = x, y = y)
-      add_sim_args <- utils.add::list_merge(asa, add_sim_args)
+      add_sim_args <- list_merge(asa, add_sim_args)
       do.call(graphics::lines, add_sim_args)
       pretty_axis(axis_ls = axis_ls, add = TRUE)
 
@@ -157,14 +272,14 @@ parameterise_smooth <-
                     CI_gp = list(col = scales::alpha("lightgrey", 0.8), border = FALSE),
                     add_fitted = TRUE,
                     fitted_gp = list(col = "black", lwd = 1, lty = 1)
-                    )
-        add_model_predictions_args <- utils.add::list_merge(amp, add_model_predictions_args)
+        )
+        add_model_predictions_args <- list_merge(amp, add_model_predictions_args)
         do.call(add_model_predictions, add_model_predictions_args)
 
         #### Add partial residuals
         if(residuals){
           pra <- list(x = dat[, term], y = p$p.resid)
-          add_residuals_args <- utils.add::list_merge(pra, add_residuals_args)
+          add_residuals_args <- list_merge(pra, add_residuals_args)
           do.call(graphics::points, add_residuals_args)
         }
       }
@@ -172,14 +287,14 @@ parameterise_smooth <-
       #### Add rug
       if(add_rug){
         ara <- list(x = dat[, term], pos = axis_ls[[2]]$lim[1])
-        add_rug_args <- utils.add::list_merge(ara, add_rug_args)
+        add_rug_args <- list_merge(ara, add_rug_args)
         do.call(graphics::rug, add_rug_args)
       }
 
       if(add_moons){
         dam <- list(side = 3, position = axis_ls[[2]]$lim[2], outer = TRUE, nv = 100, radius1 = 0.1, units = "radians")
-        add_moons_args <- utils.add::list_merge(dam, add_moons_args)
-        do.call("add_moons", add_moons_args)
+        add_moons_args <- list_merge(dam, add_moons_args)
+        do.call(plot.pretty::add_moons, add_moons_args)
       }
 
       #### Add axis labels
@@ -188,7 +303,7 @@ parameterise_smooth <-
       #### restore clip
       do.call("clip", as.list(usr))
 
-      } # close if(plot)
+    } # close if(plot)
 
 
 

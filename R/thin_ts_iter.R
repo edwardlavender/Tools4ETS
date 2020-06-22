@@ -275,7 +275,7 @@ thin_ts_iter <-
                    add_fitted = FALSE,
                    fitted_gp = list()
       )
-      add_model_predictions_args <- utils.add::list_merge(damp, add_model_predictions_args)
+      add_model_predictions_args <- list_merge(damp, add_model_predictions_args)
       # Add CI envelope
       do.call("add_model_predictions", add_model_predictions_args)
 
@@ -286,7 +286,7 @@ thin_ts_iter <-
       # Define a list of arugments
       dp1 <- list(x = thinreq$nth,
                   y = thinreq$AR1_est)
-      p1_args <- utils.add::list_merge(dp1, p1_args)
+      p1_args <- list_merge(dp1, p1_args)
       # Make plot
       do.call(graphics::lines, p1_args)
 
@@ -303,7 +303,7 @@ thin_ts_iter <-
                   axes = FALSE,
                   xlim = axis_ls[[1]]$lim, ylim = axis_ls_2nd[[1]]$lim,
                   xlab = "", ylab = "")
-      p2_args <- utils.add::list_merge(dp2, p2_args)
+      p2_args <- list_merge(dp2, p2_args)
       do.call(graphics::plot, p2_args)
 
       #### Add second axes
@@ -339,7 +339,7 @@ thin_ts_iter <-
           dl$cex.axis <- axis_ls$`1`$axis$cex.axis
         }
 
-        legend_args <- utils.add::list_merge(dl, legend_args)
+        legend_args <- list_merge(dl, legend_args)
         do.call(graphics::legend, legend_args)
       }
 

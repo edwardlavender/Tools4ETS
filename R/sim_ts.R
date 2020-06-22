@@ -46,19 +46,19 @@
 #' # (b) Define a named list that we'll use to compute the values of the linear predictor
 #' # For each variable we'll specify a function and a named list of parameters
 #' # ... to be passed to that function.
-#' compute_lp <- list(sex = list(f = utils.add::linear,
+#' compute_lp <- list(sex = list(f = linear,
 #'                               param = list(a = 0, b = 25)
 #' ),
-#' length = list(f = utils.add::linear,
+#' length = list(f = linear,
 #'               param = list(a = 0, b = 5)
 #' ),
-#' sun_angle = list(f = utils.add::sigmoid,
+#' sun_angle = list(f = sigmoid,
 #'                  param = list(x0 = 0, L = 100, k = 0.2)
 #' ),
-#' lunar_phase = list(f = utils.add::quadratic,
+#' lunar_phase = list(f = quadratic,
 #'                    param = list(a = -5, b = 1, h = 3, k = 25)
 #' ),
-#' julian_day = list(f = utils.add::quadratic,
+#' julian_day = list(f = quadratic,
 #'                   param = list(a = -0.001, b = 1, h = 183, k = 15)
 #' )
 #' )

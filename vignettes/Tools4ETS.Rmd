@@ -746,7 +746,7 @@ The second step is to define parameters which link covariates with a response. F
 # Define sun angle smooth 
 sun_angle_smooth <-
   parameterise_smooth(x = seq(-60, 60, length.out = 100),
-                      f = utils.add::sigmoid,
+                      f = sigmoid,
                       param = list(x0 = 0, L = 20, k = 0.2)
   )
 # Note that the smooth is centred on 0; i.e., when sun angle is 0, there is no change in depth
@@ -1338,7 +1338,7 @@ dat1_cs3$photoperiod <- define_photoperiod(lat = 56.41535,
 
 #### Define temperature as a covariate
 # we will use simulated values here which approximate observed relationships
-dat1_cs3$temp <- utils.add::quadratic(a = -0.000125, b = 1.5, h = 263, k = 15, x = dat1_cs3$julian_day)
+dat1_cs3$temp <- quadratic(a = -0.000125, b = 1.5, h = 263, k = 15, x = dat1_cs3$julian_day)
 ```
 
 Next, let us simulate some relationships between temperature, photoperiod and depth based on previously observed relationships between depth and Julian day:
@@ -1349,7 +1349,7 @@ Next, let us simulate some relationships between temperature, photoperiod and de
 pp <- par(mfcol = c(3, 2))
 julian_day_smooth <-
   parameterise_smooth(1:366,
-                      f = utils.add::quadratic,
+                      f = quadratic,
                       param = list(a = -0.001, b = 1, h = 183, k = 15),
                       pretty_axis_args = list(side = 1:2, lim = list(c(0, 365), NULL)),
                       xlab = "Time (Julian day)",
@@ -1376,8 +1376,8 @@ plot.pretty::pretty_plot(dat1_cs3$photoperiod[!duplicated(dat1_cs3$julian_day)],
                          type = "l")
 # In other words, an positive linear relationship:
 photoperiod_smooth <-
-  parameterise_smooth(x = utils.add::seq_range(range(dat1_cs3$photoperiod), length.out = 100),
-                      f = utils.add::linear,
+  parameterise_smooth(x = seq(min(dat1_cs3$photoperiod), max(dat1_cs3$photoperiod), length.out = 100),
+                      f = linear,
                       param = list(a = -30, b = 2.5),
                       plot = FALSE)
 lines(photoperiod_smooth$x, photoperiod_smooth$y, col = "red")
@@ -1389,8 +1389,8 @@ plot.pretty::pretty_plot(dat1_cs3$temp[!duplicated(dat1_cs3$julian_day)],
                          type = "l")
 # In other words, a positive linear relationship
 temp_smooth <-
-  parameterise_smooth(x = utils.add::seq_range(range(dat1_cs3$temp), length.out = 100),
-                      f = utils.add::linear,
+  parameterise_smooth(x = seq(min(dat1_cs3$temp), max(dat1_cs3$temp), length.out = 100),
+                      f = linear,
                       param = list(a = -35, b = 3.5),
                       plot = FALSE)
 lines(temp_smooth$x, temp_smooth$y, col = "red")

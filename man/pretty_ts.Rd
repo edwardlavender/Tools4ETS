@@ -79,7 +79,7 @@ pretty_ts(
 
 \item{add_shading_args}{A named list of arguments passed to a\code{\link[plot.pretty]{add_shading}} to add shading to a plot. 'x1', 'x2', and 'lim' are computed automatically if \code{add_shading_type} is specified, but other graphical parameters passed to \code{\link[graphics]{rect}} (e.g. \code{border = "red"}) can be included here.}
 
-\item{add_moons_args}{A named list of arguments passed to \code{\link[Tools4ETS]{add_moons}} to add moons to a plot.}
+\item{add_moons_args}{A named list of arguments passed to \code{\link[plot.pretty]{add_moons}} to add moons to a plot.}
 
 \item{return_list}{A logical input which defines whether or not to return the list of axis parameters computed by \code{\link[plot.pretty]{pretty_axis}}. This can be useful for the addition of elements to a plot created by \code{pretty_ts()}.}
 }

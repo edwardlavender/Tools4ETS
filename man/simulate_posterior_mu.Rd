@@ -93,7 +93,7 @@ utils::head(sim3)
 
 #### Example (4): The function can be used in combination with add_model_predictions()
 # This can be plotted using plot.pretty::add_model_predictions()
-nd <- data.frame(x = utils.add::seq_range(range(d$x), length.out = 100))
+nd <- data.frame(x = seq(min(d$x), max(d$x), length.out = 100))
 sim4 <-
   simulate_posterior_mu(
     model = m1,

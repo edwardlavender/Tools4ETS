@@ -12,7 +12,7 @@ timeseries. This includes (1) data exploration, (2) timeseries
 processing and (3) simulations to guide model-based ecological
 inference. This functionality is provided by functions and two
 interactive R Shiny applications. `Tools4ETS` was motivated by analyses
-of new new, high resolution depth timeseries for a Critically Endangered
+of new new, high-resolution depth timeseries for a Critically Endangered
 elasmobranch.
 
 ## Installation
@@ -28,18 +28,28 @@ install.packages("Tools4ETS")
 devtools::install_github("edwardlavender/Tools4ETS")
 ```
 
-## Data Visualisation
+## Data visualisation
 
 `Tools4ETS` facilitates rapid timeseries visualisation in relation to
 covariates, across factor levels (e.g. individuals) and timescales with
-`plot_ts()` (a function based on the complementary `plot.pretty`
-package) and an interactive R Shiny application (`visTS()`).
+`pretty_ts()` (a function based on the complementary `plot.pretty`
+package) and an interactive R Shiny application (`vis_ts()`).
 
 ## Data processing
 
 `Tools4ETS` streamlines common data processing operations for ecological
 timeseries. These include:
 
+  - **Define time categories**. `hour_nearest()` and `hour_dbl()` define
+    the nearest integer hour and the time of day respectively. `mm_yy()`
+    defines (ordered) month-year categories. `yday2date()` flicks from
+    Julian days to dates/months/seasons.
+  - **Rates of change.** `difference()` and `serial_difference()`
+    compute the difference between two values and consecutive pairs of
+    values in a sequence (numbers or timestamps) respectively.
+  - **Matching timeseries.** `match_ts_nearest()`,
+    `match_ts_nearest_by_key()` and `pair_ts()` match timeseries (i.e.,
+    to add observations from one timeseries into another).  
   - **Flagging timeseries.** `flag_ts()` can be used to flag independent
     sections of timeseries in a dataset due to the presence of different
     factor levels (e.g. individuals) and/or breaks in timeseries.

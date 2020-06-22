@@ -26,7 +26,7 @@
 #' @param add_shading_type A character input specifying the type of shading to be added. \code{"diel"} and \code{"season"} are supported. Custom shading can be added via supplying arguments to \code{add_shading_args} (see below).
 #' @param add_shading_dtb_args A named list of arguments that are passed to \code{\link[Tools4ETS]{define_time_blocks}} to compute diel/seasonal shading. These include a named list of arguments passed to \code{type_args} and colours.
 #' @param add_shading_args A named list of arguments passed to a\code{\link[plot.pretty]{add_shading}} to add shading to a plot. 'x1', 'x2', and 'lim' are computed automatically if \code{add_shading_type} is specified, but other graphical parameters passed to \code{\link[graphics]{rect}} (e.g. \code{border = "red"}) can be included here.
-#' @param add_moons_args A named list of arguments passed to \code{\link[Tools4ETS]{add_moons}} to add moons to a plot.
+#' @param add_moons_args A named list of arguments passed to \code{\link[plot.pretty]{add_moons}} to add moons to a plot.
 #' @param return_list A logical input which defines whether or not to return the list of axis parameters computed by \code{\link[plot.pretty]{pretty_axis}}. This can be useful for the addition of elements to a plot created by \code{pretty_ts()}.
 #'
 #' @examples
@@ -486,7 +486,7 @@ pretty_ts <-
                   horiz = FALSE,
                   lim = ylim
                   )
-      add_shading_args <- utils.add::list_merge(das, add_shading_args)
+      add_shading_args <- list_merge(das, add_shading_args)
     }
 
     #### add shading
@@ -516,7 +516,7 @@ pretty_ts <-
   #### Add points if specified
   if(length(add_points_args) > 0){
     dap <- list(x = dat$x, y = dat$y1)
-    add_points_args <- utils.add::list_merge(dap, add_points_args)
+    add_points_args <- list_merge(dap, add_points_args)
     do.call("points", add_points_args)
   }
 
@@ -550,9 +550,9 @@ pretty_ts <-
                  data_raw = NULL,
                  mark_args = list()
                  )
-    add_colour_bar_args <- utils.add::list_merge(dacb, add_colour_bar_args)
+    add_colour_bar_args <- list_merge(dacb, add_colour_bar_args)
     dsp <- list(x = xlim[2], y = ylim[1], size = c(0.25, 2), vadj = 0, hadj = 0)
-    subplot_args <- utils.add::list_merge(dsp, subplot_args)
+    subplot_args <- list_merge(dsp, subplot_args)
     TeachingDemos::subplot(x = subplot_args$x,
                            y = subplot_args$y,
                            size = subplot_args$size,
@@ -591,7 +591,7 @@ pretty_ts <-
            FUN = function(summary_df,
                           add_lines_summaries_args_foo){
       # add_lines_summaries_args_foo <- add_lines_summaries_args_ls[[1]]
-      add_lines_summaries_args_foo <- utils.add::list_merge(list(x = summary_df$bin, y1 = summary_df$stat), add_lines_summaries_args_foo)
+      add_lines_summaries_args_foo <- list_merge(list(x = summary_df$bin, y1 = summary_df$stat), add_lines_summaries_args_foo)
       do.call("add_lines", add_lines_summaries_args_foo)
     })
   }
@@ -620,7 +620,7 @@ pretty_ts <-
                  add_fitted = TRUE,
                  fitted_gp = list(col = "black", lwd = 1, lty = 1)
     )
-    add_model_predictions_args <- utils.add::list_merge(damp, add_model_predictions_args)
+    add_model_predictions_args <- list_merge(damp, add_model_predictions_args)
     # Delete the default border = FALSE option if fCI = "lines" because
     # ... this is not an argument to lines:
     if(add_model_predictions_args$fCI == "lines"){
@@ -660,7 +660,7 @@ pretty_ts <-
       warning("add_moons_args$side unsupported and add_moons() not implemented.")
     }
     add_moons_args <- rlist::list.merge(dam, add_moons_args)
-    do.call("add_moons", add_moons_args)
+    do.call(plot.pretty::add_moons, add_moons_args)
   }
 
   ################################################
@@ -718,7 +718,7 @@ pretty_ts <-
 
     #### Add as a line
     daly2 <- list(x = dat$x, y1 = dat$y2)
-    add_lines_args_y2 <- utils.add::list_merge(daly2, add_lines_args_y2)
+    add_lines_args_y2 <- list_merge(daly2, add_lines_args_y2)
     do.call("add_lines", add_lines_args_y2)
 
     #### Restore clip
