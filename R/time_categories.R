@@ -18,7 +18,7 @@
 #'
 
 hour_dbl <- function(time){
-  lubridate::hour(time) + lubridate::minute(time)/60 + lubridate::second(time)/3600
+  return(lubridate::hour(time) + lubridate::minute(time)/60 + lubridate::second(time)/3600)
 }
 
 
