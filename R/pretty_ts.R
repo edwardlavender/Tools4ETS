@@ -25,7 +25,7 @@
 #' @param add_lines_args_summaries A named list of arguments passed to \code{\link[plot.pretty]{add_lines}} to add summary lines to a plot.
 #' @param add_shading_type A character input specifying the type of shading to be added. \code{"diel"} and \code{"season"} are supported. Custom shading can be added via supplying arguments to \code{add_shading_args} (see below).
 #' @param add_shading_dtb_args A named list of arguments that are passed to \code{\link[Tools4ETS]{define_time_blocks}} to compute diel/seasonal shading. These include a named list of arguments passed to \code{type_args} and colours.
-#' @param add_shading_args A named list of arguments passed to a\code{\link[plot.pretty]{add_shading}} to add shading to a plot. 'x1', 'x2', and 'lim' are computed automatically if \code{add_shading_type} is specified, but other graphical parameters passed to \code{\link[graphics]{rect}} (e.g. \code{border = "red"}) can be included here.
+#' @param add_shading_args A named list of arguments passed to a\code{\link[plot.pretty]{add_shading_bar}} to add shading to a plot. 'x1', 'x2', and 'lim' are computed automatically if \code{add_shading_type} is specified, but other graphical parameters passed to \code{\link[graphics]{rect}} (e.g. \code{border = "red"}) can be included here.
 #' @param add_moons_args A named list of arguments passed to \code{\link[plot.pretty]{add_moons}} to add moons to a plot.
 #' @param return_list A logical input which defines whether or not to return the list of axis parameters computed by \code{\link[plot.pretty]{pretty_axis}}. This can be useful for the addition of elements to a plot created by \code{pretty_ts()}.
 #'
@@ -310,7 +310,7 @@
 #'
 #' #### (22) Shading can also be added, via add_shading_type, add_shading_dtb_args and/or
 #' # ... add_shading_args. If add_shading_type = "diel" or "season", Tools4ETS::define_time_blocks()
-#' # ...  is used to define x1, x2 and lim that are passed to add_shading() internally.
+#' # ...  is used to define x1, x2 and lim that are passed to add_shading_bar() internally.
 #' # ... Otherwise, custom shading can be added.
 #' pretty_ts(x = x,
 #'             y1 = y1,
@@ -323,7 +323,7 @@
 #'                                         )
 #'            )
 #'
-#' #### (23) Shading can be adjusted by supplying additional arguments to add_shading()
+#' #### (23) Shading can be adjusted by supplying additional arguments to add_shading_bar()
 #' # ... (and, in turn, graphics::rect()) via add_shading_args:
 #' pretty_ts(x = x,
 #'             y1 = y1,
@@ -409,10 +409,13 @@ pretty_ts <-
   ################################################
   #### Use pretty_axis to define axes
 
+  axis_ls <- implement_pretty_axis_args(list(dat$x, dat$y1), pretty_axis_args)
+
+  '
   #### Define pretty axis args
   # pretty_axis_args = list(side = 1:2, pretty = list(n = 5))
-  # merging with list(NULL) can cause issues, so we'll first exlcude those arguments and, then, after merging,
-  # ... if they're absent we'll add them back.
+  # merging with list(NULL) can cause issues, so we"ll first exlcude those arguments and, then, after merging,
+  # ... if they"re absent we"ll add them back.
   dpa <-   list(side = 1:4,
                 x = list(dat$x, dat$y1),
                 # lim = list(NULL),
@@ -434,6 +437,7 @@ pretty_ts <-
     }
   pretty_axis_args <- list_add_list_NULL(pretty_axis_args, c("lim", "units", "axis"))
   axis_ls <- do.call("pretty_axis", pretty_axis_args)
+  '
 
   #### Extract x limits, which may pertain to side 1 or 3
   which_xlim <- which(c(!is.null(axis_ls$"1"$lim), !is.null(axis_ls$"3"$lim)))
@@ -490,7 +494,7 @@ pretty_ts <-
     }
 
     #### add shading
-    do.call("add_shading", add_shading_args)
+    do.call("add_shading_bar", add_shading_args)
   }
 
 
@@ -499,7 +503,9 @@ pretty_ts <-
   #### Add axes
 
   pretty_axis(axis_ls = axis_ls, add = TRUE)
+  implement_mtext_args(mtext_args)
 
+  '
   #### Add titles
   # mtext_args <- list(list(side = 1, "x", line = 3), list(side = 2, "y1", line = 3))
   if(length(mtext_args) > 0){
@@ -507,6 +513,7 @@ pretty_ts <-
       do.call("mtext", mtext_args_side_i)
     })
   }
+  '
 
 
   ################################################
@@ -685,6 +692,14 @@ pretty_ts <-
                    return_list = TRUE
     )
     pretty_axis_args_y2 <- rlist::list.merge(dpa_y2, pretty_axis_args_y2)
+    list_add_list_NULL <- function(l, elm){
+      for(i in elm){
+        if(is.null(l[[i]])){
+          l[[i]] <- list(NULL)
+        }
+      }
+      return(l)
+    }
     pretty_axis_args_y2 <- list_add_list_NULL(pretty_axis_args_y2, c("lim", "units", "axis"))
     axis_ls_y2 <- do.call("pretty_axis", pretty_axis_args_y2)
     if(axis_ls_y2[[1]]$axis$side == 1){

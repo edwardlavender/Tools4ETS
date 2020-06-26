@@ -201,7 +201,12 @@ utils::str(sim_pos5)
 names(sim_pos5)[1] <- "fit"
 axis_ls <-
   plot.pretty::pretty_axis(side = 1:2,
-                           x = list(d$x, c(sim_pos5$fit,sim_pos5$lowerCI, sim_pos5$upperCI)),
+                           x = list(range(d$x),
+                                    range(c(sim_pos5$fit,
+                                            sim_pos5$lowerCI,
+                                            sim_pos5$upperCI)
+                                            )
+                                          ),
                            pretty = list(n = 5), add = FALSE)
 # Create plot and add axes and prediction intervals
 plot(d$x, d$yAR, xlim = axis_ls[[1]]$lim, ylim = axis_ls[[2]]$lim, axes = FALSE)
@@ -310,13 +315,15 @@ sim_pos7_mu2 <-
 # Define axes:
 axis_ls <-
   plot.pretty::pretty_axis(side = 1:2,
-                           x = list(d$x,
-                                    c(sim_pos7_mu1$fit,
-                                    sim_pos7_mu1$lowerCI,
-                                    sim_pos7_mu1$upperCI,
-                                    sim_pos7_mu2$fit,
-                                    sim_pos7_mu2$lowerCI,
-                                    sim_pos7_mu2$upperCI)),
+                           x = list(range(d$x),
+                                    range(
+                                      c(sim_pos7_mu1$fit,
+                                        sim_pos7_mu1$lowerCI,
+                                        sim_pos7_mu1$upperCI,
+                                        sim_pos7_mu2$fit,
+                                        sim_pos7_mu2$lowerCI,
+                                        sim_pos7_mu2$upperCI))
+                                    ),
                            pretty = list(n = 5), add = FALSE)
 # Plot prediction intervals:
 plot(d$x, d$yAR,
@@ -395,10 +402,12 @@ pp <- par(mfrow = c(1, 2))
 # Define axes:
 axis_ls <-
   plot.pretty::pretty_axis(side = 1:2,
-                           x = list(d2$x2,
-                                    c(sim_pos_prob1.1$fit,
-                                    sim_pos_prob1.1$lowerCI,
-                                    sim_pos_prob1.1$upperCI)),
+                           x = list(range(d2$x2),
+                                    range(
+                                      c(sim_pos_prob1.1$fit,
+                                        sim_pos_prob1.1$lowerCI,
+                                        sim_pos_prob1.1$upperCI))
+                                    ),
                            pretty = list(n = 5), add = FALSE)
 # Plot prediction intervals:
 plot(d2$x2, d2$y2.1, xlim = axis_ls[[1]]$lim, ylim = axis_ls[[2]]$lim, axes = FALSE)
@@ -409,10 +418,12 @@ plot.pretty::add_model_predictions(nd$x2, sim_pos_prob1.1)
 # Define axes:
 axis_ls <-
   plot.pretty::pretty_axis(side = 1:2,
-                           x = list(d2$x2,
-                                    c(sim_pos_prob1.2$fit,
-                                     sim_pos_prob1.2$lowerCI,
-                                     sim_pos_prob1.2$upperCI)),
+                           x = list(range(d2$x2),
+                                    range(
+                                      c(sim_pos_prob1.2$fit,
+                                        sim_pos_prob1.2$lowerCI,
+                                        sim_pos_prob1.2$upperCI))
+                                        ),
                            pretty = list(n = 5), add = FALSE)
 # Plot prediction intervals:
 plot(d2$x2, d2$y2.2, xlim = axis_ls[[1]]$lim, ylim = axis_ls[[2]]$lim, axes = FALSE)

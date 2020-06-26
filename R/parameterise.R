@@ -243,8 +243,7 @@ parameterise_smooth <-
         pretty_axis_x <- x
         pretty_axis_y <- y
       }
-      pretty_axis_args$x <- list(x = pretty_axis_x, y = pretty_axis_y)
-      axis_ls <- implement_pretty_axis_args(pretty_axis_args)
+      axis_ls <- implement_pretty_axis_args(list(x = range(pretty_axis_x), y = range(pretty_axis_y)), pretty_axis_args)
 
       #### Blank plot with parameterisation
       plot(x, y,

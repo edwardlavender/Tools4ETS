@@ -247,13 +247,11 @@ thin_ts_iter <-
     if(plot){
 
       #### Define axis parameters
-      p1_pretty_axis_args$x <- list(thinreq$nth, thinreq$AR1_est)
-      axis_ls <- implement_pretty_axis_args(p1_pretty_axis_args)
+      axis_ls <- implement_pretty_axis_args(list(thinreq$nth, thinreq$AR1_est), p1_pretty_axis_args)
       # Parameters for the new axis (side = 4), which needs to be added afterwards.
-      p2_pretty_axis_args$x <- list(thinreq$nrw_log)
       p2_pretty_axis_args$axis$side <- 4
       p2_pretty_axis_args$axis$pos <- max(axis_ls[[1]]$lim)
-      axis_ls_2nd <- implement_pretty_axis_args(p2_pretty_axis_args)
+      axis_ls_2nd <- implement_pretty_axis_args(list(thinreq$nrw_log), p2_pretty_axis_args)
 
       #### Blank plot of AR1 ~ nth
       # Blank plot

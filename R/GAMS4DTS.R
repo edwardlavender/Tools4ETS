@@ -1162,7 +1162,7 @@ server <- function(input, output) {
   output$length_density_curve <-
     renderPlot({
       pp <- graphics::par(oma = c(2, 3, 2, 2))
-      pretty_density(x = dat()$length,
+      pretty_curve(x = dat()$length,
                      f = stats::dgamma,
                      param = list(shape = input$length_density_curve[1],
                                   scale = input$length_density_curve[2]),
@@ -1566,6 +1566,7 @@ server <- function(input, output) {
  # histogram of depths:
  output$depth_hist <- renderPlot(
    pretty_hist(x = dat_model()$depth,
+               freq = TRUE,
                xaxis = list(cex.axis = cex.axis),
                yaxis = list(las = TRUE, cex.axis = cex.axis),
                mtext_args = list(list(side = 1, text = "Depth (m)", line = 2.5, cex = cex.lab),
@@ -2109,33 +2110,35 @@ server <- function(input, output) {
  #### Residual plots based on correlated residuals
  output$cresid_plots <- renderPlot({
 
-     pp <- graphics::par(mfcol = par_mfcol())
+   pp <- graphics::par(mfcol = par_mfcol())
 
-     plot.pretty::pretty_residuals(residuals = stats::resid(m1()),
-                    fv = stats::fitted(m1()),
-                    lp = stats::fitted(m1()),
-                    vars = unique(c(input$covariates, input$covariates_model)),
-                    timestamp = "timestamp",
-                    dat = dat_model(),
-                    plot = 1:7,
-                    rand_pc = rand_pc(),
-                    plot_rand_pc = c(3, 4)
-     )
+   plot.pretty::pretty_residuals(residuals = stats::resid(m1()),
+                                 fv = stats::fitted(m1()),
+                                 lp = stats::fitted(m1()),
+                                 vars = unique(c(input$covariates, input$covariates_model)),
+                                 timestamp = "timestamp",
+                                 timestamp_fct = "individual",
+                                 dat = dat_model(),
+                                 plot = 1:7,
+                                 rand_pc = rand_pc(),
+                                 plot_rand_pc = 1:7
+   )
 
-     if(input$rho_model > 0){
+   if(input$rho_model > 0){
      plot.pretty::pretty_residuals(residuals = m1()$std.rsd,
-                    fv = stats::fitted(m1()),
-                    lp = stats::fitted(m1()),
-                    vars = unique(c(input$covariates, input$covariates_model)),
-                    timestamp = "timestamp",
-                    dat = dat_model(),
-                    plot = 1:7,
-                    rand_pc = rand_pc(),
-                    plot_rand_pc = c(3, 4)
+                                   fv = stats::fitted(m1()),
+                                   lp = stats::fitted(m1()),
+                                   vars = unique(c(input$covariates, input$covariates_model)),
+                                   timestamp = "timestamp",
+                                   timestamp_fct = "individual",
+                                   dat = dat_model(),
+                                   plot = 1:7,
+                                   rand_pc = rand_pc(),
+                                   plot_rand_pc = 1:7
      )
-     }
+   }
 
-     graphics::par(pp)
+   graphics::par(pp)
  })
 
 

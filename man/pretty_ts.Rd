@@ -77,7 +77,7 @@ pretty_ts(
 
 \item{add_shading_dtb_args}{A named list of arguments that are passed to \code{\link[Tools4ETS]{define_time_blocks}} to compute diel/seasonal shading. These include a named list of arguments passed to \code{type_args} and colours.}
 
-\item{add_shading_args}{A named list of arguments passed to a\code{\link[plot.pretty]{add_shading}} to add shading to a plot. 'x1', 'x2', and 'lim' are computed automatically if \code{add_shading_type} is specified, but other graphical parameters passed to \code{\link[graphics]{rect}} (e.g. \code{border = "red"}) can be included here.}
+\item{add_shading_args}{A named list of arguments passed to a\code{\link[plot.pretty]{add_shading_bar}} to add shading to a plot. 'x1', 'x2', and 'lim' are computed automatically if \code{add_shading_type} is specified, but other graphical parameters passed to \code{\link[graphics]{rect}} (e.g. \code{border = "red"}) can be included here.}
 
 \item{add_moons_args}{A named list of arguments passed to \code{\link[plot.pretty]{add_moons}} to add moons to a plot.}
 
@@ -366,7 +366,7 @@ pretty_ts(x = x,
 
 #### (22) Shading can also be added, via add_shading_type, add_shading_dtb_args and/or
 # ... add_shading_args. If add_shading_type = "diel" or "season", Tools4ETS::define_time_blocks()
-# ...  is used to define x1, x2 and lim that are passed to add_shading() internally.
+# ...  is used to define x1, x2 and lim that are passed to add_shading_bar() internally.
 # ... Otherwise, custom shading can be added.
 pretty_ts(x = x,
             y1 = y1,
@@ -379,7 +379,7 @@ pretty_ts(x = x,
                                         )
            )
 
-#### (23) Shading can be adjusted by supplying additional arguments to add_shading()
+#### (23) Shading can be adjusted by supplying additional arguments to add_shading_bar()
 # ... (and, in turn, graphics::rect()) via add_shading_args:
 pretty_ts(x = x,
             y1 = y1,
