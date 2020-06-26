@@ -469,7 +469,7 @@ server <- function(input, output) {
   #### Define fct() and fct_level()
   fct <- reactive({
     if(input$fct_yn){
-      return(input$id_column)
+      return(data[, input$id_column])
     } else{
       return(NULL)
     }
@@ -853,7 +853,7 @@ server <- function(input, output) {
         pretty_ts(x = data[, input$timestamp_column],
                 y1 = data[, input$variable],
                 y2 = y2(),
-                fct = data[, fct()],
+                fct = fct(),
                 fct_level = fct_level(),
                 pretty_axis_args = pretty_axis_args(),
                 mtext_args = mtext_args(),
