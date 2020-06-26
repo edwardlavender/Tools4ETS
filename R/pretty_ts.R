@@ -1,7 +1,7 @@
 #' @title Create publication-quality plots
-#' @import plot.pretty
+#' @import prettyGraphics
 #'
-#' @description This function facilitates the creation of publication quality plots for timeseries. The function pulls lots of the functions provided in a complementary R package, \code{plot.pretty}, which can be implemented sequentially, into a single framework. While it is often useful to call functions sequentially, this can make data exploration quicker and simpler. The function underlies \code{\link[Tools4ETS]{vis_ts}}.
+#' @description This function facilitates the creation of publication quality plots for timeseries. The function pulls lots of the functions provided in a complementary R package, \code{prettyGraphics}, which can be implemented sequentially, into a single framework. While it is often useful to call functions sequentially, this can make data exploration quicker and simpler. The function underlies \code{\link[Tools4ETS]{vis_ts}}.
 #'
 #' @param x The x coordinates.
 #' @param y1 The y coordinates.
@@ -9,25 +9,25 @@
 #' @param fct (optional) A sequence of factor values.
 #' @param fct_level (optional) A factor level for which to create the plot.
 #' @param dat A dataframe containing columns named 'x', 'y1' (and optionally) 'y2' and 'fct' can be supplied instead of \code{x}, \code{y1} (and optionally) \code{y2} and \code{fct}.
-#' @param pretty_axis_args A named list of arguments passed to \code{\link[plot.pretty]{pretty_axis}} to create axes.
+#' @param pretty_axis_args A named list of arguments passed to \code{\link[prettyGraphics]{pretty_axis}} to create axes.
 #' @param mtext_args A named list of arguments passed to \code{\link[graphics]{mtext}} to create axis labels.
 #' @param add_points_args A named list of arguments passed to \code{\link[graphics]{points}} to add points.
-#' @param add_lines_args A named list of arguments passed to \code{\link[plot.pretty]{add_lines}} to add lines.
+#' @param add_lines_args A named list of arguments passed to \code{\link[prettyGraphics]{add_lines}} to add lines.
 #' @param y2_method A character specifying how \code{y2} should be added to the plot. Implemented options are \code{"by_colour"} or \code{"by_new_axis"}.
 #' @param insert_colour_bar A logical input defining whether or not to add a colour bar. This is useful if \code{y2_method = "by_colour"}.
-#' @param add_colour_bar_args A named list of arguments passed to \code{\link[plot.pretty]{add_colour_bar}}.
+#' @param add_colour_bar_args A named list of arguments passed to \code{\link[prettyGraphics]{add_colour_bar}}.
 #' @param subplot_args A list of arguments passed to \code{\link[TeachingDemos]{subplot}} to adjust the location/size of the colour bar.
-#' @param pretty_axis_args_y2 A named list of arguments passed to \code{\link[plot.pretty]{pretty_axis}} to create a second y axis if \code{y2_method = "by_new_axis"}.
-#' @param add_lines_args_y2 A named list of arguments passed to \code{\link[plot.pretty]{add_lines}} to add \code{y2} as a line on a second axis.
-#' @param list_CIs_args A named list of arguments passed to \code{\link[plot.pretty]{list_CIs}} to add model predictions to a plot.
-#' @param add_model_predictions_args A named list of arguments passed to \code{\link[plot.pretty]{add_model_predictions}} to add model predictions.
-#' @param summarise_in_bins_args A named list of arguments passed to \code{\link[plot.pretty]{summarise_in_bins}} to compute summary statistics.
-#' @param add_lines_args_summaries A named list of arguments passed to \code{\link[plot.pretty]{add_lines}} to add summary lines to a plot.
+#' @param pretty_axis_args_y2 A named list of arguments passed to \code{\link[prettyGraphics]{pretty_axis}} to create a second y axis if \code{y2_method = "by_new_axis"}.
+#' @param add_lines_args_y2 A named list of arguments passed to \code{\link[prettyGraphics]{add_lines}} to add \code{y2} as a line on a second axis.
+#' @param list_CIs_args A named list of arguments passed to \code{\link[prettyGraphics]{list_CIs}} to add model predictions to a plot.
+#' @param add_model_predictions_args A named list of arguments passed to \code{\link[prettyGraphics]{add_model_predictions}} to add model predictions.
+#' @param summarise_in_bins_args A named list of arguments passed to \code{\link[prettyGraphics]{summarise_in_bins}} to compute summary statistics.
+#' @param add_lines_args_summaries A named list of arguments passed to \code{\link[prettyGraphics]{add_lines}} to add summary lines to a plot.
 #' @param add_shading_type A character input specifying the type of shading to be added. \code{"diel"} and \code{"season"} are supported. Custom shading can be added via supplying arguments to \code{add_shading_args} (see below).
 #' @param add_shading_dtb_args A named list of arguments that are passed to \code{\link[Tools4ETS]{define_time_blocks}} to compute diel/seasonal shading. These include a named list of arguments passed to \code{type_args} and colours.
-#' @param add_shading_args A named list of arguments passed to a\code{\link[plot.pretty]{add_shading_bar}} to add shading to a plot. 'x1', 'x2', and 'lim' are computed automatically if \code{add_shading_type} is specified, but other graphical parameters passed to \code{\link[graphics]{rect}} (e.g. \code{border = "red"}) can be included here.
-#' @param add_moons_args A named list of arguments passed to \code{\link[plot.pretty]{add_moons}} to add moons to a plot.
-#' @param return_list A logical input which defines whether or not to return the list of axis parameters computed by \code{\link[plot.pretty]{pretty_axis}}. This can be useful for the addition of elements to a plot created by \code{pretty_ts()}.
+#' @param add_shading_args A named list of arguments passed to a\code{\link[prettyGraphics]{add_shading_bar}} to add shading to a plot. 'x1', 'x2', and 'lim' are computed automatically if \code{add_shading_type} is specified, but other graphical parameters passed to \code{\link[graphics]{rect}} (e.g. \code{border = "red"}) can be included here.
+#' @param add_moons_args A named list of arguments passed to \code{\link[prettyGraphics]{add_moons}} to add moons to a plot.
+#' @param return_list A logical input which defines whether or not to return the list of axis parameters computed by \code{\link[prettyGraphics]{pretty_axis}}. This can be useful for the addition of elements to a plot created by \code{pretty_ts()}.
 #'
 #' @examples
 #'
@@ -667,7 +667,7 @@ pretty_ts <-
       warning("add_moons_args$side unsupported and add_moons() not implemented.")
     }
     add_moons_args <- rlist::list.merge(dam, add_moons_args)
-    do.call(plot.pretty::add_moons, add_moons_args)
+    do.call(prettyGraphics::add_moons, add_moons_args)
   }
 
   ################################################

@@ -2093,7 +2093,7 @@ server <- function(input, output) {
 # output$uresid_plots <- renderPlot({
 #   #if(input$rho_model == 0 | input$rho > 0 & input$make_uresid_plots){
  #     pp <- graphics::par(mfcol = par_mfcol(), oma = c(2, 2, 2, 2))
- #     plot.pretty::pretty_residuals(residuals = stats::resid(m1()),
+ #     prettyGraphics::pretty_residuals(residuals = stats::resid(m1()),
  #                    fv = stats::fitted(m1()),
  #                    lp = stats::fitted(m1()),
  #                    vars = unique(c(input$covariates, input$covariates_model)),
@@ -2112,7 +2112,7 @@ server <- function(input, output) {
 
    pp <- graphics::par(mfcol = par_mfcol())
 
-   plot.pretty::pretty_residuals(residuals = stats::resid(m1()),
+   prettyGraphics::pretty_residuals(residuals = stats::resid(m1()),
                                  fv = stats::fitted(m1()),
                                  lp = stats::fitted(m1()),
                                  vars = unique(c(input$covariates, input$covariates_model)),
@@ -2125,7 +2125,7 @@ server <- function(input, output) {
    )
 
    if(input$rho_model > 0){
-     plot.pretty::pretty_residuals(residuals = m1()$std.rsd,
+     prettyGraphics::pretty_residuals(residuals = m1()$std.rsd,
                                    fv = stats::fitted(m1()),
                                    lp = stats::fitted(m1()),
                                    vars = unique(c(input$covariates, input$covariates_model)),

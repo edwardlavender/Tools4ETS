@@ -32,7 +32,7 @@ devtools::install_github("edwardlavender/Tools4ETS")
 
 `Tools4ETS` facilitates rapid timeseries visualisation in relation to
 covariates, across factor levels (e.g. individuals) and timescales with
-`pretty_ts()` (a function based on the complementary `plot.pretty`
+`pretty_ts()` (a function based on the complementary `prettyGraphics`
 package) and an interactive R Shiny application (`vis_ts()`).
 
 ## Data processing
@@ -90,7 +90,7 @@ ecology; namely:
     autocorrelation.
   - **Summarising the posterior distribution.** `summarise_posterior()`
     can be used to summarise posterior matrices (e.g. so that that they
-    can be plotted with `plot.pretty::add_model_predictions()`.)
+    can be plotted with `prettyGraphics::add_model_predictions()`.)
 
 This also includes function for simulating *de novo* timeseries with
 known properties; namely:

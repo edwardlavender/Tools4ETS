@@ -136,7 +136,7 @@ parameterise_contrast_2l <-
 #' @param dat The dataframe used to fit the GAM.
 #' @param term A character specifying the term of interest.
 #' @param plot_gam_ls The output of \code{\link[mgcv]{plot.gam}}. This is used as a quick method to add model predictions for the effect of a term on the response, confidence intervals and (optionally) partial residuals to the plot, since these are all computed by \code{\link[mgcv]{plot.gam}}.
-#' @param add_model_predictions_args A named list of arguments passed to \code{\link[plot.pretty]{add_model_predictions}} to add predictions to the plot.
+#' @param add_model_predictions_args A named list of arguments passed to \code{\link[prettyGraphics]{add_model_predictions}} to add predictions to the plot.
 #' @param residuals A logical input which defines whether or not to add partial residuals to the plot.
 #' @param add_residuals_args A named list of arguments to customise the partial residuals on the plot.
 #' @param shift A number which defines a value by which to shift model predictions/partial residuals vertically. This can be necessary because \code{\link[mgcv]{plot.gam}} smooths are centred.
@@ -144,9 +144,9 @@ parameterise_contrast_2l <-
 #' @param add_rug A logical input which defines whether or not to plot a rug. If so, \code{dat}, the dataframe used to fit the model, should be provided (see above).
 #' @param add_rug_args A named list of arguments passed to \code{\link[graphics]{rug}} to customise the rug.
 #' @param add_moons A logical input which defines whether or not to add moons to a plot. This is useful for visualising the effects of lunar phase in models of animal movement timeseries.
-#' @param add_moons_args A named list of arguments passed to \code{\link[plot.pretty]{add_moons}}.
+#' @param add_moons_args A named list of arguments passed to \code{\link[prettyGraphics]{add_moons}}.
 #'
-#' @param pretty_axis_args A named list of arguments, passed to \code{\link[plot.pretty]{pretty_axis}} to customise axes().
+#' @param pretty_axis_args A named list of arguments, passed to \code{\link[prettyGraphics]{pretty_axis}} to customise axes().
 #' @param mtext_args A named list of arguments, passed to \code{\link[graphics]{mtext}}, to add axis labels.
 #'
 #' @examples
@@ -293,7 +293,7 @@ parameterise_smooth <-
       if(add_moons){
         dam <- list(side = 3, position = axis_ls[[2]]$lim[2], outer = TRUE, nv = 100, radius1 = 0.1, units = "radians")
         add_moons_args <- list_merge(dam, add_moons_args)
-        do.call(plot.pretty::add_moons, add_moons_args)
+        do.call(prettyGraphics::add_moons, add_moons_args)
       }
 
       #### Add axis labels

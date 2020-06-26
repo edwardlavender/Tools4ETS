@@ -45,46 +45,46 @@ pretty_ts(
 
 \item{dat}{A dataframe containing columns named 'x', 'y1' (and optionally) 'y2' and 'fct' can be supplied instead of \code{x}, \code{y1} (and optionally) \code{y2} and \code{fct}.}
 
-\item{pretty_axis_args}{A named list of arguments passed to \code{\link[plot.pretty]{pretty_axis}} to create axes.}
+\item{pretty_axis_args}{A named list of arguments passed to \code{\link[prettyGraphics]{pretty_axis}} to create axes.}
 
 \item{mtext_args}{A named list of arguments passed to \code{\link[graphics]{mtext}} to create axis labels.}
 
 \item{add_points_args}{A named list of arguments passed to \code{\link[graphics]{points}} to add points.}
 
-\item{add_lines_args}{A named list of arguments passed to \code{\link[plot.pretty]{add_lines}} to add lines.}
+\item{add_lines_args}{A named list of arguments passed to \code{\link[prettyGraphics]{add_lines}} to add lines.}
 
 \item{y2_method}{A character specifying how \code{y2} should be added to the plot. Implemented options are \code{"by_colour"} or \code{"by_new_axis"}.}
 
 \item{insert_colour_bar}{A logical input defining whether or not to add a colour bar. This is useful if \code{y2_method = "by_colour"}.}
 
-\item{add_colour_bar_args}{A named list of arguments passed to \code{\link[plot.pretty]{add_colour_bar}}.}
+\item{add_colour_bar_args}{A named list of arguments passed to \code{\link[prettyGraphics]{add_colour_bar}}.}
 
 \item{subplot_args}{A list of arguments passed to \code{\link[TeachingDemos]{subplot}} to adjust the location/size of the colour bar.}
 
-\item{pretty_axis_args_y2}{A named list of arguments passed to \code{\link[plot.pretty]{pretty_axis}} to create a second y axis if \code{y2_method = "by_new_axis"}.}
+\item{pretty_axis_args_y2}{A named list of arguments passed to \code{\link[prettyGraphics]{pretty_axis}} to create a second y axis if \code{y2_method = "by_new_axis"}.}
 
-\item{add_lines_args_y2}{A named list of arguments passed to \code{\link[plot.pretty]{add_lines}} to add \code{y2} as a line on a second axis.}
+\item{add_lines_args_y2}{A named list of arguments passed to \code{\link[prettyGraphics]{add_lines}} to add \code{y2} as a line on a second axis.}
 
-\item{list_CIs_args}{A named list of arguments passed to \code{\link[plot.pretty]{list_CIs}} to add model predictions to a plot.}
+\item{list_CIs_args}{A named list of arguments passed to \code{\link[prettyGraphics]{list_CIs}} to add model predictions to a plot.}
 
-\item{add_model_predictions_args}{A named list of arguments passed to \code{\link[plot.pretty]{add_model_predictions}} to add model predictions.}
+\item{add_model_predictions_args}{A named list of arguments passed to \code{\link[prettyGraphics]{add_model_predictions}} to add model predictions.}
 
-\item{summarise_in_bins_args}{A named list of arguments passed to \code{\link[plot.pretty]{summarise_in_bins}} to compute summary statistics.}
+\item{summarise_in_bins_args}{A named list of arguments passed to \code{\link[prettyGraphics]{summarise_in_bins}} to compute summary statistics.}
 
-\item{add_lines_args_summaries}{A named list of arguments passed to \code{\link[plot.pretty]{add_lines}} to add summary lines to a plot.}
+\item{add_lines_args_summaries}{A named list of arguments passed to \code{\link[prettyGraphics]{add_lines}} to add summary lines to a plot.}
 
 \item{add_shading_type}{A character input specifying the type of shading to be added. \code{"diel"} and \code{"season"} are supported. Custom shading can be added via supplying arguments to \code{add_shading_args} (see below).}
 
 \item{add_shading_dtb_args}{A named list of arguments that are passed to \code{\link[Tools4ETS]{define_time_blocks}} to compute diel/seasonal shading. These include a named list of arguments passed to \code{type_args} and colours.}
 
-\item{add_shading_args}{A named list of arguments passed to a\code{\link[plot.pretty]{add_shading_bar}} to add shading to a plot. 'x1', 'x2', and 'lim' are computed automatically if \code{add_shading_type} is specified, but other graphical parameters passed to \code{\link[graphics]{rect}} (e.g. \code{border = "red"}) can be included here.}
+\item{add_shading_args}{A named list of arguments passed to a\code{\link[prettyGraphics]{add_shading_bar}} to add shading to a plot. 'x1', 'x2', and 'lim' are computed automatically if \code{add_shading_type} is specified, but other graphical parameters passed to \code{\link[graphics]{rect}} (e.g. \code{border = "red"}) can be included here.}
 
-\item{add_moons_args}{A named list of arguments passed to \code{\link[plot.pretty]{add_moons}} to add moons to a plot.}
+\item{add_moons_args}{A named list of arguments passed to \code{\link[prettyGraphics]{add_moons}} to add moons to a plot.}
 
-\item{return_list}{A logical input which defines whether or not to return the list of axis parameters computed by \code{\link[plot.pretty]{pretty_axis}}. This can be useful for the addition of elements to a plot created by \code{pretty_ts()}.}
+\item{return_list}{A logical input which defines whether or not to return the list of axis parameters computed by \code{\link[prettyGraphics]{pretty_axis}}. This can be useful for the addition of elements to a plot created by \code{pretty_ts()}.}
 }
 \description{
-This function facilitates the creation of publication quality plots for timeseries. The function pulls lots of the functions provided in a complementary R package, \code{plot.pretty}, which can be implemented sequentially, into a single framework. While it is often useful to call functions sequentially, this can make data exploration quicker and simpler. The function underlies \code{\link[Tools4ETS]{vis_ts}}.
+This function facilitates the creation of publication quality plots for timeseries. The function pulls lots of the functions provided in a complementary R package, \code{prettyGraphics}, which can be implemented sequentially, into a single framework. While it is often useful to call functions sequentially, this can make data exploration quicker and simpler. The function underlies \code{\link[Tools4ETS]{vis_ts}}.
 }
 \examples{
 

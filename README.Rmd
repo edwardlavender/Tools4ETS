@@ -34,7 +34,7 @@ devtools::install_github("edwardlavender/Tools4ETS")
 
 ## Data visualisation
 
-`Tools4ETS` facilitates rapid timeseries visualisation in relation to covariates, across factor levels (e.g. individuals) and timescales with `pretty_ts()` (a function based on the complementary `plot.pretty` package) and an interactive R Shiny application (`vis_ts()`). 
+`Tools4ETS` facilitates rapid timeseries visualisation in relation to covariates, across factor levels (e.g. individuals) and timescales with `pretty_ts()` (a function based on the complementary `prettyGraphics` package) and an interactive R Shiny application (`vis_ts()`). 
 
 ## Data processing
 
@@ -57,7 +57,7 @@ This includes functions which facilitate posterior simulation from generalised a
 
 * **Posterior simulation of expected values.** `simulate_posterior_mu()` can be used to simulate from the posterior of a GAM to compute ecologically-meaningful metrics, with confidence intervals, which are not directly estimated by a model. 
 * **Posterior simulation of new observed values.** `simulate_posterior_obs()` can be used to simulate new 'observations' from a model, accounting for uncertainty in fitted coefficients, expected values, predictions and autocorrelation. 
-* **Summarising the posterior distribution.** `summarise_posterior()` can be used to summarise posterior matrices (e.g. so that that they can be plotted with `plot.pretty::add_model_predictions()`.)
+* **Summarising the posterior distribution.** `summarise_posterior()` can be used to summarise posterior matrices (e.g. so that that they can be plotted with `prettyGraphics::add_model_predictions()`.)
 
 This also includes function for simulating _de novo_ timeseries with known properties; namely: 
 

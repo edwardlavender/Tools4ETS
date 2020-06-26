@@ -92,7 +92,7 @@ dA <- dat_flapper[which(dat_flapper$id == "A"), ]
 
 The first stage in ecological analysis, even prior to data processing (if possible), is data exploration. Thorough data exploration elucidates data structure, potential processing requirements and the extent to which ecological hypotheses are supported by the data. This contexualises later analyses (e.g. via modelling) and can guide model interpretation. In the case of ecological timeseries, the first stage is to plot raw timeseries. A later step is to overlay covariate timeseries and/or environmental conditions to explore hypothesised relationships between a response and covariates. 
 
-`pretty_ts()` makes the exploration of ecological timeseries straightforward. This function is based on multiple 'building block' functions within the `plot.pretty` package with which it is helpful to be to be familiar (see the vignette for `plot.pretty`). In brief, `pretty_ts()` includes the following functionality:
+`pretty_ts()` makes the exploration of ecological timeseries straightforward. This function is based on multiple 'building block' functions within the `prettyGraphics` package with which it is helpful to be to be familiar (see the vignette for `prettyGraphics`). In brief, `pretty_ts()` includes the following functionality:
 
 * Flexible and/or automated definition of pretty axes for numeric or timeseries data at different scales;
 * Flexible relationship exploration via the addition of multiple variables to a plot, either by the inclusion of additional axes, line colouration or shading; 
@@ -106,7 +106,7 @@ Here, I cut to the chase and create a collection of plots to demonstrate the pow
 pp <- par(mfrow = c(4, 2), oma = c(2, 2, 2, 2), mar = c(3, 3, 3, 3))
 
 #### Define pretty_axis_args for all plots
-# For each plot, these are passed to plot.pretty::pretty_axis() which handles
+# For each plot, these are passed to prettyGraphics::pretty_axis() which handles
 # ... the creation of axes 
 pretty_axis_args <- list(side = c(3, 2), pretty = list(n = 5), axis = list(las = TRUE))
 
@@ -118,10 +118,10 @@ pretty_ts(x = dat_flapper$timestamp,
         pretty_axis_args = pretty_axis_args, 
         return_list = FALSE)
 
-#### The result is identical to plot.pretty::pretty_plot()
-# ... but pretty_ts() employs other functions in the plot.pretty package 
+#### The result is identical to prettyGraphics::pretty_plot()
+# ... but pretty_ts() employs other functions in the prettyGraphics package 
 # ... for maximum flexibility
-plot.pretty::pretty_plot(dA$timestamp,
+prettyGraphics::pretty_plot(dA$timestamp,
                          dA$dn,
                          pretty_axis_args = pretty_axis_args,
                          type = "l"
@@ -399,7 +399,7 @@ paa_acf <- list(side = 1:2,
                 axis = list(las = TRUE)
                 )
 # Use pretty_residuals to create ACF
-plot.pretty::pretty_residuals(stats::resid(m1_dfp),
+prettyGraphics::pretty_residuals(stats::resid(m1_dfp),
                             plot = 7,
                             pretty_axis_args = paa_acf)
 ```
@@ -423,7 +423,7 @@ dfp_thin1 <- dfp_thin[[1]]
 
 #### Re-implement the model with the thinned dataset and examine the ACF
 m1_dfp_thin <- mgcv::bam(depth ~ s(sun_angle) + id, data = dfp_thin1)
-plot.pretty::pretty_residuals(stats::resid(m1_dfp_thin),
+prettyGraphics::pretty_residuals(stats::resid(m1_dfp_thin),
                             plot = 7,
                             pretty_axis_args = paa_acf)
 ```
@@ -516,7 +516,7 @@ In this case, model inferences from different thinned datasets are similar. Both
 
 ### Observed and fitted values
 
-One of the best ways to evaluate the performance of a model is to overlay observed and expected timeseries. `plot.pretty::add_model_predictions()` makes this easy, and this is incorporated into `pretty_ts()`:
+One of the best ways to evaluate the performance of a model is to overlay observed and expected timeseries. `prettyGraphics::add_model_predictions()` makes this easy, and this is incorporated into `pretty_ts()`:
 
 ```{r, fig.width = 7, fig.height = 5}
 #### Select the first data as an example 
@@ -676,11 +676,11 @@ The first figure shows the observed (thinned) timeseries used for modelling, wit
 
 ### Diagnostic residual plots
 
-To examine the extent to which model assumptions are met, diagnostic residual plots are also useful. `plot.pretty::pretty_residuals()` contains a useful function for plotting standard residual plots, as well as residuals against one or more variables, timestamps and the autocorrelation function of residuals. 
+To examine the extent to which model assumptions are met, diagnostic residual plots are also useful. `prettyGraphics::pretty_residuals()` contains a useful function for plotting standard residual plots, as well as residuals against one or more variables, timestamps and the autocorrelation function of residuals. 
 
 ```{r, fig.width = 7, fig.height = 10}
 pp <- par(mfrow = c(4, 2), oma = c(2, 2, 1, 1), mar = c(3, 3, 3, 3))
-plot.pretty::pretty_residuals(residuals = mod_dfp_thin1$std.rsd,
+prettyGraphics::pretty_residuals(residuals = mod_dfp_thin1$std.rsd,
                             fv = stats::fitted(mod_dfp_thin1),
                             lp = stats::fitted(mod_dfp_thin1),
                             vars = c("sun_angle", "temp"),
@@ -1159,7 +1159,7 @@ dat1_cs2 <- dat1
 # ... each individual so that we can use one example individual:
 dat4summarise_in_bins <- split(dat1_cs2, f = dat1_cs2$individual)
 sun_angle_av <-
-  plot.pretty::summarise_in_bins(x = dat4summarise_in_bins[[1]]$timestamp,
+  prettyGraphics::summarise_in_bins(x = dat4summarise_in_bins[[1]]$timestamp,
                                  y = dat4summarise_in_bins[[1]]$sun_angle,
                                  bin = "10 mins",
                                  shift = TRUE,
@@ -1231,7 +1231,7 @@ pbapply::pblapply(1:nsim, cl = cl, FUN = function(i){
   # Loop over each individuals dataframe and summarise with summarise_in_bins
   dat1_cs2_thin_swa_ls <-
     lapply(dat4summarise_in_bins, function(df){
-      d <- plot.pretty::summarise_in_bins(x = df$timestamp,
+      d <- prettyGraphics::summarise_in_bins(x = df$timestamp,
                                      y = df$depth,
                                      bin = "10 mins",
                                      shift = TRUE,
@@ -1357,11 +1357,11 @@ julian_day_smooth <-
                       )
 
 #### We also know that photoperiod and Julian day change as follows with Julian day:
-plot.pretty::pretty_plot(dat1_cs3$julian_day, dat1_cs3$photoperiod,
+prettyGraphics::pretty_plot(dat1_cs3$julian_day, dat1_cs3$photoperiod,
                          xlab = "Time (Julian day)",
                          ylab = "Photoperiod (hours)",
                          type = "l")
-plot.pretty::pretty_plot(dat1_cs3$julian_day, dat1_cs3$temp,
+prettyGraphics::pretty_plot(dat1_cs3$julian_day, dat1_cs3$temp,
                          xlab = "Time (Julian day)",
                          ylab = expression(paste("Temperature (", degree, "C)")),
                          type = "l")
@@ -1369,7 +1369,7 @@ plot.pretty::pretty_plot(dat1_cs3$julian_day, dat1_cs3$temp,
 #### This implies that if temperature or photoperiod explain the Julian day effect,
 # ... we'd expect the following patterns:
 ## Photoperiod
-plot.pretty::pretty_plot(dat1_cs3$photoperiod[!duplicated(dat1_cs3$julian_day)],
+prettyGraphics::pretty_plot(dat1_cs3$photoperiod[!duplicated(dat1_cs3$julian_day)],
                          julian_day_smooth$y,
                          xlab = "Photoperiod (hours)",
                          ylab = "Change in depth (m)",
@@ -1382,7 +1382,7 @@ photoperiod_smooth <-
                       plot = FALSE)
 lines(photoperiod_smooth$x, photoperiod_smooth$y, col = "red")
 ## Temperature
-plot.pretty::pretty_plot(dat1_cs3$temp[!duplicated(dat1_cs3$julian_day)],
+prettyGraphics::pretty_plot(dat1_cs3$temp[!duplicated(dat1_cs3$julian_day)],
                          julian_day_smooth$y,
                          xlab = expression(paste("Temperature (", degree, "C)")),
                          ylab = "Change in depth (m)",
@@ -1445,7 +1445,7 @@ mapply(depth_ls, names(depth_ls), FUN = function(depth, driver){
           add_lines_args = list(lwd = 0.5),
           pretty_axis_args = list(side = 1:2, axis = list(las = TRUE)),
           return_list = FALSE)
-  plot.pretty::pretty_plot(dat1_cs3[, driver], depth,
+  prettyGraphics::pretty_plot(dat1_cs3[, driver], depth,
                            cex = 0.5,
                            col = scales::alpha("grey", 0.5),
                            xlab = driver,
@@ -1517,7 +1517,7 @@ Simulation is a valuable tool in ecology. Simulation can be used to clarify the 
 
 # Conclusions 
 
-`Tool4DTS` is an R package which aims to facilitate and streamline the data exploration – data processing – modelling pipeline for (ecological) timeseries data in R. Key functionality includes the following: data exploration via `pretty_ts()` and `vis_ts()` which use functions in a complementary package (`plot.pretty`); data processing, including flagging independent timeseries (`flag_ts()`), thinning timeseries (`thin_ts()` and `thin_ts_iter()`), breaking timeseries (`break_ts()`) and, for depth timeseries, identifying recapture events (`suggest_recapture()` and `define_recapture()`); and simulation to guide ecological inference, by simulating from a model (with `simulate_posterior_mu()`, `simulate_posterior_obs()`, `summarise_posterior()`) or simulating de novo timeseries with known properties (via `assemble_ts()`, `parameterise_smooth()`, `sigma_arima()`, `sim_ts()` and, for depth timeseries, an interactive application (`GAMS4DTS()`). 
+`Tool4DTS` is an R package which aims to facilitate and streamline the data exploration – data processing – modelling pipeline for (ecological) timeseries data in R. Key functionality includes the following: data exploration via `pretty_ts()` and `vis_ts()` which use functions in a complementary package (`prettyGraphics`); data processing, including flagging independent timeseries (`flag_ts()`), thinning timeseries (`thin_ts()` and `thin_ts_iter()`), breaking timeseries (`break_ts()`) and, for depth timeseries, identifying recapture events (`suggest_recapture()` and `define_recapture()`); and simulation to guide ecological inference, by simulating from a model (with `simulate_posterior_mu()`, `simulate_posterior_obs()`, `summarise_posterior()`) or simulating de novo timeseries with known properties (via `assemble_ts()`, `parameterise_smooth()`, `sigma_arima()`, `sim_ts()` and, for depth timeseries, an interactive application (`GAMS4DTS()`). 
 
 # Future developments 
 

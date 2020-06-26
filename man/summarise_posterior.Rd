@@ -71,10 +71,10 @@ utils::str(summary3)
 plot(d$x, d$y)
 # 95 \% CIs with mean
 names(summary1)[1] <- "fit"
-plot.pretty::add_model_predictions(x = nd$x, CI = summary1)
+prettyGraphics::add_model_predictions(x = nd$x, CI = summary1)
 # 89\% CIs:
 names(summary3)[1] <- "fit"
-plot.pretty::add_model_predictions(x = nd$x,
+prettyGraphics::add_model_predictions(x = nd$x,
                                   CI = summary3,
                                    CI_gp = list(col = scales::alpha("dimgrey", 0.8),
                                                 border = FALSE

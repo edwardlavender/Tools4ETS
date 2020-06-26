@@ -4,7 +4,7 @@
 #' @import shiny
 #' @import shinydashboard
 #' @import shinyWidgets
-#' @import plot.pretty
+#' @import prettyGraphics
 #'
 #' @description Interactive visualisation and exploration of one dimensional timeseries, based on \code{\link[Tools4ETS]{pretty_ts}}.
 #'

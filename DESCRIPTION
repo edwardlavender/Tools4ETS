@@ -14,7 +14,7 @@ Imports:
     Hmisc, TeachingDemos, scales, plotrix,
     shiny, shinyWidgets, shinydashboard, DT, markdown,
     smooth, mgcv, MASS,
-    plot.pretty
+    prettyGraphics
 Suggests:
     viridis,
     knitr, rmarkdown, devtools, nlme
