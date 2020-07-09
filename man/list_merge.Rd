@@ -12,4 +12,7 @@ list_merge(...)
 \description{
 This function is a wrapper for \code{\link[rlist]{list.merge}}. The difference is that this function first screens out any empty lists, which cause errors for \code{\link[rlist]{list.merge}}. If there is only one non-empty list, this is returned. Otherwise, \code{\link[rlist]{list.merge}} is used to merge lists in an iterative process. For large lists, this approach will be slower than calling \code{\link[rlist]{list.merge}} directly if there are no empty lists. Both \code{\link[rlist]{list.merge}} and \code{list_merge()} require named lists.
 }
+\author{
+Edward Lavender
+}
 \keyword{internal}

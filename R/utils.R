@@ -31,27 +31,26 @@ check... <- function(not_allowed,...){
 
 
 ######################################
-#### check_input()
+#### check_value()
 
-#' @title Check the input to a parent function argument
-#' @description Within a function, this function checks the input to an argument of that function. If the input is supported, the function simply returns this value. If the input is not supported, the function returns a warning and the default value. This function is designed to be implemented internally within functions and not intended for general use.
-#'
+#' @title Check the input value to a parent function argument
+#' @description Within a function, this function checks the value of an input to an argument of that function. If the input value is supported, the function simply returns this value. If the input is not supported, the function returns a warning and the default value. This function is designed to be implemented internally within functions and not intended for general use.
 #' @param arg A character string which defines the argument of the parent function.
 #' @param input The input to an argument of a parent function.
 #' @param supp A vector of supported input values for the argument in the parent function.
 #' @param default The default input value for the parent function.
-#'
 #' @return The function returns \code{input} or \code{default} (the latter with a warning) depending on whether or not \code{input} is within \code{supp} (i.e., whether or not the input to the argument of a parent function is supported).
-#'
 #' @author Edward Lavender
 #' @keywords internal
 #'
 
-check_input <- function(arg, input, supp, default = supp[1]){
+check_value <- function(arg = deparse(substitute(input)), input, supp, default = supp[1]){
   # If the input is not in a vector of supported arguments...
   if(!(input %in% supp)){
     # Provide a warning and revert to the default
-    warning(paste0("Input to argument ", arg, " (", input, ") is not supported; defaulting to ", arg, " = ", default, ".\n"))
+    if(is.character(input)) input <- paste0("',", input, "'")
+    if(is.character(default)) default <- paste0("'", default, "'")
+    warning(paste0("Argument '", arg, "' = ", input, " is not supported; defaulting to ", arg, " = ", default, ".\n"))
     input <- default
   }
   # Return input
@@ -69,6 +68,7 @@ check_input <- function(arg, input, supp, default = supp[1]){
 #' @description This function is a wrapper for \code{\link[rlist]{list.merge}}. The difference is that this function first screens out any empty lists, which cause errors for \code{\link[rlist]{list.merge}}. If there is only one non-empty list, this is returned. Otherwise, \code{\link[rlist]{list.merge}} is used to merge lists in an iterative process. For large lists, this approach will be slower than calling \code{\link[rlist]{list.merge}} directly if there are no empty lists. Both \code{\link[rlist]{list.merge}} and \code{list_merge()} require named lists.
 #'
 #' @param ... named lists
+#' @author Edward Lavender
 #' @keywords internal
 
 list_merge <- function(...){
