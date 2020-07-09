@@ -277,9 +277,9 @@ pair_ts <- function(d1,
   #### Checks
   stopifnot(time_col %in% colnames(d1) & time_col %in% colnames(d2))
   stopifnot(val_col %in% colnames(d2))
-  check_input(arg = "method", input = method, supp = c("match_ts_nearest", "match_ts_nearest_by_key"))
+  check_value(arg = "method", input = method, supp = c("match_ts_nearest", "match_ts_nearest_by_key"))
   if(!is.null(control_beyond_gap))
-    check_input(arg = "control_beyond_gap", input = control_beyond_gap, supp = c("NA", "remove"))
+    check_value(arg = "control_beyond_gap", input = control_beyond_gap, supp = c("NA", "remove"))
 
   #### Implement match_ts method
   if(method == "match_ts_nearest"){
@@ -302,32 +302,33 @@ pair_ts <- function(d1,
     ## Add times in d2 to d1
     d1$time_in_d2 <- d2[d1$position_in_d2, time_col]
     # Compute difference in time using specified units
-    d1$difftime <- as.numeric(difftime(d1[, "time_in_d2"], d1[, time_col], units = units))
+    # Use drop = TRUE in case a tibble has been provided.
+    d1$difftime <- as.numeric(difftime(d1[, "time_in_d2", drop = TRUE], d1[, time_col, drop = TRUE], units = units))
 
     ## Check whether the min_gap was exceeded
-    min_gap_exceeded <- any(d1$difftime < min_gap)
+    min_gap_exceeded <- any(d1$difftime < min_gap, na.rm = TRUE)
     l_min_gap_exceeded <- length(which(min_gap_exceeded))
     if(min_gap_exceeded){
       warning(paste0(l_min_gap_exceeded, " observations exceeded min_gap."))
       if(!is.null(control_beyond_gap)){
         if(control_beyond_gap == "remove"){
-          d1 <- d1[d1$difftime >= min_gap, ]
+          d1 <- d1[which(d1$difftime >= min_gap), ]
         } else if(control_beyond_gap == "NA"){
-          d1[d1$difftime < min_gap, val_col] <- NA
+          d1[which(d1$difftime < min_gap), val_col] <- NA
         }
       }
     }
 
     ## Check whether the max_gap was exceeded
-    max_gap_exceeded <- any(d1$difftime > max_gap)
+    max_gap_exceeded <- any(d1$difftime > max_gap, na.rm = TRUE)
     l_max_gap_exceeded <- length(which(max_gap_exceeded))
     if(max_gap_exceeded){
       warning(paste0(l_max_gap_exceeded, " observations exceeded max_gap."))
       if(!is.null(control_beyond_gap)){
         if(control_beyond_gap == "remove"){
-          d1 <- d1[d1$difftime <= max_gap, ]
+          d1 <- d1[which(d1$difftime <= max_gap), ]
         } else if(control_beyond_gap == "NA"){
-          d1[d1$difftime > max_gap, val_col] <- NA
+          d1[which(d1$difftime > max_gap), val_col] <- NA
         }
       }
     }
