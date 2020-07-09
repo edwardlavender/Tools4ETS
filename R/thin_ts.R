@@ -82,6 +82,13 @@ thin_ts <-
       dat_ls <- list(dat)
     } else{
       stopifnot(is.character(ind))
+      # Check for any unused factor levels and drop these, to avoid looping over empty levels.
+      if(inherits(dat[, ind], "factor")){
+        if(!(all(levels(dat[, ind]) %in% unique(dat[, ind])))){
+          warning(paste0("Dropping empty factor levels in dat[,'", ind, "']."))
+          dat[, ind] <- droplevels(dat[, ind])
+        }
+      }
       dat_ls <- split(dat, f = dat[, ind])
     }
     stopifnot(is.character(flag1))
