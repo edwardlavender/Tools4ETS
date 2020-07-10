@@ -105,7 +105,7 @@ parameterise_contrast_2l <-
     if(plot_gam){
       graphics::points(c(1, 2), fits, pch = 21, bg = "darkgrey", col = "darkgrey")
       graphics::segments(x0 = 2, y0 = se_lower, y1 = se_upper,
-                         col = scales::alpha("darkgrey", 0.4),
+                         col = "dimgrey",
                          lwd = 2,
                          lty = 1)
     }
@@ -268,7 +268,7 @@ parameterise_smooth <-
         amp <- list(x = p$x,
                     CI = CI,
                     fCI = "poly",
-                    CI_gp = list(col = scales::alpha("lightgrey", 0.8), border = FALSE),
+                    CI_gp = list(col = "lightgrey", border = FALSE),
                     add_fitted = TRUE,
                     fitted_gp = list(col = "black", lwd = 1, lty = 1)
         )

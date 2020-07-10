@@ -76,7 +76,7 @@ prettyGraphics::add_model_predictions(x = nd$x, CI = summary1)
 names(summary3)[1] <- "fit"
 prettyGraphics::add_model_predictions(x = nd$x,
                                   CI = summary3,
-                                   CI_gp = list(col = scales::alpha("dimgrey", 0.8),
+                                   CI_gp = list(col = "dimgrey",
                                                 border = FALSE
                                    )
 )

@@ -25,7 +25,7 @@
 #'                    type = "diel",
 #'                    type_args = list(lon = 56, lat = -5),
 #'                    to_plot = TRUE,
-#'                    col = c("white", scales::alpha("dimgrey", 0.7))
+#'                    col = c("white", "dimgrey")
 #'                    )
 #'
 #' #### Example (3) define seasonal blocks between two dates
@@ -112,9 +112,9 @@ define_time_blocks <-
       # Define default colours appropriately if not provided:
       if(is.null(col)){
         if(type == "diel"){
-          col <- c("white", scales::alpha("dimgrey", 0.6))
+          col <- c("white", "dimgrey")
         } else if(type == "season"){
-          col <- scales::alpha(grDevices::grey.colors(4), 0.6)
+          col <- grDevices::grey.colors(4)
         }
       }
       # Rename dataframe

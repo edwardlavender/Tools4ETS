@@ -326,7 +326,7 @@ pretty_ts(x = x,
             add_lines_args_y2 = list(col = "red"),
             pretty_axis_args_y2 = list(pretty = list(n = 5), axis = list(las = TRUE)),
             list_CIs_args = list(pred = p),
-            add_model_predictions_args = list(CI_gp = list(col = scales::alpha("skyblue", 0.5)),
+            add_model_predictions_args = list(CI_gp = list(col = "skyblue"),
                                               fitted_gp = list(col = "blue"))
             )
 

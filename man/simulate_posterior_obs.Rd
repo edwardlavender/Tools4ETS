@@ -222,7 +222,7 @@ sim_mu_AR1 <-
     return = "summary")
 names(sim_mu_AR1)[1] <- "fit"
 prettyGraphics::add_model_predictions(x = nd$x, CI = sim_mu_AR1,
-                                  CI_gp = list(col = scales::alpha("dimgrey", 0.8),
+                                  CI_gp = list(col = "dimgrey",
                                                 border = FALSE))
 
 #### Examine the effects of accounting for autocorrelation on CIs and prediction intervals
@@ -274,14 +274,14 @@ sim_pos6_AR1_PI <- summarise_posterior(sim_pos6_AR1)
 names(sim_pos6_AR0_PI)[1] <- "fit"
 names(sim_pos6_AR1_PI)[1] <- "fit"
 # Plot
-plot(d$x, d$yAR, cex = 0.1, col = scales::alpha("grey", 0.5))
+plot(d$x, d$yAR, cex = 0.1, col = "grey")
 prettyGraphics::add_model_predictions(nd$x, sim_pos6_AR0_PI,
-                                   CI_gp = list(col = scales::alpha("red", 0.5),
+                                   CI_gp = list(col = "red",
                                                 border = FALSE),
                                    add_fitted = FALSE
 )
 prettyGraphics::add_model_predictions(nd$x, sim_pos6_AR1_PI,
-                                  CI_gp = list(col = scales::alpha("blue", 0.2),
+                                  CI_gp = list(col = "blue",
                                                 border = FALSE),
                                    add_fitted = FALSE
 )
@@ -289,7 +289,7 @@ prettyGraphics::add_model_predictions(nd$x, sim_pos6_AR1_PI,
 # ... is similar inm both cases, which we can see if we compare the two original models:
 stats::sigma(mAR0); stats::sigma(mAR1)
 # The difference is that in the AR model, the residual variation
-# ... is not all random, but some is 'deterministic'. This matters for uncertainity in the mean,
+# ... is not all random, but some is 'deterministic'. This matters for uncertainty in the mean,
 # ... but, once you've accounted for this, the observed variation around the mean is similar.
 
 #### Example (6) Comparison of mu_method = 1 and mu_method = 2.
@@ -329,14 +329,14 @@ axis_ls <-
 plot(d$x, d$yAR,
      xlim = axis_ls[[1]]$lim, ylim = axis_ls[[2]]$lim,
      axes = FALSE, cex = 0.1,
-     col = scales::alpha("grey", 0.5))
+     col = "grey")
 prettyGraphics::pretty_axis(axis_ls = axis_ls, add = TRUE)
 names(sim_pos7_mu1)[1] <- "fit"
 names(sim_pos7_mu2)[1] <- "fit"
 prettyGraphics::add_model_predictions(nd$x, sim_pos7_mu1,
-                                  CI_gp = list(col = scales::alpha("red", 0.7), border = FALSE))
+                                  CI_gp = list(col = "red", border = FALSE))
 prettyGraphics::add_model_predictions(nd$x, sim_pos7_mu2,
-                                   CI_gp = list(col = scales::alpha("skyblue", 0.5),
+                                   CI_gp = list(col = "skyblue",
                                    border = FALSE))
 # similar results in this case.
 
@@ -434,9 +434,9 @@ prettyGraphics::add_model_predictions(nd$x2, sim_pos_prob1.2)
 # ... However, in this case, our model inferences are not affected strongly:
 pp <- par(mfrow = c(3, 4))
 mgcv::plot.gam(m2.1)
-mgcv::gam.check(m2.1, cex = 0.1, col = scales::alpha("grey", 0.5))
+mgcv::gam.check(m2.1, cex = 0.1, col = "grey")
 mgcv::plot.gam(m2.2)
-mgcv::gam.check(m2.2, cex = 0.1, col = scales::alpha("grey", 0.5))
+mgcv::gam.check(m2.2, cex = 0.1, col = "grey")
 par(pp)
 
 }

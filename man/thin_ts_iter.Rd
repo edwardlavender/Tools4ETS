@@ -14,15 +14,14 @@ thin_ts_iter(
   increment = 1,
   eval_mod,
   resid_method = function(mod) {     stats::resid(mod) },
-  compute_AR1 = function(mod) {     stats::acf(stats::resid(mod), plot = FALSE)$acf[2] },
+  compute_AR1 = function(mod) {     stats::acf(stats::resid(mod), plot = FALSE)$acf[2]
+    },
   thin_ts_iter_ls = NULL,
   plot = TRUE,
   p1_pretty_axis_args = list(side = 1:2, pretty = list(n = 5)),
   p2_pretty_axis_args = list(side = 4, pretty = list(n = 5)),
-  p1_args = list(type = "b", pch = 21, bg = scales::alpha("black", 0.8), col =
-    scales::alpha("black", 0.8), cex = 0.5),
-  p2_args = list(type = "b", pch = 21, bg = scales::alpha("dimgrey", 0.8), col =
-    scales::alpha("dimgrey", 0.8), cex = 0.5),
+  p1_args = list(type = "b", pch = 21, bg = "black", col = "black", cex = 0.5),
+  p2_args = list(type = "b", pch = 21, bg = "dimgrey", col = "dimgrey", cex = 0.5),
   add_model_predictions_args = list(),
   add_legend = TRUE,
   legend_args = list(),
@@ -124,14 +123,14 @@ thin_ts_iter_ls1 <-
                p2_pretty_axis_args = list(side = 4, pretty = list(n = 5)),
                p1_args = list(type = "b",
                               pch = 21,
-                              bg = scales::alpha("black", 0.8),
-                              col = scales::alpha("black", 0.8),
+                              bg = "black",
+                              col = "black",
                               cex = 0.5
                ),
                p2_args = list(type = "b",
                               pch = 21,
-                              bg = scales::alpha("dimgrey", 0.8),
-                              col = scales::alpha("dimgrey", 0.8),
+                              bg = "black",
+                              col = "black",
                               cex = 0.5
                ),
                add_model_predictions_args = list(),

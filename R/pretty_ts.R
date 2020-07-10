@@ -270,7 +270,7 @@
 #'             add_lines_args_y2 = list(col = "red"),
 #'             pretty_axis_args_y2 = list(pretty = list(n = 5), axis = list(las = TRUE)),
 #'             list_CIs_args = list(pred = p),
-#'             add_model_predictions_args = list(CI_gp = list(col = scales::alpha("skyblue", 0.5)),
+#'             add_model_predictions_args = list(CI_gp = list(col = "skyblue"),
 #'                                               fitted_gp = list(col = "blue"))
 #'             )
 #'
@@ -623,7 +623,7 @@ pretty_ts <-
     damp <- list(x = dat$x,
                  CI = CIs,
                  fCI = "poly",
-                 CI_gp = list(col = scales::alpha("lightgrey", 0.8), border = FALSE),
+                 CI_gp = list(col = "lightgrey", border = FALSE),
                  add_fitted = TRUE,
                  fitted_gp = list(col = "black", lwd = 1, lty = 1)
     )
@@ -640,7 +640,7 @@ pretty_ts <-
   # ... e.g. created by simulate_posterior_obs() without going via list_CIs()
   if(length(list_CIs_args) > 0 | length(add_model_predictions_args) > 0){
     damp <- list(fCI = "poly",
-                 CI_gp = list(col = scales::alpha("lightgrey", 0.8), border = FALSE),
+                 CI_gp = list(col = "lightgrey", border = FALSE),
                  add_fitted = TRUE,
                  fitted_gp = list(col = "black", lwd = 1, lty = 1))
     add_model_predictions_args <- rlist::list.merge(damp, add_model_predictions_args)

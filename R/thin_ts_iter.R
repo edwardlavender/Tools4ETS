@@ -68,14 +68,14 @@
 #'                p2_pretty_axis_args = list(side = 4, pretty = list(n = 5)),
 #'                p1_args = list(type = "b",
 #'                               pch = 21,
-#'                               bg = scales::alpha("black", 0.8),
-#'                               col = scales::alpha("black", 0.8),
+#'                               bg = "black",
+#'                               col = "black",
 #'                               cex = 0.5
 #'                ),
 #'                p2_args = list(type = "b",
 #'                               pch = 21,
-#'                               bg = scales::alpha("dimgrey", 0.8),
-#'                               col = scales::alpha("dimgrey", 0.8),
+#'                               bg = "black",
+#'                               col = "black",
 #'                               cex = 0.5
 #'                ),
 #'                add_model_predictions_args = list(),
@@ -118,14 +118,14 @@ thin_ts_iter <-
     p2_pretty_axis_args = list(side = 4, pretty = list(n = 5)),
     p1_args = list(type = "b",
                    pch = 21,
-                   bg = scales::alpha("black", 0.8),
-                   col = scales::alpha("black", 0.8),
+                   bg = "black",
+                   col = "black",
                    cex = 0.5
                    ),
     p2_args = list(type = "b",
                    pch = 21,
-                   bg = scales::alpha("dimgrey", 0.8),
-                   col = scales::alpha("dimgrey", 0.8),
+                   bg = "dimgrey",
+                   col = "dimgrey",
                    cex = 0.5
                    ),
     add_model_predictions_args = list(),
@@ -269,7 +269,7 @@ thin_ts_iter <-
       damp <- list(x = thinreqCI$x,
                    CI = thinreqCI,
                    fCI = "poly",
-                   CI_gp = list(col = scales::alpha("lightgrey", 0.8), border = FALSE),
+                   CI_gp = list(col = "lightgrey", border = FALSE),
                    add_fitted = FALSE,
                    fitted_gp = list()
       )

@@ -99,11 +99,11 @@
 #' sigma <- stats::sigma(mAR1)
 #' sd_arima <- sigma_arima(AR1 = AR1_bam, sigma = sigma)
 #' sim_obs <- mu + arima.sim(list(order = c(1,0,0), ar = AR1_bam), n = nrow(d), sd = sd_arima)
-#' plot(d$x, d$yAR.2, cex = 0.5, col = scales::alpha("grey", 0.5))
-#' points(d$x, sim_obs, cex = 0.1, col = scales::alpha("red", 0.5))
+#' plot(d$x, d$yAR.2, cex = 0.5, col = "grey")
+#' points(d$x, sim_obs, cex = 0.1, col = "red")
 #' # Compare these results to a simulation of observed values which doesn't accout for AR1 process:
 #' sim_obs_AR0 <- stats::rnorm(nrow(d), mu, sigma)
-#' points(d$x, sim_obs_AR0, cex = 0.1, col = scales::alpha("blue", 0.5))
+#' points(d$x, sim_obs_AR0, cex = 0.1, col = "blue")
 #' # It is difficult to see any clear difference from a single simulation, but simulate_posterior_obs()
 #' # ... can be used to explore this across many simulations.
 #'

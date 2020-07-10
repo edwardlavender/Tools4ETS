@@ -6,13 +6,13 @@ Author: Edward Lavender
 Maintainer: Edward Lavender <el72@st-andrews.ac.uk>
 Description: Tools for  Ecological Timeseries (Tools4ETS) is package designed to facilitate the simulation, processing, exploration, visualisation and modelling of ecological timeseries. This package has been particularly inspired by new, high-resolution depth timeseries collected for a Critically Endangered benthopelagic elasmobranch. 
 Imports:
-    magrittr, plyr, dplyr, data.table,
+    magrittr, dplyr, data.table,
     utils, pbapply, rlist,
     fasttime, lubridate,
     lunar, suncalc, 
     maptools,
-    Hmisc, TeachingDemos, scales, plotrix,
-    shiny, shinyWidgets, shinydashboard, DT, markdown,
+    TeachingDemos, plotrix,
+    shiny, shinyWidgets, shinydashboard, DT,
     smooth, mgcv, MASS,
     prettyGraphics
 Suggests:
@@ -24,5 +24,5 @@ URL: http://github.com/edwardlavender/Tools4ETS
 BugReports: http://github.com/edwardlavender/Tools4ETS/issues
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.1
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr

@@ -659,7 +659,7 @@ pretty_ts(x = dfp_thin1_A$timestamp,
         y1 = dfp_thin1_A$dn,
         add_model_predictions_args = list(x = dfp_thin1_A$timestamp,
                                           CI = PI,
-                                          CI_gp = list(col = scales::alpha("lightgrey", 0.4), border = FALSE), 
+                                          CI_gp = list(col = "lightgrey", border = FALSE), 
                                           fitted_gp = list(col = "red")
                                           ), 
         pretty_axis_args = paa, 
@@ -1016,7 +1016,7 @@ pbapply::pbmapply(list(mod_dat1_depthAR0, mod_dat1_depthAR1),
           add_model_predictions_args = list(x = nd$timestamp,
                                             CI = sim_obs,
                                             fCI = "lines",
-                                            CI_gp = list(col = scales::alpha("red", 0.8))
+                                            CI_gp = list(col = "red")
                                             )
           )
 }) %>% invisible()
@@ -1447,7 +1447,7 @@ mapply(depth_ls, names(depth_ls), FUN = function(depth, driver){
           return_list = FALSE)
   prettyGraphics::pretty_plot(dat1_cs3[, driver], depth,
                            cex = 0.5,
-                           col = scales::alpha("grey", 0.5),
+                           col = "grey",
                            xlab = driver,
                            ylab = "Depth")
 }) %>% invisible()
@@ -1532,11 +1532,5 @@ Suggestions for developments are welcome.
 # Acknowledgments
 
 This work was conducted during a PhD Studentship at the University of St Andrews, jointly funded by Scottish Natural Heritage and the Centre for Research into Ecological and Environmental Modelling. EL is a member of the Marine Alliance for Science and Technology Graduate School.
-
-# Session information
-
-```{r}
-devtools::session_info()
-```
 
 # References

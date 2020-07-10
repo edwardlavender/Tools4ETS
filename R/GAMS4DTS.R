@@ -1855,7 +1855,7 @@ server <- function(input, output) {
  plot_gam_ls <- reactive(plot.gam(m1(), residuals = TRUE))
 
  #### common arguments
- add_residuals_args <- list(cex = 0.5, col = scales::alpha("black", 0.5))
+ add_residuals_args <- list(cex = 0.5, col = "black")
 
  #### length
  output$length_smooth_preds <-
