@@ -12,7 +12,7 @@
 #' @param model The model.
 #' @param term A character input which defines the name of the term in the model.
 #' @param cex.axis A numeric input which defines the size of the font for axis tick labels.
-#' @param mtext_args A named list of arguments which are passed to \code{\link[graphics]{mtext}} to produce axis labels. A nested list can be used to control each axis (see also \code{\link[Tools4ETS]{pretty_ts}}).
+#' @param mtext_args A named list of arguments which are passed to \code{\link[graphics]{mtext}} to produce axis labels. A nested list can be used to control each axis (see also \code{\link[prettyGraphics]{pretty_ts}}).
 #'
 #' @return The function returns a plot showing the size of the contrast between factor levels, possibly in relation to that estimated by an \code{mgcv} GAM model.
 #'
@@ -100,7 +100,7 @@ parameterise_contrast_2l <-
     graphics::axis(side = 1, at = c(0.5, 1, 2, 3), labels = c("", as.character(x), ""), pos = min(yat), cex.axis = cex.axis)
 
     # add axis labels
-    implement_mtext_args(mtext_args)
+    prettyGraphics::implement_mtext_args(mtext_args)
 
     if(plot_gam){
       graphics::points(c(1, 2), fits, pch = 21, bg = "darkgrey", col = "darkgrey")
@@ -224,7 +224,7 @@ parameterise_smooth <-
         p$p.resid <- p$p.resid + shift
       }
 
-      CI <- list_CIs(pred = list(fit = p$fit, se.fit = p$se), plot_suggestions = FALSE)
+      CI <- prettyGraphics::list_CIs(pred = list(fit = p$fit, se.fit = p$se), plot_suggestions = FALSE)
     }
 
     #### Create plot
@@ -243,7 +243,7 @@ parameterise_smooth <-
         pretty_axis_x <- x
         pretty_axis_y <- y
       }
-      axis_ls <- implement_pretty_axis_args(list(x = range(pretty_axis_x), y = range(pretty_axis_y)), pretty_axis_args)
+      axis_ls <- prettyGraphics::implement_pretty_axis_args(list(x = range(pretty_axis_x), y = range(pretty_axis_y)), pretty_axis_args)
 
       #### Blank plot with parameterisation
       plot(x, y,
@@ -260,7 +260,7 @@ parameterise_smooth <-
       asa <- list(x = x, y = y)
       add_sim_args <- list_merge(asa, add_sim_args)
       do.call(graphics::lines, add_sim_args)
-      pretty_axis(axis_ls = axis_ls, add = TRUE)
+      prettyGraphics::pretty_axis(axis_ls = axis_ls, add = TRUE)
 
       if(plot_gam){
 
@@ -273,7 +273,7 @@ parameterise_smooth <-
                     fitted_gp = list(col = "black", lwd = 1, lty = 1)
         )
         add_model_predictions_args <- list_merge(amp, add_model_predictions_args)
-        do.call(add_model_predictions, add_model_predictions_args)
+        do.call(prettyGraphics::add_model_predictions, add_model_predictions_args)
 
         #### Add partial residuals
         if(residuals){
@@ -297,7 +297,7 @@ parameterise_smooth <-
       }
 
       #### Add axis labels
-      implement_mtext_args(mtext_args)
+      prettyGraphics::implement_mtext_args(mtext_args)
 
       #### restore clip
       do.call("clip", as.list(usr))

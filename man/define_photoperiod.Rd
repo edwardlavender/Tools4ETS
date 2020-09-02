@@ -24,7 +24,7 @@ define_photoperiod(
 
 \item{lon}{A numeric input which defines the longitude (decimal degrees) at which to calculate the sunlight times for each interval (see \code{interval}) on each day of the timeseries. This is passed to \code{\link[suncalc]{getSunlightTimes}}. The location is assumed to be constant at least for each day of timeseries.}
 
-\item{interval}{A character vector with two elements which define the sunrise/sunset times between which photoperiod is calculated. This is passed to the \code{keep} argument of \code{\link[suncalc]{getSunlightTimes}} where further details are provided.}
+\item{interval}{A character vector with two elements which define the sunrise and sunset times (n that order) between which photoperiod is calculated. This is passed to the \code{keep} argument of \code{\link[suncalc]{getSunlightTimes}} where further details are provided.}
 
 \item{units}{A character input which defines the units of the time difference. This is passed to \code{\link[base]{difftime}}. Options are: "auto", "secs", "mins", "hours", "days" or "weeks".}
 

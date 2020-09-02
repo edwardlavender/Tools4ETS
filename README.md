@@ -10,30 +10,26 @@
 `Tools4ETS` is an R package which provides tools for ecological
 timeseries. This includes (1) data exploration, (2) timeseries
 processing and (3) simulations to guide model-based ecological
-inference. This functionality is provided by functions and two
-interactive R Shiny applications. `Tools4ETS` was motivated by analyses
-of new new, high-resolution depth timeseries for a Critically Endangered
+inference. `Tools4ETS` was motivated by analyses of new new,
+high-resolution depth timeseries for a Critically Endangered
 elasmobranch.
 
 ## Installation
 
-You can install the released version of Tools4ETS from
-[CRAN](https://CRAN.R-project.org) with:
+You can install the development version of `Tools4ETS` from
+[GitHub](https://github.com) with:
 
 ``` r
-# Install from CRAN 
-install.packages("Tools4ETS")
-
-# Or, install the development version from github:
 devtools::install_github("edwardlavender/Tools4ETS")
 ```
 
 ## Data visualisation
 
-`Tools4ETS` facilitates rapid timeseries visualisation in relation to
-covariates, across factor levels (e.g. individuals) and timescales with
-`pretty_ts()` (a function based on the complementary `prettyGraphics`
-package) and an interactive R Shiny application (`vis_ts()`).
+The `R` package `prettyGraphics` was designed to complement `Tools4ETS`
+via the provision of tools for rapid timeseries visualisation in
+relation to covariates, across factor levels (e.g. individuals) and
+timescales with `prettyGraphics::pretty_ts()` and an interactive R Shiny
+application (`prettyGraphics::vis_ts()`).
 
 ## Data processing
 
@@ -53,7 +49,7 @@ timeseries. These include:
   - **Flagging timeseries.** `flag_ts()` can be used to flag independent
     sections of timeseries in a dataset due to the presence of different
     factor levels (e.g. individuals) and/or breaks in timeseries.
-    Different flag typescan be added, reflecting the requirements of
+    Different flag types can be added, reflecting the requirements of
     different modelling approaches.  
   - **Thinning timeseries.** `thin_ts()` can be used to thin a dataset,
     accounting for independent timeseries. `thin_ts_iter()` implements
@@ -66,7 +62,7 @@ timeseries. These include:
 processing depth timeseries, including the identification and
 description of recapture events (`suggest_recapture()` and
 `define_recapture()`) and the definition common covariates (e.g. via
-`define_photoperiod()` and `define_time_blocks()`).
+`define_photoperiod()`).
 
 ## Simulations
 
@@ -115,6 +111,5 @@ different conditions.
 
 ## Interactive applications
 
-`Tools4ETS` includes two interactive applications for (a) interactive
-timeseries visualisation and (b) simulating/modelling depth timeseries
-using GAMs. These can be launched using `launch_shiny()`.
+`Tools4ETS` includes an interactive Shiny-Dashboard application for the
+simulation and modelling of depth timeseries using GAMs (`GAMS4DTS()`).

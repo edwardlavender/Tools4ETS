@@ -5,7 +5,7 @@
 #' @param end_date The end date, as a \code{\link[base]{Date}} object, to which photoperiod will be calculated. If \code{NULL}, the end date is taken as the last date (in time) in user-supplied vector of dates (see \code{match_date}).
 #' @param lat A numeric input which defines the latitude (decimal degrees) at which to calculate the sunlight times for each interval (see \code{interval}) on each day of the timeseries. This is passed to \code{\link[suncalc]{getSunlightTimes}}. The location is assumed to be constant at least for each day of the timeseries.
 #' @param lon  A numeric input which defines the longitude (decimal degrees) at which to calculate the sunlight times for each interval (see \code{interval}) on each day of the timeseries. This is passed to \code{\link[suncalc]{getSunlightTimes}}. The location is assumed to be constant at least for each day of timeseries.
-#' @param interval A character vector with two elements which define the sunrise/sunset times between which photoperiod is calculated. This is passed to the \code{keep} argument of \code{\link[suncalc]{getSunlightTimes}} where further details are provided.
+#' @param interval A character vector with two elements which define the sunrise and sunset times (n that order) between which photoperiod is calculated. This is passed to the \code{keep} argument of \code{\link[suncalc]{getSunlightTimes}} where further details are provided.
 #' @param units A character input which defines the units of the time difference. This is passed to \code{\link[base]{difftime}}. Options are: "auto", "secs", "mins", "hours", "days" or "weeks".
 #' @param type A number (1, 2 or 3) which defines whether or not to return (1) the photoperiod (in user-defined units), (2) the difference in photoperiod between sequential dates (in user-defined units) or (3) the rate of change in photoperiod (in user-defined units) per day. This is relevant if \code{match_date} is provided (see below).
 #' @param match_date A sequence of dates to which appropriate photoperiods are matched (see Examples).
@@ -109,7 +109,7 @@ define_photoperiod <-
 
     #### Calculate photoperiod in user-specified units :
     photoperiod_df$photoperiod <-
-      as.numeric(difftime(photoperiod_df$dusk, photoperiod_df$dawn, units = units))
+      as.numeric(difftime(photoperiod_df[, interval[2]], photoperiod_df[, interval[1]], units = units))
     # difference
     photoperiod_df$difference <- serial_difference(photoperiod_df$photoperiod)
     # units (e.g. hours) per day

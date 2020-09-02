@@ -247,11 +247,11 @@ thin_ts_iter <-
     if(plot){
 
       #### Define axis parameters
-      axis_ls <- implement_pretty_axis_args(list(thinreq$nth, thinreq$AR1_est), p1_pretty_axis_args)
+      axis_ls <- prettyGraphics::implement_pretty_axis_args(list(thinreq$nth, thinreq$AR1_est), p1_pretty_axis_args)
       # Parameters for the new axis (side = 4), which needs to be added afterwards.
       p2_pretty_axis_args$axis$side <- 4
       p2_pretty_axis_args$axis$pos <- max(axis_ls[[1]]$lim)
-      axis_ls_2nd <- implement_pretty_axis_args(list(thinreq$nrw_log), p2_pretty_axis_args)
+      axis_ls_2nd <- prettyGraphics::implement_pretty_axis_args(list(thinreq$nrw_log), p2_pretty_axis_args)
 
       #### Blank plot of AR1 ~ nth
       # Blank plot
@@ -275,7 +275,7 @@ thin_ts_iter <-
       )
       add_model_predictions_args <- list_merge(damp, add_model_predictions_args)
       # Add CI envelope
-      do.call("add_model_predictions", add_model_predictions_args)
+      do.call(prettyGraphics::add_model_predictions, add_model_predictions_args)
 
       #### Restore clip
       do.call("clip", as.list(usr))
@@ -289,10 +289,10 @@ thin_ts_iter <-
       do.call(graphics::lines, p1_args)
 
       #### Add initial axes
-      pretty_axis(axis_ls = axis_ls, add = TRUE)
+      prettyGraphics::pretty_axis(axis_ls = axis_ls, add = TRUE)
 
       #### Add axis_titles
-      implement_mtext_args(mtext_args)
+      prettyGraphics::implement_mtext_args(mtext_args)
 
       #### Plot nrow(data) ~ nth ontop using a second y axis
       graphics::par(new = TRUE)
@@ -305,7 +305,7 @@ thin_ts_iter <-
       do.call(graphics::plot, p2_args)
 
       #### Add second axes
-      pretty_axis(axis_ls = axis_ls_2nd, add = TRUE)
+      prettyGraphics::pretty_axis(axis_ls = axis_ls_2nd, add = TRUE)
 
       # Add legend
       if(add_legend){

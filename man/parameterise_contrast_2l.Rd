@@ -31,7 +31,7 @@ parameterise_contrast_2l(
 
 \item{cex.axis}{A numeric input which defines the size of the font for axis tick labels.}
 
-\item{mtext_args}{A named list of arguments which are passed to \code{\link[graphics]{mtext}} to produce axis labels. A nested list can be used to control each axis (see also \code{\link[Tools4ETS]{pretty_ts}}).}
+\item{mtext_args}{A named list of arguments which are passed to \code{\link[graphics]{mtext}} to produce axis labels. A nested list can be used to control each axis (see also \code{\link[prettyGraphics]{pretty_ts}}).}
 }
 \value{
 The function returns a plot showing the size of the contrast between factor levels, possibly in relation to that estimated by an \code{mgcv} GAM model.

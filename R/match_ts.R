@@ -165,10 +165,6 @@ match_ts_nearest <- function(times, lookup){
 #' @export
 #'
 
-###############################
-###############################
-#### match_ts_nearest_by_key()
-
 match_ts_nearest_by_key <- function(d1, d2, key_col, time_col){
   # Check dataframes contain required columns
   stopifnot(all(c(key_col, time_col) %in% colnames(d1)))

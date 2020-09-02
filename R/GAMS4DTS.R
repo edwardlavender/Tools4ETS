@@ -1162,17 +1162,17 @@ server <- function(input, output) {
   output$length_density_curve <-
     renderPlot({
       pp <- graphics::par(oma = c(2, 3, 2, 2))
-      pretty_curve(x = dat()$length,
-                     f = stats::dgamma,
-                     param = list(shape = input$length_density_curve[1],
-                                  scale = input$length_density_curve[2]),
-                     pretty_axis_args = list(side = 1:2, pretty = list(n = 5),
-                                             axis = list(cex.axis = cex.axis, las = TRUE)),
-                     mtext_args = list(list(side = 1, text = "Length (cm)", line = 2.5, cex = cex.lab),
-                                       list(side = 2, text = "Density", line = 5, cex = cex.lab)
-                                       )
-                     )
-      pp
+      prettyGraphics::pretty_curve(x = dat()$length,
+                                   f = stats::dgamma,
+                                   param = list(shape = input$length_density_curve[1],
+                                                scale = input$length_density_curve[2]),
+                                   pretty_axis_args = list(side = 1:2, pretty = list(n = 5),
+                                                           axis = list(cex.axis = cex.axis, las = TRUE)),
+                                   mtext_args = list(list(side = 1, text = "Length (cm)", line = 2.5, cex = cex.lab),
+                                                     list(side = 2, text = "Density", line = 5, cex = cex.lab)
+                                   )
+      )
+      graphics::par(pp)
 
    })
 
@@ -1565,13 +1565,13 @@ server <- function(input, output) {
 
  # histogram of depths:
  output$depth_hist <- renderPlot(
-   pretty_hist(x = dat_model()$depth,
-               freq = TRUE,
-               xaxis = list(cex.axis = cex.axis),
-               yaxis = list(las = TRUE, cex.axis = cex.axis),
-               mtext_args = list(list(side = 1, text = "Depth (m)", line = 2.5, cex = cex.lab),
-                                 list(side = 2, text = "Frequency", line = 2.5, cex = cex.lab))
-               )
+   prettyGraphics::pretty_hist(x = dat_model()$depth,
+                               freq = TRUE,
+                               xaxis = list(cex.axis = cex.axis),
+                               yaxis = list(las = TRUE, cex.axis = cex.axis),
+                               mtext_args = list(list(side = 1, text = "Depth (m)", line = 2.5, cex = cex.lab),
+                                                 list(side = 2, text = "Frequency", line = 2.5, cex = cex.lab))
+   )
    )
 
 
@@ -1600,7 +1600,7 @@ server <- function(input, output) {
  #### Plot depth_timeseries
  output$depth_timeseries <-
    renderPlot(
-     pretty_ts(x = dat_model()$timestamp,
+     prettyGraphics::pretty_ts(x = dat_model()$timestamp,
              y1 = dat_model()$depth*-1,
              fct = dat_model()$individual,
              fct_level = input$selected_individual,
@@ -1617,7 +1617,7 @@ server <- function(input, output) {
  #### Sun angle time series
  output$sun_angle_timeseries <-
    renderPlot(
-     pretty_ts(x = dat_model()$timestamp,
+     prettyGraphics::pretty_ts(x = dat_model()$timestamp,
              y1 = dat_model()$sun_angle,
              fct = dat_model()$individual,
              fct_level = input$selected_individual,
@@ -1634,7 +1634,7 @@ server <- function(input, output) {
  #### Lunar phase
  output$lunar_phase_timeseries <-
    renderPlot(
-     pretty_ts(x = dat_model()$timestamp,
+     prettyGraphics::pretty_ts(x = dat_model()$timestamp,
              y1 = dat_model()$lunar_phase,
              fct = dat_model()$individual,
              fct_level = input$selected_individual,
@@ -1659,7 +1659,7 @@ server <- function(input, output) {
  #### julian_day
  output$julian_day_timeseries <-
    renderPlot(
-     pretty_ts(x = dat_model()$timestamp,
+     prettyGraphics::pretty_ts(x = dat_model()$timestamp,
              y1 = dat_model()$julian_day,
              fct = dat_model()$individual,
              fct_level = input$selected_individual,
@@ -2000,7 +2000,7 @@ server <- function(input, output) {
  #### Define a plot which shows predictions
  output$depth_timeseries_preds <-
    renderPlot(
-     pretty_ts(x = dat_model()$timestamp,
+     prettyGraphics::pretty_ts(x = dat_model()$timestamp,
              y1 = dat_model()$depth *-1,
              fct = dat_model()$individual,
              fct_level = input$selected_individual_preds,
