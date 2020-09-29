@@ -7,12 +7,12 @@
 
 <!-- badges: end -->
 
-`Tools4ETS` is an R package which provides tools for ecological
-timeseries. This includes (1) data exploration, (2) timeseries
-processing and (3) simulations to guide model-based ecological
-inference. `Tools4ETS` was motivated by analyses of new new,
-high-resolution depth timeseries for a Critically Endangered
-elasmobranch.
+`Tools4ETS` is an `R` package which provides tools for ecological
+timeseries. This includes data exploration, timeseries processing, the
+computation of simple statistics from timeseries or models of timeseries
+and simulations to guide model-based ecological inference. `Tools4ETS`
+was motivated by analyses of new, high-resolution depth timeseries for a
+Critically Endangered elasmobranch.
 
 ## Installation
 
@@ -50,7 +50,8 @@ timeseries. These include:
     sections of timeseries in a dataset due to the presence of different
     factor levels (e.g. individuals) and/or breaks in timeseries.
     Different flag types can be added, reflecting the requirements of
-    different modelling approaches.  
+    different modelling approaches. `add_unit_id()` is used to add
+    unique unit IDs to a timeseries.
   - **Thinning timeseries.** `thin_ts()` can be used to thin a dataset,
     accounting for independent timeseries. `thin_ts_iter()` implements
     `thin_ts()` iteratively to explore the change in autocorrelation and
@@ -64,6 +65,20 @@ description of recapture events (`suggest_recapture()` and
 `define_recapture()`) and the definition common covariates (e.g. via
 `define_photoperiod()`).
 
+## Simple statistics
+
+A few functions facilitate the computation of simple statistics from
+timeseries data or models. These include:
+
+  - **Calculate cumulative frequencies.** `cumdates()` is used to
+    calculate the cumulative number of events by each date in a
+    timeseries.
+  - **Estimating the strength of autocorrelation.** `eatimate_AR1()` is
+    used to estimate the autoregressive order 1 (AR1) parameter from the
+    autocorrelation function (ACF) of a model’s residuals.
+    `acf_in_white_noise()` can be used to compute confidence intervals
+    around an ACF.
+
 ## Simulations
 
 `Tools4ETS` advocates simulation-informed model-based inference; i.e,
@@ -71,25 +86,8 @@ the use of simulations to explore the consequences of data structure,
 processing and modelling decisions for model performance and ecological
 inferences.
 
-This includes functions which facilitate posterior simulation from
-generalised additive models (GAMs), a widely used modelling approach in
-ecology; namely:
-
-  - **Posterior simulation of expected values.**
-    `simulate_posterior_mu()` can be used to simulate from the posterior
-    of a GAM to compute ecologically-meaningful metrics, with confidence
-    intervals, which are not directly estimated by a model.
-  - **Posterior simulation of new observed values.**
-    `simulate_posterior_obs()` can be used to simulate new
-    ‘observations’ from a model, accounting for uncertainty in
-    fitted coefficients, expected values, predictions and
-    autocorrelation.
-  - **Summarising the posterior distribution.** `summarise_posterior()`
-    can be used to summarise posterior matrices (e.g. so that that they
-    can be plotted with `prettyGraphics::add_model_predictions()`.)
-
-This also includes function for simulating *de novo* timeseries with
-known properties; namely:
+This includes functions for simulating *de novo* timeseries with known
+properties; namely:
 
   - **Dataframe assembly.** `assemble_ts()` can be used to simulate
     timeseries dataframes with timestamps for multiple factor levels (if
@@ -101,15 +99,39 @@ known properties; namely:
   - **Response simulation.** `sim_ts()` can be used to simulate the
     values of a response variable given a user-defined model. For
     simulations including residual autocorrelation, `sigma_arima()`
-    facilitates the simulate autocorrelated observations with known
+    facilitates the simulation of autocorrelated observations with known
     variance.
 
-`Tools4ETS` also includes an interactive application designed to explore
-the use of GAMs as a tool for modelling depth timeseries (`GAMS4DTS()`)
-via the comparison of simulated datasets and model inferences under
-different conditions.
+A interactive application designed specifically to explore the use of
+GAMs as a tool for modelling depth timeseries (`GAMS4DTS()`) via the
+comparison of simulated datasets and model inferences under different
+conditions is included as well.
+
+`Tools4ETS` also includes functions which facilitate posterior
+simulation from generalised additive models (GAMs), a widely used
+modelling approach in ecology; namely:
+
+  - **Posterior simulation of expected values.**
+    `simulate_posterior_mu()` can be used to simulate from the posterior
+    of a GAM to compute ecologically meaningful metrics, with confidence
+    intervals, which are not directly estimated by a model.
+  - **Posterior simulation of new observed values.**
+    `simulate_posterior_obs()` can be used to simulate new
+    ‘observations’ from a model, accounting for uncertainty in
+    fitted coefficients, expected values, predictions and
+    autocorrelation.
+  - **Summarising the posterior distribution.** `summarise_posterior()`
+    can be used to summarise posterior matrices (e.g. so that that they
+    can be plotted with `prettyGraphics::add_model_predictions()`.)
 
 ## Interactive applications
 
 `Tools4ETS` includes an interactive Shiny-Dashboard application for the
 simulation and modelling of depth timeseries using GAMs (`GAMS4DTS()`).
+
+## Disclaimer
+
+`Tools4ETS` is a new package at an early stage of evolution. Package
+development has been particularly motivated by high-resolution movement
+timeseries collected from a Critically Endangered elasmobranch. Please
+report issues, comments or suggestions\!
