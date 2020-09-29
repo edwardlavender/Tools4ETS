@@ -73,7 +73,7 @@ timeseries data or models. These include:
   - **Calculate cumulative frequencies.** `cumdates()` is used to
     calculate the cumulative number of events by each date in a
     timeseries.
-  - **Estimating the strength of autocorrelation.** `eatimate_AR1()` is
+  - **Estimating the strength of autocorrelation.** `estimate_AR1()` is
     used to estimate the autoregressive order 1 (AR1) parameter from the
     autocorrelation function (ACF) of a model’s residuals.
     `acf_in_white_noise()` can be used to compute confidence intervals
