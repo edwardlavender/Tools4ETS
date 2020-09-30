@@ -17,7 +17,7 @@ acf_in_white_noise(acf, ci = 0.95, return = "upper")
 The function returns a number or a list, depending on the input to \code{return} (see above).
 }
 \description{
-This function calculates confidence intervals around an ACF. This represents the upper limit of autocorrelation in white noise. This is useful for producing pretty plots.
+This function calculates confidence intervals around an ACF. This represents the upper limit of autocorrelation expected in white noise. This is useful for producing pretty plots.
 }
 \seealso{
 \code{\link[stats]{acf}}, \code{\link[prettyGraphics]{add_model_predictions}}

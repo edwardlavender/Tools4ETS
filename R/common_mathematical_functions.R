@@ -8,7 +8,7 @@
 
 #' @title A linear function
 #' @description This function evaluates a linear function.
-#' @param x A numeric input which defines the data for which the linear function will be evaluated.
+#' @param x A numeric vector which defines the values at which the linear function will be evaluated.
 #' @param a A numeric input which defines the intercept.
 #' @param b A numeric input which defines the gradient.
 #'
@@ -32,7 +32,7 @@ linear <- function(x, a, b){
 
 #' @title A quadratic function
 #' @description   This function evaluates a quadratic function.
-#' @param x A numeric input which defines the data for which the quadratic function will be evaluated.
+#' @param x A numeric vector which defines the values at which the quadratic function will be evaluated.
 #' @param a A numeric value which defines the vertical stretch of the function.
 #' @param b A numeric value which defines the horizontal stretch of the function.
 #' @param h The x coordinate of the vertex.
@@ -58,7 +58,7 @@ quadratic <- function(x, a, b, h, k){
 
 #' @title A sigmoidal function
 #' @description This function evaluates a sigmoidal function.
-#' @param x A numeric input which defines the data for which the sigmoidal function will be evaluated.
+#' @param x A numeric vector which defines the values at which the sigmoidal function will be evaluated.
 #' @param x0 A numeric value which defines the x-value of the sigmoid's midpoint
 #' @param L A numeric value which defines expected change in f(x) above/below 0. For example, if \code{L = 2}, then the function will stretch ± 1 units above/below 0 at f(0) = 0.
 #' @param k A numeric value which affects the steepness of the function.

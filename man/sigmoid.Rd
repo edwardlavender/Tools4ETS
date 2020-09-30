@@ -7,7 +7,7 @@
 sigmoid(x, x0, L, k)
 }
 \arguments{
-\item{x}{A numeric input which defines the data for which the sigmoidal function will be evaluated.}
+\item{x}{A numeric vector which defines the values at which the sigmoidal function will be evaluated.}
 
 \item{x0}{A numeric value which defines the x-value of the sigmoid's midpoint}
 

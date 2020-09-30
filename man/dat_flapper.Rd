@@ -14,7 +14,7 @@ A dataframe with 20,161 observations and 4 variables:
 }
 }
 \source{
-Depth timeseries were collected by Marine Scotland Science and Scottish Natural Heritage.
+Archival timeseries were collected by Marine Scotland Science and Scottish Natural Heritage.
 }
 \usage{
 dat_flapper

@@ -9,13 +9,13 @@
 #' @examples
 #'
 #' #### Example (1): A simple sequence of dates
-#' cumdates(seq.Date(as.Date("2016-01-01"), as.Date("2016-01-10"), 1))
+#' cum_dates(seq.Date(as.Date("2016-01-01"), as.Date("2016-01-10"), 1))
 #'
 #' #### Example (2): Multiple records of each date
 #' set.seed(1)
 #' dates <- seq.Date(as.Date("2016-01-01"), as.Date("2016-01-10"), 1)
 #' dates <- sort(sample(dates, size = 1000, replace = TRUE))
-#' cumdates(dates)
+#' cum_dates(dates)
 #'
 #' @author Edward Lavender
 #' @export
@@ -23,9 +23,9 @@
 
 ###################################################
 ###################################################
-#### cumdates()
+#### cum_dates()
 
-cumdates <- function(data, ...){
+cum_dates <- function(data, ...){
   # work out the frequency of events on each date and put this in a new dataframe
   df.new <- data.frame(table(data))
   colnames(df.new) <- c("date", "freq")

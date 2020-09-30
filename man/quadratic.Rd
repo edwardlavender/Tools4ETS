@@ -7,7 +7,7 @@
 quadratic(x, a, b, h, k)
 }
 \arguments{
-\item{x}{A numeric input which defines the data for which the quadratic function will be evaluated.}
+\item{x}{A numeric vector which defines the values at which the quadratic function will be evaluated.}
 
 \item{a}{A numeric value which defines the vertical stretch of the function.}
 

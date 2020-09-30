@@ -2,20 +2,20 @@
 % Please edit documentation in R/flag_ts.R
 \name{flag_ts}
 \alias{flag_ts}
-\title{Flag independent segments of timeseries}
+\title{Flag independent segments of a timeseries}
 \usage{
 flag_ts(x, fct = NULL, dat = NULL, duration_threshold, flag = 1:3)
 }
 \arguments{
 \item{x}{A vector of timestamps, either as an integer/numeric object, a \code{\link[base]{DateTimeClasses}} or a \code{\link[base]{Date}}.}
 
-\item{fct}{A grouping factor defining independent segments of timeseries (e.g. individuals).}
+\item{fct}{(optional) A grouping factor defining independent segments of timeseries (e.g. individuals).}
 
 \item{dat}{(optional) A dataframe with a column \code{x} and, optionally, a column \code{fct}, can be supplied instead of \code{x} and \code{fct}.}
 
-\item{duration_threshold}{A numeric input defining the number of units (if \code{x} is an integer/numeric) or the number of minutes (if \code{x} is \code{\link[base]{DateTimeClasses}} or a \code{\link[base]{Date}}) between records after which separated timeseries are considered effectively 'independent'. This could be informed by a the autocorrelation function of the residuals of a model without any autocorrelation.}
+\item{duration_threshold}{A numeric input defining the number of units (if \code{x} is an integer/numeric) or the number of minutes (if \code{x} is \code{\link[base]{DateTimeClasses}} or a \code{\link[base]{Date}}) between records after which separated timeseries are considered effectively 'independent'. This could be informed by the autocorrelation function of the residuals of a model without any autocorrelation.}
 
-\item{flag}{A numeric input/vector of \code{1}, \code{2} or \code{3} specifying the flag type to be returned. \code{flag = 1} returns a logical vector with \code{TRUE} marking the first observation in each independent segment of timeseries (e.g. as required by \code{\link[mgcv]{bam}}. \code{flag = 2} returns identifies the first, second,... nth, independent segment of each factor level's timeseries. \code{flag = 3} provides a unique identifier for each segment of timeseries (e.g. as required by \code{\link[mgcv]{gamm}}).}
+\item{flag}{A numeric input/vector of \code{1}, \code{2} or \code{3} specifying the flag type to be returned. \code{flag = 1} returns a logical vector with \code{TRUE} marking the first observation in each independent segment of timeseries (e.g. as required by \code{\link[mgcv]{bam}}). \code{flag = 2} returns identifies the first, second,... nth, independent segment of each factor level's timeseries. \code{flag = 3} provides a unique identifier for each segment of timeseries (e.g. as required by \code{\link[mgcv]{gamm}}).}
 }
 \value{
 A dataframe with the duration between each observation and the next observation and corresponding flags.

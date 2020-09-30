@@ -4,7 +4,7 @@
 #' @import shinydashboard
 #' @import shinyWidgets
 #'
-#' @description An interactive Shiny-Dashboard interface for exploring generalised additive models (GAMs) as a tool for modelling depth timeseries (DTS). A specific vignette provides further information for this function.
+#' @description An interactive Shiny-Dashboard interface for exploring generalised additive models (GAMs) as a tool for modelling depth timeseries (DTS). Within this application, depth timeseries can be simulated, post-processed and modelled under different conditions. Comparisons of the simulated and inferred relationships under different conditions can be informative abou the impacts of impacts of data structure, post-processing decisions and model structure for ecological inferences. A specific vignette provides further information for this function.
 #'
 #' @examples
 #' \dontrun{

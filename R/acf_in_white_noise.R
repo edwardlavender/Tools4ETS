@@ -1,5 +1,5 @@
 #' @title Compute confidence intervals around an autocorrelation function (ACF)
-#' @description This function calculates confidence intervals around an ACF. This represents the upper limit of autocorrelation in white noise. This is useful for producing pretty plots.
+#' @description This function calculates confidence intervals around an ACF. This represents the upper limit of autocorrelation expected in white noise. This is useful for producing pretty plots.
 #'
 #' @param acf An ACF object, produced by \code{\link[stats]{acf}}.
 #' @param ci An numeric value between 0 and 1 which defines the confidence interval (CI) to be calculated. The default is 0.95; i.e, a 95 percent CI.

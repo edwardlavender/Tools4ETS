@@ -7,7 +7,7 @@
 linear(x, a, b)
 }
 \arguments{
-\item{x}{A numeric input which defines the data for which the linear function will be evaluated.}
+\item{x}{A numeric vector which defines the values at which the linear function will be evaluated.}
 
 \item{a}{A numeric input which defines the intercept.}
 

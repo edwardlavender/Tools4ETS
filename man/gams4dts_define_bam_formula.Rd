@@ -2,7 +2,7 @@
 % Please edit documentation in R/gams4dts_support.R
 \name{gams4dts_define_bam_formula}
 \alias{gams4dts_define_bam_formula}
-\title{Define an \code{mgcv::bam()} formula in GAMS4DTS}
+\title{Define an \code{\link[mgcv]{bam}} formula in \code{\link[Tools4ETS]{GAMS4DTS}}}
 \usage{
 gams4dts_define_bam_formula(
   response = "depth",
@@ -21,7 +21,7 @@ gams4dts_define_bam_formula(
 \item{dat}{A dataframe.}
 }
 \value{
-An \code{\link[mgcv]{bam}} model formula for GAMS4DTS.
+An \code{\link[mgcv]{bam}} model formula for \code{\link[Tools4ETS]{GAMS4DTS}}.
 }
 \description{
 This function is used to pass user-defined variables in \code{\link[Tools4ETS]{GAMS4DTS}} into an \code{\link[mgcv]{bam}} formula. The function is not intended to be called outside of \code{\link[Tools4ETS]{GAMS4DTS}}.
@@ -29,3 +29,4 @@ This function is used to pass user-defined variables in \code{\link[Tools4ETS]{G
 \author{
 Edward Lavender
 }
+\keyword{internal}

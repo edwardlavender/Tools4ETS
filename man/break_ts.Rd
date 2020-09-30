@@ -2,7 +2,7 @@
 % Please edit documentation in R/break_ts.R
 \name{break_ts}
 \alias{break_ts}
-\title{Break timeseries and introduce gaps}
+\title{Break a timeseries and introduce gaps}
 \usage{
 break_ts(
   dat,
@@ -18,9 +18,9 @@ break_ts(
 \arguments{
 \item{dat}{A dataframe to be broken. As a minimum, the dataframe should include a column which defines timestamps (see below).}
 
-\item{timestamp}{A character string defining the column name in \code{dat} which contains timeseries. \code{timestamp} can be an object of class numeric, integer or \code{\link[base]{DateTimeClasses}}.}
+\item{timestamp}{A character string defining the column name in \code{dat} which contains times. \code{timestamp} can be an object of class numeric, integer or \code{\link[base]{DateTimeClasses}}.}
 
-\item{ind}{A character string defining the column name in \code{dat} which distinguishes unique timeseries. This is 'flag3' in \code{\link[Tools4ETS]{flag_ts}}.}
+\item{ind}{A character string defining the column name in \code{dat} which distinguishes unique timeseries (see also \code{\link[Tools4ETS]{flag_ts}} and the code{flag} argument).}
 
 \item{n}{A number or a numeric vector defining the number of breaks in each unique timeseries. Alternatively, \code{pos} can be provided (see below).}
 
@@ -30,7 +30,7 @@ break_ts(
 
 \item{after}{As above, but after the break position.}
 
-\item{output}{A numeric value defining the output type. If \code{output = 1}, the function returns a list. This comprises: (1) \code{breaks}, a vector of TRUE/FALSE statements indicating the positions in \code{dat} that lie within break windows; (2) \code{pos_breaks}, a numeric vector of positions at which \code{dat} is broken; and (3) \code{dat_broken}, the dataframe in which these positions have been removed. If \code{output = 2}, only \code{dat_broken} is returned.}
+\item{output}{A numeric value defining the output type. If \code{output = 1}, the function returns a named list. This comprises: (1) 'breaks', a vector of TRUE/FALSE statements indicating the positions in \code{dat} that lie within break windows; (2) 'pos_breaks', a numeric vector of positions at which \code{dat} is broken; and (3) 'dat_broken', the dataframe in which these positions have been removed. If \code{output = 2}, only 'dat_broken' is returned.}
 }
 \value{
 The function returns a list or a dataframe, depending on the input to \code{output} (see above).
@@ -54,7 +54,8 @@ break_ts_ls <-
            n = 1)
 # By default, the function returns a list:
 utils::str(break_ts_ls)
-# We have broken the timeseries at 721 positions around n = 1 randomly chosen position(s)
+# We have broken the timeseries around n = 1 randomly chosen position(s),
+# ... removing 721 rows
 # ... based on the default before() and after() functions
 length(which(break_ts_ls$breaks))
 length(break_ts_ls$pos_breaks)

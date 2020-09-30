@@ -70,7 +70,7 @@ description of recapture events (`suggest_recapture()` and
 A few functions facilitate the computation of simple statistics from
 timeseries data or models. These include:
 
-  - **Calculate cumulative frequencies.** `cumdates()` is used to
+  - **Calculate cumulative frequencies.** `cum_dates()` is used to
     calculate the cumulative number of events by each date in a
     timeseries.
   - **Estimating the strength of autocorrelation.** `estimate_AR1()` is

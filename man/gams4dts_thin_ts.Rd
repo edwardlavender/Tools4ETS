@@ -2,7 +2,7 @@
 % Please edit documentation in R/gams4dts_support.R
 \name{gams4dts_thin_ts}
 \alias{gams4dts_thin_ts}
-\title{GAMS4DTS Thinning Methods}
+\title{\code{\link[Tools4ETS]{GAMS4DTS}} Thinning Methods}
 \usage{
 gams4dts_thin_ts(
   dat,
@@ -41,3 +41,4 @@ This function implements thinning behind the scenes for \code{\link[Tools4ETS]{G
 \author{
 Edward Lavender
 }
+\keyword{internal}

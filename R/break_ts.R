@@ -1,14 +1,14 @@
-#' @title Break timeseries and introduce gaps
+#' @title Break a timeseries and introduce gaps
 #' @description This function 'breaks' a timeseries by introducing gaps either around (a) \code{n} randomly chosen positions or (b) user-defined positions. The width of each gap is determined by user-supplied functions which define the amount of time around each position to be removed. Datasets comprising multiple, independent timeseries can be broken by different amounts and/or at different positions. This can be useful to explore the effects of gaps in real-world data for model inferences (e.g. a model's ability to correctly infer the effects of covariates acting at different scales for different individuals with different amounts of missing data).
 #'
 #' @param dat A dataframe to be broken. As a minimum, the dataframe should include a column which defines timestamps (see below).
-#' @param timestamp A character string defining the column name in \code{dat} which contains timeseries. \code{timestamp} can be an object of class numeric, integer or \code{\link[base]{DateTimeClasses}}.
-#' @param ind A character string defining the column name in \code{dat} which distinguishes unique timeseries. This is 'flag3' in \code{\link[Tools4ETS]{flag_ts}}.
+#' @param timestamp A character string defining the column name in \code{dat} which contains times. \code{timestamp} can be an object of class numeric, integer or \code{\link[base]{DateTimeClasses}}.
+#' @param ind A character string defining the column name in \code{dat} which distinguishes unique timeseries (see also \code{\link[Tools4ETS]{flag_ts}} and the code{flag} argument).
 #' @param n A number or a numeric vector defining the number of breaks in each unique timeseries. Alternatively, \code{pos} can be provided (see below).
 #' @param pos A list of positions at which to break each unique timeseries. This can be provided instead of \code{n} for more control.
 #' @param before A list containing a function/functions which define(s) the number of timesteps before each break position to be included in the break.
 #' @param after As above, but after the break position.
-#' @param output A numeric value defining the output type. If \code{output = 1}, the function returns a list. This comprises: (1) \code{breaks}, a vector of TRUE/FALSE statements indicating the positions in \code{dat} that lie within break windows; (2) \code{pos_breaks}, a numeric vector of positions at which \code{dat} is broken; and (3) \code{dat_broken}, the dataframe in which these positions have been removed. If \code{output = 2}, only \code{dat_broken} is returned.
+#' @param output A numeric value defining the output type. If \code{output = 1}, the function returns a named list. This comprises: (1) 'breaks', a vector of TRUE/FALSE statements indicating the positions in \code{dat} that lie within break windows; (2) 'pos_breaks', a numeric vector of positions at which \code{dat} is broken; and (3) 'dat_broken', the dataframe in which these positions have been removed. If \code{output = 2}, only 'dat_broken' is returned.
 #'
 #' @return The function returns a list or a dataframe, depending on the input to \code{output} (see above).
 #'
@@ -28,7 +28,8 @@
 #'            n = 1)
 #' # By default, the function returns a list:
 #' utils::str(break_ts_ls)
-#' # We have broken the timeseries at 721 positions around n = 1 randomly chosen position(s)
+#' # We have broken the timeseries around n = 1 randomly chosen position(s),
+#' # ... removing 721 rows
 #' # ... based on the default before() and after() functions
 #' length(which(break_ts_ls$breaks))
 #' length(break_ts_ls$pos_breaks)

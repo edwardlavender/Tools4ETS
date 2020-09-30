@@ -1,14 +1,14 @@
 #' @title Add unique unit IDs to timeseries
-#' @description This function extracts unique unit (e.g., electronic tag) IDs from a dataframe containing unit attributes, termed \code{dat_units}, that correspond to units listed in a timeseries, termed \code{dat_ts}. This is useful when the same unit (e.g., an electronic tag) is deployed multiple times so that each 'unit' code (i.e., the code of a particular tag) does not correspond to a unique deployment. In this scenario, both unit code and the time of deployment need to be included in the matching procedure to add unique unit IDs to the timeseries.
+#' @description This function extracts unique unit (e.g., electronic tag) IDs from a dataframe containing unit attributes, termed \code{dat_units}, that correspond to units listed in a timeseries, termed \code{dat_ts}. This is useful when the same unit (e.g., an electronic tag) is deployed multiple times so that each 'unit' code (i.e., the code of a particular tag) does not correspond to a unique deployment. In this scenario, both the unit code and the time of deployment need to be included in the matching procedure to add unique unit IDs to the timeseries.
 #'
-#' @param dat_ts A dataframe comprising timeseries collected from 'units'. This must contain two named columns: 'timestamp', a  vector which defines the time of each observation (i.e., in \code{\link[base]{Date}} or \code{\link[base]{DateTimeClasses}}) format; and 'unit', a vector which defines the unit code (which may be non unique). The column 'unit' should also be found in \code{dat_units} (see below).
+#' @param dat_ts A dataframe comprising timeseries collected from 'units'. This must contain two named columns: 'timestamp', a  vector which defines the time of each observation (in \code{\link[base]{Date}} or \code{\link[base]{DateTimeClasses}} format); and 'unit', a vector which defines the unit code (which may be non unique). The column 'unit' should also be found in \code{dat_units} (see below).
 #' @param dat_units A dataframe which contains unit metadata. This must contain four named columns: 'unit', as above for \code{dat_ts}; 'unit_id', a unique identifier for unit; 'start_time', a vector which defines the time of each unit's deployment; and 'end_time', a vector which defines the end of each unit's deployment. 'start_time' and 'end_time' should be of the same object type, and the same type as 'timestamp' in \code{dat_ts}.
 #'
 #' @return The function returns a vector of unit IDs, as defined in the \code{dat_units$unit_id} column, which correspond to each observation in the \code{dat_ts} dataframe.
 #'
 #' @examples
 #' #### Define example data
-#' # In this example, we have two unit, but one has been re-deployed:
+#' # In this example, we have two units, but one has been re-deployed:
 #' dat_units <- data.frame(unit = c(1, 1, 2),
 #'                         unit_id = c(1, 2, 3),
 #'                         start_time = as.POSIXct(c("2016-01-01", "2016-01-02", "2016-01-01")),

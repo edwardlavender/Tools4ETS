@@ -3,7 +3,7 @@
 #### estimate_AR1()
 
 #' @title Estimate the AR1 parameter from the autocorrelation function of a model's residuals
-#' @description This function estimates the AR1 parameter from the autocorrelation function of a model's residuals. For models of a single timeseries, the AR1 parameter is the autocorrelation function at lag = 1 (i.e., between sequential residuals). However, for multiple timeseries, this value may be misleading if the AR1 parameter differs among independent timeseries. In this case, the function calculates the AR1 parameter separately for each timeseries and returns a summary.
+#' @description This function estimates the AR1 parameter from the autocorrelation function of a model's residuals. For models of a single timeseries, the AR1 parameter is the value of the autocorrelation function at lag = 1 (i.e., between sequential residuals). However, for multiple timeseries, this value may be misleading if the AR1 parameter differs among independent timeseries. In this case, the function calculates the AR1 parameter separately for each timeseries and returns a summary.
 #' @param resid A numeric vector of residuals.
 #' @param AR.start A logical variable, of the same length as \code{resid}, in which the first observation of each independent section of AR1 correlation is denoted \code{TRUE}.
 #' @param verbose A logical input which defines whether or not to print messages to the console. If \code{verbose = TRUE} and AR.start is not \code{NULL}, the function also returns a plot of the density of AR1 parameter values across independent timeseries.
@@ -51,7 +51,7 @@
 # Model using bam()
 #' mAR0 <- mgcv::bam(y ~ s(t), data = d)
 #' # Examine AR1 computed for whole timeseries or as a mean from each independent timeseries
-#' # Both reflect a compromise between thew lower and higher autocorrelation
+#' # Both reflect a compromise between the lower and higher autocorrelation
 #' # ... but the second output makes it clear that we have very different levels of autocorrelation
 #' # ... in the timeseries that we may need to account for.
 #' estimate_AR1(stats::resid(mAR0), AR.start = NULL)
@@ -73,9 +73,9 @@ estimate_AR1 <- function(resid, AR.start = NULL, verbose = TRUE){
     resid_ls <- split(resid, f = split_f)
     rhos <- sapply(resid_ls, function(r) return(extract_AR1_from_acf(r)))
     if(verbose) {
-      cat("Summary statistics for rho values from each independent timeseries: \n")
+      cat("Summary statistics for AR1 values from each independent timeseries: \n")
       print(summary(rhos))
-      prettyGraphics::pretty_plot(stats::density(rhos), type = "l", xlab = "rho", ylab = "Density")
+      prettyGraphics::pretty_plot(stats::density(rhos), type = "l", xlab = "AR1", ylab = "Density")
     }
     rho <- mean(rhos)
   }

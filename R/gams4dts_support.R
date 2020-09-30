@@ -2,7 +2,7 @@
 ################################################
 #### gams4dts_define_bam_formula()
 
-#' @title Define an \code{mgcv::bam()} formula in GAMS4DTS
+#' @title Define an \code{\link[mgcv]{bam}} formula in \code{\link[Tools4ETS]{GAMS4DTS}}
 #' @description This function is used to pass user-defined variables in \code{\link[Tools4ETS]{GAMS4DTS}} into an \code{\link[mgcv]{bam}} formula. The function is not intended to be called outside of \code{\link[Tools4ETS]{GAMS4DTS}}.
 #'
 #' @param response A character input specifying the name of the response variable in \code{dat} (i.e. \code{"depth"}).
@@ -10,10 +10,10 @@
 #' @param smooth_covariates A list containing smooth covariates, including their names and basis functions.
 #' @param dat A dataframe.
 #'
-#' @returns An \code{\link[mgcv]{bam}} model formula for GAMS4DTS.
+#' @returns An \code{\link[mgcv]{bam}} model formula for \code{\link[Tools4ETS]{GAMS4DTS}}.
 #'
 #' @author Edward Lavender
-#'
+#' @keywords internal
 
 gams4dts_define_bam_formula <-
   function(
@@ -116,7 +116,7 @@ gams4dts_define_bam_formula <-
 ################################################
 #### gams4dts_bam_model()
 
-#' @title Evaluate an \code{mgcv::bam()} model for GAMS4DTS
+#' @title Evaluate an \code{\link[mgcv]{bam}} model for \code{\link[Tools4ETS]{GAMS4DTS}}
 #' @import mgcv
 #'
 #' @description This function is a wrapper for \code{\link[mgcv]{bam}} which passes user-defined inputs from \code{\link[Tools4ETS]{GAMS4DTS}} to \code{\link[mgcv]{bam}}. The function is not intended to be called outside of \code{\link[Tools4ETS]{GAMS4DTS}}.
@@ -130,7 +130,7 @@ gams4dts_define_bam_formula <-
 #'
 #' @return An \code{\link[mgcv]{bam}} model object.
 #' @author Edward Lavender
-#'
+#' @keywords internal
 
 gams4dts_bam_model <-
   function(
@@ -173,7 +173,7 @@ gams4dts_bam_model <-
 ################################################
 #### gams4dts_thin_ts()
 
-#' @title GAMS4DTS Thinning Methods
+#' @title \code{\link[Tools4ETS]{GAMS4DTS}} Thinning Methods
 #' @importFrom magrittr %>%
 #'
 #' @description This function implements thinning behind the scenes for \code{\link[Tools4ETS]{GAMS4DTS}}. The function is not intended to be called outside of this environment.
@@ -188,7 +188,7 @@ gams4dts_bam_model <-
 #'
 #' @return A thinned dataframe.
 #' @author Edward Lavender
-#'
+#' @keywords internal
 
 #### Comments
 # In cases where we have a dataframe with covariates and depths, the user may choose to
@@ -590,6 +590,66 @@ gams4dts_thin_ts <-
 
 
 
-#### End of code.
-################################################
-################################################
+#########################################
+#########################################
+#### barplot_ts_sex()
+
+#' @title Create a barplot of the number of individuals of each sex in timeseries
+#' @description This function produces a barplot showing the number of individuals of each sex in a timeseries. To do this, the function takes in a dataframe which contains a column distinguishing individuals and a column defining their sex, which are specified as character strings. The function then identifies the sex of each unique individual, sums the number of individuals of each sex and produces a barplot. This function is primarily intended for use in \code{\link[Tools4ETS]{GAMS4DTS}}.
+#'
+#' @param dat A dataframe which contains a column which defines unique individuals and a column which defines their sex. Multiple observations from the same individual are supported because the function obtains the sex of each unique individual once.
+#' @param id_column A character input which defines the name of the column in \code{dat} which distinguishes individuals.
+#' @param f_column A character input which defines the name of the column in \code{dat} which defines the sex of each individual.
+#' @param cex.axis A number which defines the font size for axis tick labels.
+#' @param cex A number which defines the font sizes for axis labels.
+#'
+#' @return The function returns a pre-customised barplot showing the number of individuals of each sex in a dataframe.
+#'
+#' @author Edward Lavender
+#' @keywords internal
+#'
+
+barplot_ts_sex <-
+  function(
+    dat,
+    id_column = "individual",
+    f_column = "sex",
+    cex.axis = 1,
+    cex = 1
+  ){
+
+    #### create a new dataframe, containing the sex of each id_column
+    sc <- data.frame(individual = unique(dat[, id_column]))
+    sc[, f_column] <- factor(dat[, f_column][match(sc[, id_column], dat[, id_column])])
+
+    #### count the number of individuals
+    n_individuals <- length(unique(dat[, id_column]))
+    # count the number of females and males
+    nfemales <- length(which(sc[, f_column] == as.character(levels(sc[, f_column])[1])))
+    nmales <- n_individuals - nfemales
+
+    #### Define y axis and limits for plot
+    yat <- pretty(c(0, n_individuals), 5)
+    ylims <- c(0, max(yat))
+
+    #### create barplot
+    graphics::barplot(c(nfemales, nmales),
+                      space = 0,
+                      axes = F,
+                      ylim = ylims)
+
+    #### Add axes
+    graphics::axis(side = 1, at = c(0.5, 1.5), labels = c("Female", "Male"), pos = 0, cex.axis = cex.axis)
+    graphics::axis(side = 2, at = yat, pos = 0, las = 2, cex.axis = cex.axis)
+
+    #### Add axes labels
+    graphics::mtext(side = 1, "Sex", line = 2.5, cex = cex)
+    graphics::mtext(side = 2, "Count", line = 2.5, cex = cex)
+
+    # close function
+  }
+
+#### End of code
+#########################################
+#########################################
+

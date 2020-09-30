@@ -9,5 +9,5 @@
 #'   \item{id}{A factor with two levels ("A" and "B") distinguishing sample timeseries from two different individuals.}
 #' }
 #'
-#' @source Depth timeseries were collected by Marine Scotland Science and Scottish Natural Heritage.
+#' @source Archival timeseries were collected by Marine Scotland Science and Scottish Natural Heritage.
 "dat_flapper"

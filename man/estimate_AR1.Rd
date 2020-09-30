@@ -17,7 +17,7 @@ estimate_AR1(resid, AR.start = NULL, verbose = TRUE)
 The function returns a number which represents the estimated AR1 parameter.
 }
 \description{
-This function estimates the AR1 parameter from the autocorrelation function of a model's residuals. For models of a single timeseries, the AR1 parameter is the autocorrelation function at lag = 1 (i.e., between sequential residuals). However, for multiple timeseries, this value may be misleading if the AR1 parameter differs among independent timeseries. In this case, the function calculates the AR1 parameter separately for each timeseries and returns a summary.
+This function estimates the AR1 parameter from the autocorrelation function of a model's residuals. For models of a single timeseries, the AR1 parameter is the value of the autocorrelation function at lag = 1 (i.e., between sequential residuals). However, for multiple timeseries, this value may be misleading if the AR1 parameter differs among independent timeseries. In this case, the function calculates the AR1 parameter separately for each timeseries and returns a summary.
 }
 \examples{
 #### Example (1): Simulate a single timeseries and identify AR1 parameter
@@ -60,7 +60,7 @@ d3$y <- as.numeric(arima.sim(list(order = c(1,0,0), ar = 0.2),
 d <- rbind(d1, d3)
 mAR0 <- mgcv::bam(y ~ s(t), data = d)
 # Examine AR1 computed for whole timeseries or as a mean from each independent timeseries
-# Both reflect a compromise between thew lower and higher autocorrelation
+# Both reflect a compromise between the lower and higher autocorrelation
 # ... but the second output makes it clear that we have very different levels of autocorrelation
 # ... in the timeseries that we may need to account for.
 estimate_AR1(stats::resid(mAR0), AR.start = NULL)

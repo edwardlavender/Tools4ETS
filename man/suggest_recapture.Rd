@@ -2,7 +2,7 @@
 % Please edit documentation in R/suggest_recapture.R
 \name{suggest_recapture}
 \alias{suggest_recapture}
-\title{Explore potential recapture events on unknown dates}
+\title{Explore potential, unrecorded recapture events within depth timeseries}
 \usage{
 suggest_recapture(
   data,

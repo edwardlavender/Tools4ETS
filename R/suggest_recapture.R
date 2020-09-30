@@ -1,4 +1,4 @@
-#' @title Explore potential recapture events on unknown dates
+#' @title Explore potential, unrecorded recapture events within depth timeseries
 #' @description This function highlights potential recapture events on unknown dates based on a depth threshold; for each day in the depth timeseries, all the timestamps in which the individual was above this depth are considered possible recapture events. These timestamps can be saved by the function and inspected graphically.
 #'
 #' @param data A dataframe with two named columns: 'timestamp' (in POSIXct format) and 'depth' (of a given individual).
