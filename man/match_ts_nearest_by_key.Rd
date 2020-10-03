@@ -19,7 +19,7 @@ match_ts_nearest_by_key(d1, d2, key_col, time_col)
 For a dataframe comprising observations from a series of factor levels (e.g., individuals) collected through time, the function returns a vector of positions in a second dataframe which, for the appropriate factor level, are nearest in time.
 }
 \description{
-For two dataframes, \code{d1} and \code{d2}, this function finds the positions in the second dataframe which, for each key (e.g., factor level, individual) in the first dataframe, are nearest in time (i.e., nearest neighbour interpolation accounting for observations from different factor levels).
+For two dataframes, \code{d1} and \code{d2}, this function finds the positions in the second dataframe which, for each key (e.g., factor level) in the first dataframe, are nearest in time (i.e., nearest neighbour interpolation accounting for observations from different factor levels).
 }
 \details{
 If there are multiple matches, only the first is returned.
@@ -70,12 +70,12 @@ d1$key_in_d2 <- d2$key[d1$position_in_d2]
 d1$t_in_d2 <- d2$t[d1$position_in_d2]
 # We can now safely add values from d2 to d1:
 d1$val_in_d2 <- d2$vals[d1$position_in_d2]
-# Examine d1 and d2;
+# Examine d1 and d2:
 d1; d2
 
 }
 \seealso{
-This is an extension of \code{\link[Tools4ETS]{match_ts_nearest}} to account for different factor levels when these to be included in the matching process.
+This is an extension of \code{\link[Tools4ETS]{match_ts_nearest}} to account for different factor levels when these to be included in the matching process. To use \code{\link[Tools4ETS]{match_ts_nearest}} or \code{\link[Tools4ETS]{match_ts_nearest_by_key}} to add observations from one dataframe to another, see \code{\link[Tools4ETS]{pair_ts}}.
 }
 \author{
 Edward Lavender

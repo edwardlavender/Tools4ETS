@@ -1,7 +1,7 @@
 #' @title Thin a timeseries by selecting every nth observation
 #' @importFrom magrittr %>%
 #'
-#' @description This function thins a timeseries by selecting every nth observation. The function provides flexibility to (a) distinguish among independent timeseries (e.g. timeseries for different individuals) via a user supplied factor that can be determined by \code{\link[Tools4ETS]{flag_ts}} and (b) return multiple thinned datasets for which thinning is started at different locations. The latter is useful for models of thinned timeseries because it is important to check that model inferences are not sensitive to the particular subset of data chosen.
+#' @description This function thins a timeseries by selecting every nth observation. The function provides flexibility to (a) distinguish among independent timeseries (e.g. timeseries for different individuals) via a user-supplied factor that can be determined \code{\link[Tools4ETS]{flag_ts}} and (b) return multiple thinned datasets for which thinning is started at different locations. The latter is useful for models of thinned timeseries because it is important to check that model inferences are not sensitive to the particular subset of data chosen.
 #'
 #' @param dat A dataframe to be thinned.
 #' @param ind A character input which defines the column name \code{dat} which uniquely distinguishes each independent timeseries (i.e., \code{flag3} reported by \code{\link[Tools4ETS]{flag_ts}}).
@@ -12,7 +12,6 @@
 #' @return The function returns a list or dataframe, depending on the input to \code{first} (see above).
 #'
 #' @examples
-#'
 #' #### Simulate a dataframe to be thinned
 #' # Define timestamps
 #' t <- c(seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-02"), by = "6 hours"),

@@ -2,10 +2,10 @@
 ###############################
 #### match_ts_nearest()
 
-#' @title Find the position in one vector that is nearest in time to a value in another dataframe
+#' @title Find the position in one vector that is nearest in time to a value in another
 #' @import data.table
 #'
-#' @description This function is like \code{\link[base]{match}}, but the aim is, for a given sequence of times (\code{times}), to find the positions in another sequence of times (\code{lookup}) that are nearest in time to those in the first sequence. In other words, for every time inputted, \code{match_ts_nearest()} finds the position in another sequence of times which is nearest in time to that time. This is useful if, for example, you have an existing dataframe to which you want to add the observations, held in another dataframe, that are nearest in time to observations in the first dataframe (i.e., nearest neighbour interpolation). This function uses \code{\link[data.table]{data.table}} for fast matching, even with very large vectors.
+#' @description This function is like \code{\link[base]{match}}, but the aim is, for a given sequence of times (\code{times}), to find the positions in another sequence of times (\code{lookup}) that are nearest in time to those in the first sequence. This is useful if, for example, you have an existing dataframe to which you want to add the observations, held in another dataframe, that are nearest in time to observations in the first dataframe (i.e., nearest neighbour interpolation). This function uses \code{\link[data.table]{data.table}} for fast matching, even with very large vectors.
 #'
 #' @param times A vector of timestamps for which you want to identify the position of the nearest timestamp in another vector (\code{lookup}).
 #' @param lookup A vector of timestamps for which you will determine the position of the nearest timestamp to each time in \code{times}.
@@ -66,7 +66,7 @@
 #' # correct output is: 3, 2, 4, 4
 #' match_ts_nearest(t1_unordered, t2_unordered)
 #'
-#' @seealso \code{\link[Tools4ETS]{match_ts_nearest_by_key}} is an extension of \code{match_ts_nearest()} to account for different factor levels when these to be included in the matching process.
+#' @seealso \code{\link[Tools4ETS]{match_ts_nearest_by_key}} is an extension of this function to account for different factor levels when these to be included in the matching process. To use \code{\link[Tools4ETS]{match_ts_nearest}} or \code{\link[Tools4ETS]{match_ts_nearest_by_key}} to add observations from one dataframe to another, see \code{\link[Tools4ETS]{pair_ts}}.
 #'
 #' @author Edward Lavender
 #' @export
@@ -99,7 +99,7 @@ match_ts_nearest <- function(times, lookup){
 #### match_ts_nearest_by_key()
 
 #' @title Match timeseries by key and time
-#' @description For two dataframes, \code{d1} and \code{d2}, this function finds the positions in the second dataframe which, for each key (e.g., factor level, individual) in the first dataframe, are nearest in time (i.e., nearest neighbour interpolation accounting for observations from different factor levels).
+#' @description For two dataframes, \code{d1} and \code{d2}, this function finds the positions in the second dataframe which, for each key (e.g., factor level) in the first dataframe, are nearest in time (i.e., nearest neighbour interpolation accounting for observations from different factor levels).
 #'
 #' @param d1 A dataframe which includes a column that defines factor levels and a column that defines timestamps. The names of these columns need to match those in \code{d2}.
 #' @param d2 A dataframe which includes a column that defines factor levels and a column that defines timestamps. The names of these columns need to match those in \code{d1}.
@@ -110,7 +110,7 @@ match_ts_nearest <- function(times, lookup){
 #'
 #' @return For a dataframe comprising observations from a series of factor levels (e.g., individuals) collected through time, the function returns a vector of positions in a second dataframe which, for the appropriate factor level, are nearest in time.
 #'
-#' @seealso This is an extension of \code{\link[Tools4ETS]{match_ts_nearest}} to account for different factor levels when these to be included in the matching process.
+#' @seealso This is an extension of \code{\link[Tools4ETS]{match_ts_nearest}} to account for different factor levels when these to be included in the matching process. To use \code{\link[Tools4ETS]{match_ts_nearest}} or \code{\link[Tools4ETS]{match_ts_nearest_by_key}} to add observations from one dataframe to another, see \code{\link[Tools4ETS]{pair_ts}}.
 #'
 #' @examples
 #' #### Example (1)
@@ -158,7 +158,7 @@ match_ts_nearest <- function(times, lookup){
 #' d1$t_in_d2 <- d2$t[d1$position_in_d2]
 #' # We can now safely add values from d2 to d1:
 #' d1$val_in_d2 <- d2$vals[d1$position_in_d2]
-#' # Examine d1 and d2;
+#' # Examine d1 and d2:
 #' d1; d2
 #'
 #' @author Edward Lavender
@@ -199,7 +199,7 @@ match_ts_nearest_by_key <- function(d1, d2, key_col, time_col){
 #' @title Pair timeseries
 #' @description This function adds observations from one timeseries to another timeseries using a matching process (e.g., nearest neighbour interpolation). This is useful when you have a main dataframe to which you need to add observations (e.g., those occurring closest in time) from another dataframe.
 #'
-#' @param d1 A dataframe that contains, at a minimum, a vector of timestamps, to which observations are added from \code{d2}.
+#' @param d1 A dataframe that contains, at a minimum, a vector of timestamps, to which observations need to be added from \code{d2}.
 #' @param d2 A dataframe that contains, at a minimum, a vector of timestamps and associated observations, to be added to \code{d1}.
 #' @param time_col A character that defines the name of the column that contains timestamps in \code{d1} and \code{d2}.
 #' @param key_col (optional) A character that defines the name of the column that contains keys in \code{d1} and \code{d2}. This is required for \code{method = "match_ts_nearest_by_key"} (see below).
@@ -208,12 +208,12 @@ match_ts_nearest_by_key <- function(d1, d2, key_col, time_col){
 #' @param min_gap (optional) A number that defines the minimum time gap (in user-defined units, see \code{units}, below) between times in \code{d1} and the times of observations that are added to \code{d1} from \code{d2}. This is useful if, for instance, some of the nearest observations in \code{d2} occurred long before the nearest observations in \code{d1}. If provided, the function counts the number of observations which do not meet this requirement and, if requested via \code{control_beyond_gap}, removes these from the returned dataframe or sets them to NA (see below).
 #' @param max_gap As above, for \code{min_gap}, but the maximum time gap.
 #' @param units A character that defines the units of the inputted \code{min_gap} or \code{max_gap}. This is passed to \code{\link[base]{difftime}}.
-#' @param control_beyond_gap A character that defines whether or not to rows from \code{d1} that contain observations from \code{d2} that exceed \code{min_gap} or \code{max_gap} to NA (\code{"NA"}) or to remove those rows (\code{"remove"}).
+#' @param control_beyond_gap A character that defines whether or not to set rows from \code{d1} that contain observations from \code{d2} that exceed \code{min_gap} or \code{max_gap} to NA (\code{"NA"}) or to remove those rows (\code{"remove"}).
 #'
 #' @return The function returns a dataframe, \code{d1}, as inputted, with an added column (whose name is given by \code{val_col}), comprising values added from another dataframe, \code{d2}. Any observations in \code{d1} for which there are not observations in \code{d2} occurring within some time window (defined by \code{min_gap} and \code{max_gap}), if specified, are counted and, if requested, removed from the returned dataframe.
 #'
 #' @examples
-#' #### Example (1) Using method = "match_nearest_ts()"
+#' #### Example (1) Pair timeseries using method = "match_nearest_ts()"
 #' # Define dataframe to which we want to add information
 #' d1 <- data.frame(t = seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-02"), by = "hours"))
 #' # Define dataframe in which information is contained
@@ -221,7 +221,7 @@ match_ts_nearest_by_key <- function(d1, d2, key_col, time_col){
 #' d2$vals <- runif(nrow(d2), 0, 50)
 #' pair_ts(d1, d2, time_col = "t", val_col = "vals", method = "match_ts_nearest")
 #'
-#' #### Example (2) Using method = "match_nearest_ts_by_key()"
+#' #### Example (2) Pair timeseries sing method = "match_nearest_ts_by_key()"
 #' # Define dataframes
 #' d1 <- data.frame(t = as.POSIXct(c("2016-01-01 18:00:00",
 #'                                   "2016-01-01 17:00:00",

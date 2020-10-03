@@ -36,13 +36,12 @@ simulate_posterior_mu(
 The function returns a matrix, or list depending on the input to \code{return} and \code{summary_format}.
 }
 \description{
-This function simulates expected values from a GAM, on the scale of the the response, using posterior simulation. To do this, the function assumes that the uncertainty in fitted coefficients can be characterised by a multivariate normal distribution with a mean vector given by fitted coefficients and a covariance matrix equal to their (Bayesian) covariance matrix. The function samples \code{n} new coefficient vectors from this multivariate distribution. Each sample of coefficient vectors is combined with the linear predictor matrix (and the inverse link function) to generate a single, simulated mean value for each coefficient vector sample. This results in a posterior distribution matrix, in which each row contains \code{n} simulated mean values (stored in different columns) for that observation. The posterior distribution matrix can be summarised, by calculating the mean value and confidence intervals, for every observation, by internally implementing \code{\link[Tools4ETS]{summarise_posterior}}.
+This function simulates expected values from a GAM, on the scale of the response, using posterior simulation. To do this, the function assumes that the uncertainty in fitted coefficients can be characterised by a multivariate normal distribution with a mean vector given by fitted coefficients and a covariance matrix equal to their (Bayesian) covariance matrix. The function samples \code{n} new coefficient vectors from this multivariate distribution. Each sample of coefficient vectors is combined with the linear predictor matrix (and the inverse link function) to generate a single, simulated mean value for each coefficient vector sample. This results in a posterior distribution matrix, in which each row contains \code{n} simulated mean values (stored in different columns) for that observation. The posterior distribution matrix can be summarised, by calculating the mean value and confidence intervals, for every observation, by internally implementing \code{\link[Tools4ETS]{summarise_posterior}}.
 }
 \details{
 This function was written for models of class "gam" (see \code{\link[mgcv]{gamObject}}).
 }
 \examples{
-
 #### Simulate some data and fit a GAM
 set.seed(1)
 nobs <- 100
@@ -53,14 +52,16 @@ d <- data.frame(x = x, y = y)
 m1 <- mgcv::gam(y ~ s(x), data = d)
 
 #### Example (1): Return the full posterior distribution
-# ... based on 1000 simulations:
+# ... based on some simulations. We'll keep the number of simulations
+# ... small in these examples to minimise computation time.
+n_sim <- 100
 sim1 <-
   simulate_posterior_mu(
     model = m1,
     newdata = d,
-    n = 500,
+    n = n_sim,
     return = "full")
-# The function returns a matrix, w
+# The function returns a matrix,
 # ... with one row for each observation
 # ... and one column for each simulated mean/fitted value (on the scale of the response)
 # ... for that observation.
@@ -72,7 +73,7 @@ sim2 <-
   simulate_posterior_mu(
     model = m1,
     newdata = d,
-    n = 500,
+    n = n_sim,
     return = "summary")
 # The function returns a list, with 'mean', 'lowerCI' and 'upperCI'
 utils::str(sim2)
@@ -84,7 +85,7 @@ sim3 <-
   simulate_posterior_mu(
     model = m1,
     newdata = d,
-    n = 500,
+    n = n_sim,
     return = "summary",
     prob = c(0.055, 0.945),
    summary_format = "matrix")
@@ -98,7 +99,7 @@ sim4 <-
   simulate_posterior_mu(
     model = m1,
     newdata = nd,
-    n = 500,
+    n = n_sim,
     return = "summary")
 plot(d$x, d$y)
 names(sim4)[1] <- "fit"
@@ -109,7 +110,7 @@ sim5 <-
   simulate_posterior_mu(
     model = m1,
     newdata = nd,
-    n = 500,
+    n = n_sim,
     return = "both")
 # The simulations are contained in a list
 utils::str(sim5)

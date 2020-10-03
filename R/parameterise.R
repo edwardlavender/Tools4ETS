@@ -3,7 +3,7 @@
 #### parameterise_contrast_2l()
 
 #' @title Define and visualise a contrast between two factor levels
-#' @description This function is used to define and visualise a contrast between two factor levels (e.g. the difference in depth between males and females). Simulated contrasts can be compared to estimated contrasts from an \code{mgcv} generalised additive model (GAM). The function is intended primarily for use behind-the-scenes in \code{\link[Tools4ETS]{GAMS4DTS}}.
+#' @description This function is used to define and visualise a contrast between two factor levels (e.g. the difference in depth between males and females). Simulated contrasts can be compared to estimated contrasts from an \code{\link[mgcv]{mgcv}} generalised additive model (GAM). The function is intended primarily for use behind-the-scenes in \code{\link[Tools4ETS]{GAMS4DTS}}.
 #'
 #' @param x A vector of two factor levels for which to define a contrast.
 #' @param param A numeric input which defines the size of the contrast between two factor levels.
@@ -14,7 +14,7 @@
 #' @param cex.axis A numeric input which defines the size of the font for axis tick labels.
 #' @param mtext_args A named list of arguments which are passed to \code{\link[graphics]{mtext}} to produce axis labels. A nested list can be used to control each axis (see also \code{\link[prettyGraphics]{pretty_ts}}).
 #'
-#' @return The function returns a plot showing the size of the contrast between factor levels, possibly in relation to that estimated by an \code{mgcv} GAM model.
+#' @return The function returns a plot showing the size of the contrast between factor levels, possibly in relation to that estimated by an \code{\link[mgcv]{mgcv}} GAM model.
 #'
 #' @author Edward Lavender
 #' @export
@@ -119,12 +119,12 @@ parameterise_contrast_2l <-
 #### parameterise_smooth()
 
 #' @title Parameterise smooth functions and compare simulated and inferred smooths
-#' @description This function helps the user to define reasonable functions for the effect of a covariate on a linear predictor/response for simulations. Then, model-based inferences of the effect of that covariate can be plotted on top of simulated effects to examine the performance of a model in terms of its ability to correctly estimate the simulated function under different scenarios.
+#' @description This function helps the user to define reasonable functions for the effect of a covariate on a linear predictor/response for simulations. Then, model-based inferences of the effect of that covariate can be plotted on top of simulated effects to examine the performance of a model in terms of its ability to correctly estimate the simulated function under different scenarios. This function is intended for use primarily in \code{\link[Tools4ETS]{GAMS4DTS}}.
 #'
 #' @param x A numeric sequence of values for which to evaluate the shape of a user-defined function (see below).
 #' @param f A function which relates a covariate to a linear predictor/response.
 #' @param param A named list of parameters and parameter values required to evaluate the function.
-#' @param parameterise_smooth_ls A list from a previous implementation of \code{parameterise_smooth()}. This is useful following modelling when the aim is to compare simulated and model-inferred smooths. By supplying this list, the function does not have to recompute simulated smooths.
+#' @param parameterise_smooth_ls A list from a previous implementation of \code{\link[Tools4ETS]{parameterise_smooth}}. This is useful following modelling when the aim is to compare simulated and model-inferred smooths. By supplying this list, the function does not have to recompute simulated smooths.
 #'
 #' @param plot A logical input which defines whether or not to create a plot.
 #' @param add_sim_args A named list of arguments to customise the visualisation of the simulated effect of a covariate on the plot.
@@ -146,11 +146,10 @@ parameterise_contrast_2l <-
 #' @param add_moons A logical input which defines whether or not to add moons to a plot. This is useful for visualising the effects of lunar phase in models of animal movement timeseries.
 #' @param add_moons_args A named list of arguments passed to \code{\link[prettyGraphics]{add_moons}}.
 #'
-#' @param pretty_axis_args A named list of arguments, passed to \code{\link[prettyGraphics]{pretty_axis}} to customise axes().
+#' @param pretty_axis_args A named list of arguments, passed to \code{\link[prettyGraphics]{pretty_axis}} to customise axes.
 #' @param mtext_args A named list of arguments, passed to \code{\link[graphics]{mtext}}, to add axis labels.
 #'
 #' @examples
-#'
 #' #### Example 1: Simulate a quadratic effect of variable (e.g. Julian day) on a response (e.g. depth)
 #' # The function creates a plot, so we can 'play' with the parameters
 #' # .... until we're happy with the shape:
@@ -161,6 +160,9 @@ parameterise_contrast_2l <-
 #'                       plot = TRUE)
 #' # The function returns a list containing x, f, the parameters we chose and y values:
 #' utils::str(smooth_julian_day)
+#' # We could then use these parameters to simulate a response, model the response using a GAM
+#' # ... and then compare the simulated and modelled relationship using parameterise_smooth() again
+#' # ... (see the vignette or GAMS4DTS() for further examples).
 #'
 #' @author Edward Lavender
 #' @export
@@ -303,7 +305,6 @@ parameterise_smooth <-
       do.call("clip", as.list(usr))
 
     } # close if(plot)
-
 
 
     #### Return y values

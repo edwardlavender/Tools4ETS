@@ -16,7 +16,7 @@ difference(x2, x1, f = NULL, ...)
 \item{...}{Other arguments passed to \code{\link[base]{difftime}} e.g. \code{units = "secs"}.}
 }
 \value{
-A difference.
+The function returns the difference between two numbers or times.
 }
 \description{
 Calculate a difference between two numbers or times. For numeric objects, the difference is calculated as \code{x2 - x1}. For time objects (i.e., \code{\link[base]{DateTimeClasses}} or \code{\link[base]{Dates}}), the difference is calculated using \code{\link[base]{difftime}}. A function can be supplied to process outputs; e.g. \code{\link[base]{abs}}, or \code{\link[base]{numeric}} for \code{\link[base]{difftime}} objects.

@@ -42,7 +42,6 @@ A dataframe with 4 columns: 'timestamp' (as inputted), 'depth' (as inputted), 'r
 This function highlights potential recapture events on unknown dates based on a depth threshold; for each day in the depth timeseries, all the timestamps in which the individual was above this depth are considered possible recapture events. These timestamps can be saved by the function and inspected graphically.
 }
 \examples{
-
 #### Example (1): Suggest recapture events for a single individual
 suggested_recap <-
   suggest_recapture(data = dat_flapper[dat_flapper$id == "A", ],

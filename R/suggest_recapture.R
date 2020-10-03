@@ -16,7 +16,6 @@
 #' @author Edward Lavender
 #'
 #' @examples
-#'
 #' #### Example (1): Suggest recapture events for a single individual
 #' suggested_recap <-
 #'   suggest_recapture(data = dat_flapper[dat_flapper$id == "A", ],

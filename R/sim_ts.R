@@ -16,7 +16,8 @@
 #'
 #' @examples
 #'
-#' #### Simulate a dataframe which we will use to simulate depths
+#' #### Simulate a dataframe which we will use to simulate the depth of a
+#' # ... hypothetical animal through time.
 #' # We will simulate a small timeseries (2 days in length) for two individuals,
 #' # ... one male and one female.
 #' # We will include sex, length, sun_angle, lunar_phase and julian_day in the dataframe:
@@ -37,11 +38,11 @@
 #'                                                     plot_density_curve = FALSE))
 #'   )
 #'
-#' #### Simulate depths
+#' #### Simulate 'observed' depths
 #' # We will simulate depths in the scenario that depth is affected by
 #' # ... linear functions of sex and length
 #' # ... and smooth functions of sun_angle, lunar_phase and julian_day.
-#' # (a) Record sex in terms of 0s/1s
+#' ## (a) Record sex in terms of 0s/1s
 #' dat$sex <- (dat$sex == "M") + 0
 #' # (b) Define a named list that we'll use to compute the values of the linear predictor
 #' # For each variable we'll specify a function and a named list of parameters
@@ -62,7 +63,7 @@
 #'                   param = list(a = -0.001, b = 1, h = 183, k = 15)
 #' )
 #' )
-#' # (b) Simulate observations:
+#' ## (b) Simulate observations:
 #' dat$depth <-
 #'   sim_ts(
 #'     alpha = 0,

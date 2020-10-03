@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulate_from_gam.R
 \name{simulate_posterior_obs}
 \alias{simulate_posterior_obs}
-\title{Simulate 'observed' values and prediction uncertainty from a Gaussian \code{mgcv::bam()} or \code{mgcv::gam()} model}
+\title{Simulate 'observed' values and prediction uncertainty from a Gaussian \code{\link[mgcv]{bam}} or \code{\link[mgcv]{gam}} model}
 \usage{
 simulate_posterior_obs(
   model,
@@ -23,9 +23,9 @@ simulate_posterior_obs(
 
 \item{newdata}{A dataframe from which to make predictions (see \code{\link[mgcv]{predict.gam}}).}
 
-\item{rho}{A numeric value which defines the \code{rho} value from an \code{\link[mgcv]{predict.gam}} model. For models without an AR1 structure, the default value (\code{rho = 0}) is appropriate.}
+\item{rho}{A numeric value which defines the \code{rho} value from an \code{\link[mgcv]{bam}} model. For models without an AR1 structure, the default value (\code{rho = 0}) is appropriate.}
 
-\item{ind}{A vector, of the same length as the number of rows in \code{newdata}, which defines independent sections of timeseries.}
+\item{ind}{A logical vector, of the same length as the number of rows in \code{newdata}, which defines independent sections of timeseries (see \code{\link[mgcv]{bam}} and the \code{AR.start} argument).}
 
 \item{type}{A character input which defines the type of simulation. Options are: (1) \code{"snapshot"}, which returns a single realisation of the model; or (b) \code{"envelope"}, which performs multiple simulations and returns a posterior distribution of outcomes.}
 
@@ -42,19 +42,19 @@ simulate_posterior_obs(
 \item{summary_format}{A character input which defines the format of the summary distribution, if \code{return = "summary"} or \code{return = "both"} (see \code{\link[Tools4ETS]{summarise_posterior}}).}
 }
 \value{
-The function returns a posterior distribution matrix for predictions, a summary of these predictions (as a list or matrix, see above).
+The function returns a posterior distribution matrix for predictions, a summary of these predictions or both.
 }
 \description{
-This function enables the user to simulate new 'observed' values from an Gaussian \code{\link[mgcv]{bam}} or \code{\link[mgcv]{gam}} model, including for models with an AR1 structure. There are three main options. The first option is for the user to simulate a single realisation from a model. Under this scenario (\code{type = "snapshot"}), the function samples a vector of observed values from a Gaussian distribution with a mean vector equal to the expected values and a standard deviation equal to the estimated sigma parameter (i.e. the standard deviation of residuals), accounting for autocorrelation in the sampling process if necessary. One reason as to why this is useful is to investigate whether the estimate of the residual standard deviation is appropriate: while the simulated timeseries will not reproduce the observed timeseries, the simulated timeseries should approximately reproduce the observed variation in the timeseries. However, this method only provides a single 'snapshot' realisation of a model, which does not capture uncertainty or calculate prediction intervals. When \code{type = "envelope"}, the function calculates the posterior distribution of predicted values in a two stage process which accounts for (a) uncertainty in the mean (possibly via uncertainty in the underlying fitted coefficients, see below) and (b) uncertainty in the predictions due to variation around expected values. To calculate a posterior distribution for the mean (i.e., expected values), there are two methods. Under \code{mu_method = 1}, the assumption is that the uncertainty in the expected values can be characterised by a Gaussian distribution. For each observation, \code{n} possible mean values are sampled from a Gaussian distribution with a mean equal to the expected value for that observation and a SD equal to the estimated SE around that mean for that observation. \code{mu_method = 2} is more sophisticated. Under \code{mu_method = 2}, uncertainty in the fitted coefficients is characterised by a multivariate normal distribution, with mean vector given by fitted coefficients and a covariance matrix equal to their (Bayesian) covariance matrix. For each observation, the function then samples \code{n} new fitted coefficient vectors from this multivariate distribution. Each sample is combined with the linear predictor matrix to generate a single simulated mean for each observation. This method is implemented by \code{\link[Tools4ETS]{simulate_posterior_mu}}(). With a posterior distribution for expected values, the function then samples \code{n} new 'observed' values using expected values, accounting for autocorrelation if necessary. The function returns the posterior distribution of simulated observed values, either in full (i.e., a matrix with a row for each observation and \code{n} realised values for new predicted values for that observation), a summary computed by \code{\link[Tools4ETS]{summarise_posterior}} (i.e., for each observation, the mean of the posterior distribution and a lower and upper quantile), or both.
+This function enables the user to simulate new 'observed' values from a Gaussian \code{\link[mgcv]{bam}} or \code{\link[mgcv]{gam}} model, including for models with an AR1 structure. There are three main options. The first option is for the user to simulate a single realisation from a model. Under this scenario (\code{type = "snapshot"}), the function samples a vector of observed values from a Gaussian distribution with a mean vector equal to the expected values and a standard deviation equal to the estimated sigma parameter (i.e. the standard deviation of residuals), accounting for autocorrelation in the sampling process if necessary. One reason as to why this is useful is to investigate whether the estimate of the residual standard deviation is appropriate: while the simulated timeseries will not reproduce the observed timeseries, the simulated timeseries should approximately reproduce the observed variation in the timeseries. However, this method only provides a single 'snapshot' realisation of a model, which does not capture uncertainty or calculate prediction intervals. When \code{type = "envelope"}, the function calculates the posterior distribution of predicted values in a two stage process which accounts for (a) uncertainty in the mean (possibly via uncertainty in the underlying fitted coefficients, see below) and (b) uncertainty in the predictions due to variation around expected values. To calculate a posterior distribution for the mean (i.e., expected values), there are two methods. Under \code{mu_method = 1}, the assumption is that the uncertainty in the expected values can be characterised by a Gaussian distribution. For each observation, \code{n} possible mean values are sampled from a Gaussian distribution with a mean equal to the expected value for that observation and a SD equal to the estimated SE around that mean for that observation. \code{mu_method = 2} is more sophisticated. Under \code{mu_method = 2}, uncertainty in the fitted coefficients is characterised by a multivariate normal distribution, with mean vector given by fitted coefficients and a covariance matrix equal to their (Bayesian) covariance matrix. For each observation, the function then samples \code{n} new fitted coefficient vectors from this multivariate distribution. Each sample is combined with the linear predictor matrix to generate a single simulated mean for each observation. This method is implemented by \code{\link[Tools4ETS]{simulate_posterior_mu}}. With a posterior distribution for expected values, the function then samples \code{n} new 'observed' values using expected values, accounting for autocorrelation if necessary. The function returns the posterior distribution of simulated observed values, either in full (i.e., a matrix with a row for each observation and \code{n} realised values for new predicted values for that observation), a summary computed by \code{\link[Tools4ETS]{summarise_posterior}} (i.e., for each observation, the mean of the posterior distribution and a lower and upper quantile), or both.
 }
 \details{
 The function makes two assumptions which may cause a slight underestimate in the 'true' uncertainty: both the model's \code{sigma} and, if applicable, the inputted \code{rho} are fixed (i.e. assumed to be known). These parameters could also be treated as uncertain, with their uncertainty characterised by probability distributions.
 }
 \examples{
-
 #####################################################
 #### Simulate some data and fit a GAM
 
+#### Simulation and model fitting
 set.seed(1)
 nobs <- 100
 x <- stats::runif(nobs, 0, 1000)
@@ -64,7 +64,7 @@ d <- data.frame(x = x, y = y)
 m1 <- mgcv::gam(y ~ s(x), data = d)
 
 #### We can use simulate_posterior_mu to add a fitted line and CIs from posterior simulation
-# ... This shows our confidence in the fitted line; but what about our confidence in predictions?
+# ... This shows our confidence in the fitted line, as exemplified below.
 nd <- data.frame(x = seq(min(d$x), max(d$x), length.out = 100))
 sim_mu <-
   simulate_posterior_mu(
@@ -75,10 +75,12 @@ sim_mu <-
 plot(d$x, d$y)
 names(sim_mu)[1] <- "fit"
 prettyGraphics::add_model_predictions(x = nd$x, CI = sim_mu)
-
+# But what about our confidence in predictions? This is where
+# ... simulate_posterior_obs() comes in.
 
 #####################################################
-#### Simulate 'snapshots' of 'observed' values
+#### Use of simulate_posterior_obs() (1):
+# .. Simulate 'snapshots' of 'observed' values
 
 #### Example (1): Simulate a single realisation of 'observed values'
 sim_pos1 <-
@@ -101,14 +103,14 @@ points(d$x, sim_pos1$obs_sim, col = "red")
 d$yAR <- mu + arima.sim(list(order = c(1,0,0), ar = 0.95), n = nrow(d), sd = sigma_arima(0.95, 100))
 # use mgcv::bam() to estimate the AR1 parameter and
 # ... then implement a model accounting for autocorrelation
-# with sufficient data here, the AR1 estimated using the ACF is very accurate:
+# with sufficient data here, the AR1 estimated using the ACF is quite accurate:
 mAR0 <- mgcv::bam(yAR ~ s(x), data = d)
 AR1 <- stats::acf(stats::resid(mAR0))$acf[2]; AR1
 mAR1 <- mgcv::bam(yAR ~ s(x), rho = AR1, data = d)
 # mAR1 model effectively captured autocorrelation:
 stats::acf(mAR1$std.rsd)$acf[2];
 # Note that we've simulated data such that the sigma of a model with/without
-# ... autocorrelation is the same
+# ... autocorrelation is the same (or similar given random variation):
 stats::sigma(m1); stats::sigma(mAR1)
 # Simulate a single realised sequence of 'observations from this model,
 # ... accounting for the estimated AR1 parameter
@@ -125,7 +127,7 @@ sim_pos2 <-
 d$index <- 1:nrow(d)
 pp <- par(mfrow = c(2, 3))
 # Initially simulated y values shouldn't show evidence of autocorrelation,
-# ... while simularted yAR values/observations from the model should show autocorrelation
+# ... while simulated yAR values/observations from the model should show autocorrelation
 plot(d$index[1:100], d$y[1:100], type = "l")
 plot(d$index[1:100], d$yAR[1:100], type = "l")
 plot(d$index[1:100], sim_pos2$obs_sim[1:100], type = "l")
@@ -135,7 +137,8 @@ par(pp)
 
 
 #####################################################
-#### Use simulation to create prediction intervals
+#### Use of simulate_posterior_obs() (2):
+# .. Use simulation to create prediction intervals
 
 #### Introduction
 # The above approach is useful in quickly demonstrating how
@@ -163,7 +166,7 @@ sim_pos3 <-
 # ... stored an observed value from one simulation.
 utils::str(sim_pos3)
 
-#### Example (4): The full posterior distribution using mu_method = 2
+#### Example (4): Simulate the full posterior distribution using mu_method = 2
 # When mu_method = 2, the expected value, on the scale of the response, is simulated using
 # ... simulate_posterior_mu(). This approach treats fitted cofficients as realisations
 # ... of a multivariate normal distribution. New coefficients are sampled from this distribution,
@@ -179,7 +182,6 @@ sim_pos4 <-
     n = 250,
     return = "full")
 utils::str(sim_pos4)
-
 
 #### Example (5): The full posterior distribution can be summarised to create a prediction interval
 # ... from either mu_method = 1 or mu_method = 2
@@ -227,7 +229,7 @@ prettyGraphics::add_model_predictions(x = nd$x, CI = sim_mu_AR1,
 
 #### Examine the effects of accounting for autocorrelation on CIs and prediction intervals
 
-# Compare prediction interval accounting for autocorrelation to one which
+# Let's compare a prediction interval accounting for autocorrelation to one which
 # ... doesn't account for autocorrelation. The interval which does not include
 # ... autocorrelation is similar in this case.
 # Simulate the full posterior prediction matrix from model mAR1 with/without accounting rho:
@@ -250,7 +252,7 @@ sim_pos6_AR1 <-
     n = 250,
     return = "full")
 # For a single simulation scenario, examine the ACF
-# This shows that the residuals are not correleted under the first scenario,
+# This shows that the residuals are not correlated under the first scenario,
 # ... but they are correlated under the second scenario in which observations were simulated
 # ... with an AR1 process:
 sim_pos6_mAR0 <- mgcv::bam(sim_pos6_AR0[1:100, 1] ~ s(nd$x))
@@ -259,15 +261,8 @@ pp <- par(mfrow = c(1, 2))
 stats::acf(stats::resid(sim_pos6_mAR0))
 sim_pos6_rho <- stats::acf(stats::resid(sim_pos6_mAR1))$acf[2]
 par(pp)
-# Accounting for autocorrelation makes a difference for confidence intervals.
-# Usually, the effect is to make CIs wider, but interestingly CIs are narrower for the
-# ... model with the AR1 model in this case:
-pp <- par(mfrow = c(1, 2))
-mgcv::plot.gam(mAR0)
-mgcv::plot.gam(mAR1)
-par(pp)
-
-# What about for prediction intervals?
+# For confidence intervals, accounting for autocorrelation usually makes CIs wider,
+# ... but about for prediction intervals?
 # summarise intervals
 sim_pos6_AR0_PI <- summarise_posterior(sim_pos6_AR0)
 sim_pos6_AR1_PI <- summarise_posterior(sim_pos6_AR1)
@@ -344,7 +339,7 @@ prettyGraphics::add_model_predictions(nd$x, sim_pos7_mu2,
 # One of the reasons as to why posterior simulation of prediction intervals is useful
 # ... is because a model which explains a small amount of variation may still produce
 # ... useful insights if the error distribution captures the unexplained variation properly.
-# ... To investigate this, lets compare the results of two models, one in which the
+# ... To investigate this, let's compare the results of two models, one in which the
 # ... model is properly specified and another in which we introduce heterogeneity:
 
 #### Simulate data

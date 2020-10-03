@@ -17,10 +17,9 @@ summarise_posterior(pmat, probs = c(0.025, 0.975), summary_format = "list")
 The function returns a list or a matrix, depending on the input to \code{summary_format}.
 }
 \description{
-This function calculates summarises of a posterior distribution matrix, in which each row is an observation and each column is a sample from the posterior distribution for that observation, that can be used to create confidence intervals (or similar) around a fitted line (or similar)based on posterior simulation.
+This function calculates summarises of a posterior distribution matrix, in which each row is an observation and each column is a sample from the posterior distribution for that observation, that can be used to create confidence intervals (or similar) around a fitted line (or similar) based on the posterior simulation.
 }
 \examples{
-
 #### Simulate some data and fit a GAM
 set.seed(1)
 nobs <- 100
@@ -48,7 +47,7 @@ summary1 <-
                       probs = c(0.025, 0.975),
                       summary_format = "list")
 utils::str(summary1)
-# This can be plotted with pretty.plot::add_model_predictions()
+# This can be plotted with prettyGraphics::add_model_predictions()
 # ... see (below).
 
 #### Example (2) Summarise the posterior in a matrix:

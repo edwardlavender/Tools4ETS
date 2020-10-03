@@ -37,7 +37,7 @@ application (`prettyGraphics::vis_ts()`).
 timeseries. These include:
 
   - **Define time categories**. `hour_nearest()` and `hour_dbl()` define
-    the nearest integer hour and the time of day respectively. `mm_yy()`
+    the nearest integer hour and the time of day respectively. `mmyy()`
     defines (ordered) month-year categories. `yday2date()` flicks from
     Julian days to dates/months/seasons.
   - **Rates of change.** `difference()` and `serial_difference()`

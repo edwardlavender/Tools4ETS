@@ -34,10 +34,10 @@ parameterise_contrast_2l(
 \item{mtext_args}{A named list of arguments which are passed to \code{\link[graphics]{mtext}} to produce axis labels. A nested list can be used to control each axis (see also \code{\link[prettyGraphics]{pretty_ts}}).}
 }
 \value{
-The function returns a plot showing the size of the contrast between factor levels, possibly in relation to that estimated by an \code{mgcv} GAM model.
+The function returns a plot showing the size of the contrast between factor levels, possibly in relation to that estimated by an \code{\link[mgcv]{mgcv}} GAM model.
 }
 \description{
-This function is used to define and visualise a contrast between two factor levels (e.g. the difference in depth between males and females). Simulated contrasts can be compared to estimated contrasts from an \code{mgcv} generalised additive model (GAM). The function is intended primarily for use behind-the-scenes in \code{\link[Tools4ETS]{GAMS4DTS}}.
+This function is used to define and visualise a contrast between two factor levels (e.g. the difference in depth between males and females). Simulated contrasts can be compared to estimated contrasts from an \code{\link[mgcv]{mgcv}} generalised additive model (GAM). The function is intended primarily for use behind-the-scenes in \code{\link[Tools4ETS]{GAMS4DTS}}.
 }
 \author{
 Edward Lavender

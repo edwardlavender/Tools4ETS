@@ -38,7 +38,7 @@ parameterise_smooth(
 
 \item{param}{A named list of parameters and parameter values required to evaluate the function.}
 
-\item{parameterise_smooth_ls}{A list from a previous implementation of \code{parameterise_smooth()}. This is useful following modelling when the aim is to compare simulated and model-inferred smooths. By supplying this list, the function does not have to recompute simulated smooths.}
+\item{parameterise_smooth_ls}{A list from a previous implementation of \code{\link[Tools4ETS]{parameterise_smooth}}. This is useful following modelling when the aim is to compare simulated and model-inferred smooths. By supplying this list, the function does not have to recompute simulated smooths.}
 
 \item{plot}{A logical input which defines whether or not to create a plot.}
 
@@ -74,15 +74,14 @@ parameterise_smooth(
 
 \item{add_moons_args}{A named list of arguments passed to \code{\link[prettyGraphics]{add_moons}}.}
 
-\item{pretty_axis_args}{A named list of arguments, passed to \code{\link[prettyGraphics]{pretty_axis}} to customise axes().}
+\item{pretty_axis_args}{A named list of arguments, passed to \code{\link[prettyGraphics]{pretty_axis}} to customise axes.}
 
 \item{mtext_args}{A named list of arguments, passed to \code{\link[graphics]{mtext}}, to add axis labels.}
 }
 \description{
-This function helps the user to define reasonable functions for the effect of a covariate on a linear predictor/response for simulations. Then, model-based inferences of the effect of that covariate can be plotted on top of simulated effects to examine the performance of a model in terms of its ability to correctly estimate the simulated function under different scenarios.
+This function helps the user to define reasonable functions for the effect of a covariate on a linear predictor/response for simulations. Then, model-based inferences of the effect of that covariate can be plotted on top of simulated effects to examine the performance of a model in terms of its ability to correctly estimate the simulated function under different scenarios. This function is intended for use primarily in \code{\link[Tools4ETS]{GAMS4DTS}}.
 }
 \examples{
-
 #### Example 1: Simulate a quadratic effect of variable (e.g. Julian day) on a response (e.g. depth)
 # The function creates a plot, so we can 'play' with the parameters
 # .... until we're happy with the shape:
@@ -93,6 +92,9 @@ smooth_julian_day <-
                       plot = TRUE)
 # The function returns a list containing x, f, the parameters we chose and y values:
 utils::str(smooth_julian_day)
+# We could then use these parameters to simulate a response, model the response using a GAM
+# ... and then compare the simulated and modelled relationship using parameterise_smooth() again
+# ... (see the vignette or GAMS4DTS() for further examples).
 
 }
 \author{

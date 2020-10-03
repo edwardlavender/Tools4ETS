@@ -18,7 +18,6 @@
 #' @author Edward Lavender
 #' @keywords internal
 
-
 check... <- function(not_allowed,...){
   l <- list(...)
   if(any(names(l) %in% not_allowed)){

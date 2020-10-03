@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_ts.R
 \name{match_ts_nearest}
 \alias{match_ts_nearest}
-\title{Find the position in one vector that is nearest in time to a value in another dataframe}
+\title{Find the position in one vector that is nearest in time to a value in another}
 \usage{
 match_ts_nearest(times, lookup)
 }
@@ -15,7 +15,7 @@ match_ts_nearest(times, lookup)
 For a sequence of times (\code{times}), the function returns a vector of the positions of the nearest times in another sequence (\code{lookup}).
 }
 \description{
-This function is like \code{\link[base]{match}}, but the aim is, for a given sequence of times (\code{times}), to find the positions in another sequence of times (\code{lookup}) that are nearest in time to those in the first sequence. In other words, for every time inputted, \code{match_ts_nearest()} finds the position in another sequence of times which is nearest in time to that time. This is useful if, for example, you have an existing dataframe to which you want to add the observations, held in another dataframe, that are nearest in time to observations in the first dataframe (i.e., nearest neighbour interpolation). This function uses \code{\link[data.table]{data.table}} for fast matching, even with very large vectors.
+This function is like \code{\link[base]{match}}, but the aim is, for a given sequence of times (\code{times}), to find the positions in another sequence of times (\code{lookup}) that are nearest in time to those in the first sequence. This is useful if, for example, you have an existing dataframe to which you want to add the observations, held in another dataframe, that are nearest in time to observations in the first dataframe (i.e., nearest neighbour interpolation). This function uses \code{\link[data.table]{data.table}} for fast matching, even with very large vectors.
 }
 \details{
 If there are multiple matches, only the first is returned.
@@ -74,7 +74,7 @@ match_ts_nearest(t1_unordered, t2_unordered)
 
 }
 \seealso{
-\code{\link[Tools4ETS]{match_ts_nearest_by_key}} is an extension of \code{match_ts_nearest()} to account for different factor levels when these to be included in the matching process.
+\code{\link[Tools4ETS]{match_ts_nearest_by_key}} is an extension of this function to account for different factor levels when these to be included in the matching process. To use \code{\link[Tools4ETS]{match_ts_nearest}} or \code{\link[Tools4ETS]{match_ts_nearest_by_key}} to add observations from one dataframe to another, see \code{\link[Tools4ETS]{pair_ts}}.
 }
 \author{
 Edward Lavender

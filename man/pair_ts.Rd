@@ -18,7 +18,7 @@ pair_ts(
 )
 }
 \arguments{
-\item{d1}{A dataframe that contains, at a minimum, a vector of timestamps, to which observations are added from \code{d2}.}
+\item{d1}{A dataframe that contains, at a minimum, a vector of timestamps, to which observations need to be added from \code{d2}.}
 
 \item{d2}{A dataframe that contains, at a minimum, a vector of timestamps and associated observations, to be added to \code{d1}.}
 
@@ -36,7 +36,7 @@ pair_ts(
 
 \item{units}{A character that defines the units of the inputted \code{min_gap} or \code{max_gap}. This is passed to \code{\link[base]{difftime}}.}
 
-\item{control_beyond_gap}{A character that defines whether or not to rows from \code{d1} that contain observations from \code{d2} that exceed \code{min_gap} or \code{max_gap} to NA (\code{"NA"}) or to remove those rows (\code{"remove"}).}
+\item{control_beyond_gap}{A character that defines whether or not to set rows from \code{d1} that contain observations from \code{d2} that exceed \code{min_gap} or \code{max_gap} to NA (\code{"NA"}) or to remove those rows (\code{"remove"}).}
 }
 \value{
 The function returns a dataframe, \code{d1}, as inputted, with an added column (whose name is given by \code{val_col}), comprising values added from another dataframe, \code{d2}. Any observations in \code{d1} for which there are not observations in \code{d2} occurring within some time window (defined by \code{min_gap} and \code{max_gap}), if specified, are counted and, if requested, removed from the returned dataframe.
@@ -45,7 +45,7 @@ The function returns a dataframe, \code{d1}, as inputted, with an added column (
 This function adds observations from one timeseries to another timeseries using a matching process (e.g., nearest neighbour interpolation). This is useful when you have a main dataframe to which you need to add observations (e.g., those occurring closest in time) from another dataframe.
 }
 \examples{
-#### Example (1) Using method = "match_nearest_ts()"
+#### Example (1) Pair timeseries using method = "match_nearest_ts()"
 # Define dataframe to which we want to add information
 d1 <- data.frame(t = seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-02"), by = "hours"))
 # Define dataframe in which information is contained
@@ -53,7 +53,7 @@ d2 <- data.frame(t = seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-02
 d2$vals <- runif(nrow(d2), 0, 50)
 pair_ts(d1, d2, time_col = "t", val_col = "vals", method = "match_ts_nearest")
 
-#### Example (2) Using method = "match_nearest_ts_by_key()"
+#### Example (2) Pair timeseries sing method = "match_nearest_ts_by_key()"
 # Define dataframes
 d1 <- data.frame(t = as.POSIXct(c("2016-01-01 18:00:00",
                                   "2016-01-01 17:00:00",
