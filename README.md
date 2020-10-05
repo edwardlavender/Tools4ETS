@@ -44,7 +44,8 @@ timeseries. These include:
   - **Define time categories**. `hour_nearest()` and `hour_dbl()` define
     the nearest integer hour and the time of day respectively. `mmyy()`
     defines (ordered) month-year categories. `yday2date()` flicks from
-    Julian days to dates/months/seasons.
+    Julian days to dates/months/seasons. `yday_dbl()` defines the
+    fraction of the year in days.
   - **Rates of change.** `difference()` and `serial_difference()`
     compute the difference between two values and consecutive pairs of
     values in a sequence (numbers or timestamps) respectively.

@@ -38,7 +38,7 @@ The `R` package `prettyGraphics` was designed to complement `Tools4ETS` via the 
 
 `Tools4ETS` streamlines common data processing operations for ecological timeseries. These include: 
 
-* **Define time categories**. `hour_nearest()` and `hour_dbl()` define the nearest integer hour and the time of day respectively. `mmyy()` defines (ordered) month-year categories. `yday2date()` flicks from Julian days to dates/months/seasons. 
+* **Define time categories**. `hour_nearest()` and `hour_dbl()` define the nearest integer hour and the time of day respectively. `mmyy()` defines (ordered) month-year categories. `yday2date()` flicks from Julian days to dates/months/seasons. `yday_dbl()` defines the fraction of the year in days. 
 * **Rates of change.** `difference()` and `serial_difference()` compute the difference between two values and consecutive pairs of values in a sequence (numbers or timestamps) respectively. 
 * **Matching timeseries.** `match_ts_nearest()`, `match_ts_nearest_by_key()` and `pair_ts()` match timeseries (i.e., to add observations from one timeseries into another).  
 * **Flagging timeseries.** `flag_ts()` can be used to flag independent sections of timeseries in a dataset due to the presence of different factor levels (e.g. individuals) and/or breaks in timeseries. Different flag types can be added, reflecting the requirements of different modelling approaches. `add_unit_id()` is used to add unique unit IDs to a timeseries. 

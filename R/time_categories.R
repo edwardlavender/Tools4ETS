@@ -159,6 +159,34 @@ yday2date <-
   } # close function
 
 
+#######################################
+#######################################
+#### yday_dbl
+
+#' @title Compute the fraction of the year (days)
+#' @description This function computes the Julian day on inputted times/dates as a fraction of the total number of days in each year.
+#' @param time A vector of time(s) of class \code{\link[base]{Date}} or \code{\link[base]{DateTimeClasses}}.
+#' @return The function returns a number for each element in \code{time} which is the Julian day as a fraction of the total number of days in that year.
+#' @examples
+#' # Compare the start of a non-leap and leap year:
+#' yday_dbl(as.Date("2015-01-01"))
+#' yday_dbl(as.Date("2016-01-01"))
+#' # The end of the year
+#' yday_dbl(as.Date("2015-12-31"))
+#' yday_dbl(as.Date("2015-12-31"))
+#' @author Edward Lavender
+#' @export
+#'
+
+yday_dbl <-
+  function(time){
+    yday <- lubridate::yday(time)
+    yr <- lubridate::year(time)
+    nday <- lubridate::yday(as.Date(paste0(yr, "-12-31")))
+    yday_dbl <- yday/nday
+    return(yday_dbl)
+  }
+
 
 #### End of code.
 #######################################
