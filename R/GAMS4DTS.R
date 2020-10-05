@@ -90,7 +90,7 @@ ui <-
                 box(width = 12,
                     h2("Abstract"),
 
-                    p("Depth-specific periodic behaviours are common in marine ecosystems. However, our understanding the drivers of these trends remains limited, in part, by available analytical techniques, which either lack quantitative rigour (e.g. wavelet analysis) or else require knowledge that lies outside of many ecologists' training (e.g. Hidden Markov Models). Generalised Additive Models (GAMs) strike a balance along this double-edged sword, being both a powerful modelling framework and a tool with which many ecologists are familiar, but their successful implementation requires correctly interpreting model fits and outputs, which remains challenging. Here, I present a interactive tool for the simulation and modelling of depth timeseries using GAMs. The tool allows the user to simulate complex depth timeseries according to a user-specified data-generating process that can incorporate variables commonly associated with depth in natural ecosystems (i.e., sex, body size, light levels, lunar phase, season). Simulated timeseries can then be modelled using GAMs to investigate (a) the extent to which models recover simulated parameters and/or functions under different simulation/model scenarios; and (b) the consequences of mis-specifying of various aspects of the simulated data-generating process within models for model outputs. This tool will facilitate ecologists to build and interpret GAMs of timeseries in cases where the true data-generating processes are unknown.",
+                    p("Depth-specific periodic behaviours are common in marine ecosystems. However, our understanding the drivers of these trends remains limited, in part, by available analytical techniques, which are either principally qualitative (e.g. wavelet analysis) or else require knowledge that lies outside of many ecologists' training (e.g. Hidden Markov Models). Generalised Additive Models (GAMs) strike a balance along this double-edged sword, being both a powerful modelling framework and a tool with which many ecologists are familiar, but their successful implementation requires correctly interpreting model fits and outputs, which remains challenging. Here, I present a interactive tool for the simulation and modelling of depth timeseries using GAMs. The tool allows the user to simulate complex depth timeseries according to a user-specified data-generating process that can incorporate variables commonly associated with depth in natural ecosystems (i.e., sex, body size, light levels, lunar phase, season). Simulated timeseries can then be modelled using GAMs to investigate (a) the extent to which models recover simulated parameters and/or functions under different simulation/model scenarios; and (b) the consequences of mis-specifying of various aspects of the simulated data-generating process within models for model outputs. This tool will facilitate ecologists to build and interpret GAMs of timeseries in cases where the true data-generating processes are unknown.",
                       style = "font-size: 25px; font-family: Times New Roman; text-align: justify;"
                     ) # close paragraph
                 ) # close box
@@ -572,7 +572,7 @@ ui <-
                     # define distribution parameters
                     conditionalPanel(condition = "input.distribution == 'gaussian'",
                                      numericInput(inputId = "sigma_global",
-                                                  label = "Define the sigma parameter of the gaussian distribution",
+                                                  label = "Define the sigma parameter of the gaussian distribution.",
                                                   min = 0,
                                                   value = 5)
                                      ),
@@ -587,7 +587,7 @@ ui <-
                                                   )
                                      ),
                     sliderInput(inputId = "rho",
-                                label = "Define the serial autocorrelation (rho) parameter",
+                                label = "Define the serial autocorrelation (rho) parameter.",
                                 min = 0,
                                 max = 0.99999,
                                 value = 0)
@@ -819,17 +819,17 @@ ui <-
                 box(title = "Define the inputs to your model",
                     width = 3,
 
-                    # Define the likelihood distrib ution for the model
+                    # Define the likelihood distribution for the model
                     radioButtons(inputId = "distribution_model",
                                  label = "Select the likelihood distribution.",
-                                 choices = c("gaussian", "gamma"),
+                                 choices = c("gaussian"),
                                  selected = "gaussian",
                                  inline = T),
 
                     # Define the link function for the model
                     radioButtons(inputId = "link_model",
                                  label = "Select a link function.",
-                                 choices = c("identity", "log"),
+                                 choices = c("identity"),
                                  selected = "identity",
                                  inline = T),
 
@@ -846,7 +846,7 @@ ui <-
                     # Define the basis function for length
                     conditionalPanel(condition = "input.covariates_model .includes('length')",
                                      radioButtons(inputId = "length_bs",
-                                                  label = "Choose the basis function for sun_angle",
+                                                  label = "Choose the basis function for length",
                                                   choices = c("tp", "ts", "cr", "cs"),
                                                   selected = "ts",
                                                   inline = T)
@@ -1206,7 +1206,7 @@ server <- function(input, output) {
 
   length_smooth <- reactive({
     if("length" %in% input$covariates){
-      length_smooth <- parameterise_smooth(x = seq(-60, 60, length.out = 100),
+      length_smooth <- parameterise_smooth(x = seq(min(dat()$length), max(dat()$length), length.out = 100),
                                               f = linear,
                                               param = list(a = 0, b = input$length_beta),
                                               plot = FALSE
