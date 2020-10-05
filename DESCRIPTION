@@ -18,6 +18,7 @@ Imports:
 Suggests:
     viridis,
     knitr, rmarkdown, devtools, nlme
+Remotes: github::edwardlavender/prettyGraphics
 Depends: R (>= 3.5)
 License: GPL-3
 URL: http://github.com/edwardlavender/Tools4ETS
