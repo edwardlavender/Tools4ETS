@@ -79,15 +79,14 @@ knitr::include_graphics("workflow.png")
 
 The first step towards simulating and modelling depth timeseries is to assemble a basic dataframe structure that defines, for each individual, a sequence of timesteps and associated covariate values, at which depth can be simulated. The *Dataframe Assembly* tab displays the options for simulating depth timeseries and the assembled dataframe. Behind the scenes, dataframe assembly is faciliated by `dat.assembly()` (see Reference Manual). 
 
-In this tab, the user must specify: 
-\begin{enumerate}
-\item The date of the first observation.
-\item The duration, in days, over which to simulate data. This is assumed to be the same across all individuals (see below). 
-\item The duration, in minutes, between consecutive depth samples. 
-\item The number of individuals for which depth timeseries will be simulated.
-\item The longitude (DD) of the tagging location.
-\item The latitude (DD) of the tagging location.
-\end{enumerate}
+In this tab, the user must specify:
+
+* The date of the first observation.
+* The duration, in days, over which to simulate data. This is assumed to be the same across all individuals (see below).
+* The duration, in minutes, between consecutive depth samples.
+* The number of individuals for which depth timeseries will be simulated.
+* The longitude (DD) of the tagging location.
+* The latitude (DD) of the tagging location.
 
 The other arguments that `dat.assembly()` takes assume their default values. For example, all currently supported covariates (sex, length, sun\_angle, lunar\_phase, julian\_day) are automatically included in the dataframe. This means that any combination of these variables can be used to simulate depths and/or be included in models (e.g., models can contain variables that were not used to simulate depths). The outcome is a dataframe with the following structure: 
 
@@ -174,14 +173,12 @@ Having defined the covariates and the parameters and/or smooth functions which r
 
 To simulate depths, it is necessary to define the likelihood distribution and a link function. Options for these two inputs include the Gaussian and Gamma distributions, and identity and log link functions. Note: currently, only the Gaussian distribution with the identity link function is supported. This is because `mgcv::bam()` is used to fit models rapidly; this only supports a Gaussian distribution with an identity link if an AR(1) structure is included (see below). More flexible approaches (e.g. `mgcv::gamm()` and `gamlss::gamlss()`) may be added in the future. To simulate depths, the full list of required, user-specifi parameters is as follows: 
 
-\begin{enumerate}
-\item Likelihood distribution. This is the probability distribution which relate observed (simulated) depths to expected depths, given a model. For example, simulated depths ($depth$) might be assumed to be drawn from a normal distribution with a mean equal to the expected depth given the model ($\psi$) and some standard devation ($\sigma$); i.e.:  $depth \sim N(E(depth|\psi), \sigma)$. Input options for the likelihood distribution are the Gaussian and Gamma distributions. Note that only the Gaussian distribution is currently supported. 
-\item Link function. This is a function which maps the observed data onto a linear scale, at which model parameters are estimated. The inverse link function is a map from the linear predictor to the scale of the data. Input options for the link function are the identity and log link functions. Note that only the identity link function is currently supported. 
-\item Parameters of the likelihood distribution. Having defined a likelihood distribution, additional parameters may need to be defined. For the Gaussian distribution, the sigma parameter ($\sigma$) is required to be specifed by the user (see above). 
-\item Model intercept ($\alpha$). This is the mean depth (m) across all individuals (or, all females, if `sex` has been included as a covariate) across the timeseries. 
-\item Random intercept term ($\sigma_2$). In a random intercepts model, each individual can have a different intercept, with the distribution of intercepts across individuals ($i$) around the model intercept ($\alpha$) assumed to follow a Gaussian distribution with a mean of 0 and a standard deviation of $\sigma_2$ specified by the user, i.e., $\delta_{alpha, i} \sim N(0, \sigma_2)$. 
-\item Serial autocorrelation parameter ($\rho$). In models, there is usually variation around the expected value of the response variable (residual variation, $\epsilon$). In a simple model with a Gaussian likelihood, this residual variation is assumed to be normally distributed and the extent of this variation is captured by the $\sigma$ parameter (see above). However, in models of timeseries, especially those in which the repsonse variable has been observed at high frequency, there is often a correlation between the residual at one timestep and previous timesteps. In an autoregressive order 1 model (AR1), we can partition the residual variation into two components: a deterministic component that depends on the correlation ($\rho$) between the residual at one time step and the previous timestep ($\epsilon_{t-1}$), and a stochastic component that relates to the current timestep ($\sigma$). Thus, the simple model above, $depth \sim N(E(depth|\psi), \sigma)$, becomes $depth \sim N(E(depth|\psi)+ \rho \epsilon_{t-1}, \sigma)$. Models with an AR1 correlation structure can be implemented in `bam()`. This is the only correlation structure currently supported by GAMS4DTS. 
-\end{enumerate}
+* Likelihood distribution. This is the probability distribution which relate observed (simulated) depths to expected depths, given a model. For example, simulated depths ($depth$) might be assumed to be drawn from a normal distribution with a mean equal to the expected depth given the model ($\psi$) and some standard devation ($\sigma$); i.e.:  $depth \sim N(E(depth|\psi), \sigma)$. Input options for the likelihood distribution are the Gaussian and Gamma distributions. Note that only the Gaussian distribution is currently supported.
+* Link function. This is a function which maps the observed data onto a linear scale, at which model parameters are estimated. The inverse link function is a map from the linear predictor to the scale of the data. Input options for the link function are the identity and log link functions. Note that only the identity link function is currently supported.
+* Parameters of the likelihood distribution. Having defined a likelihood distribution, additional parameters may need to be defined. For the Gaussian distribution, the sigma parameter ($\sigma$) is required to be specifed by the user (see above).
+* Model intercept ($\alpha$). This is the mean depth (m) across all individuals (or, all females, if `sex` has been included as a covariate) across the timeseries.
+* Random intercept term ($\sigma_2$). In a random intercepts model, each individual can have a different intercept, with the distribution of intercepts across individuals ($i$) around the model intercept ($\alpha$) assumed to follow a Gaussian distribution with a mean of 0 and a standard deviation of $\sigma_2$ specified by the user, i.e., $\delta_{alpha, i} \sim N(0, \sigma_2)$.
+* Serial autocorrelation parameter ($\rho$). In models, there is usually variation around the expected value of the response variable (residual variation, $\epsilon$). In a simple model with a Gaussian likelihood, this residual variation is assumed to be normally distributed and the extent of this variation is captured by the $\sigma$ parameter (see above). However, in models of timeseries, especially those in which the repsonse variable has been observed at high frequency, there is often a correlation between the residual at one timestep and previous timesteps. In an autoregressive order 1 model (AR1), we can partition the residual variation into two components: a deterministic component that depends on the correlation ($\rho$) between the residual at one time step and the previous timestep ($\epsilon_{t-1}$), and a stochastic component that relates to the current timestep ($\sigma$). Thus, the simple model above, $depth \sim N(E(depth|\psi), \sigma)$, becomes $depth \sim N(E(depth|\psi)+ \rho \epsilon_{t-1}, \sigma)$. Models with an AR1 correlation structure can be implemented in `bam()`. This is the only correlation structure currently supported by GAMS4DTS.
 
 These inputs are used to simulate depths using the `dat.depth()` function, which also calls the `sim.random.intercepts()` function. In a model with a Gaussian likelihood, the assumption is that the depth of individual $i$ at timestep $t$ is drawn from a Gaussian distribution, defined by parameters $\mu_{i, t}$ and $\sigma$, the latter which is specified by the user, i.e.: 
 
