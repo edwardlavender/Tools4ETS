@@ -17,11 +17,16 @@ Critically Endangered elasmobranch.
 ## Installation
 
 You can install the development version of `Tools4ETS` from
-[GitHub](https://github.com) with:
+[GitHub](https://github.com) as shown below:
 
 ``` r
-devtools::install_github("edwardlavender/Tools4ETS")
+devtools::install_github("edwardlavender/Tools4ETS", build_vignette = TRUE)
 ```
+
+To access the vignettes, use `vignette("Tools4ETS", package =
+Tools4ETS)` for a general introduction to the package and
+`vignette("GAMS4DTS", package = Tools4ETS)` for a specific introduction
+to the `GAMS4DTS()` function (see below).
 
 ## Data visualisation
 
