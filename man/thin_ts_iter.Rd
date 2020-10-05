@@ -126,10 +126,10 @@ thin_ts_iter_ls1 <-
                               col = "black",
                               cex = 0.5
                ),
-               p2_args = list(type = "b",
-                              pch = 21,
-                              bg = "black",
-                              col = "black",
+               p2_args = list(type = "p",
+                              pch = 24,
+                              bg = "dimgrey",
+                              col = "dimgrey",
                               cex = 0.5
                ),
                add_model_predictions_args = list(),

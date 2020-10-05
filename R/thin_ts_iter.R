@@ -71,10 +71,10 @@
 #'                               col = "black",
 #'                               cex = 0.5
 #'                ),
-#'                p2_args = list(type = "b",
-#'                               pch = 21,
-#'                               bg = "black",
-#'                               col = "black",
+#'                p2_args = list(type = "p",
+#'                               pch = 24,
+#'                               bg = "dimgrey",
+#'                               col = "dimgrey",
 #'                               cex = 0.5
 #'                ),
 #'                add_model_predictions_args = list(),
@@ -308,9 +308,10 @@ thin_ts_iter <-
 
       # Add legend
       if(add_legend){
+        # Define basline list of arguments
         dl <- list(x = axis_ls[[1]]$axis$at[length(axis_ls[[1]]$axis$at)-1],
                    y = axis_ls_2nd[[1]]$lim[2],
-                   pch = c(1, 1),
+                   pch = c(21, 21),
                    lty = c(1, 1),
                    legend =
                      c(
@@ -318,24 +319,27 @@ thin_ts_iter <-
                        "nobs"
                      )
         )
-
-        l_args = c("pch", "lty", "col", "bg", "pt.cex", "pt.lwd")
-        p_args = c("pch", "lty", "col", "pt.bg", "pt.cex", "lwd")
-        pos <- 1
+        # Remove lty/pch elements as appropriate depending on inputs
+        if(p1_args$type == "p") dl$lty[1] <- NA
+        if(p2_args$type == "p") dl$lty[2] <- NA
+        if(p1_args$type == "l") dl$pch[1] <- NA
+        if(p2_args$type == "l") dl$pch[2] <- NA
+        # Adjust arguments for points
+        l_args = c("pch", "lty", "col", "pt.bg", "pt.cex", "pt.lwd") # names of arguments for legend
+        p_args = c("pch", "lty", "col", "bg", "cex", "lwd")          # names of arguments in points lists
         p_args_ls <- list(p1_args, p2_args)
-        for(i in 1:length(args)){
+        for(i in 1:6){
           p_arg <- p_args[i]
           l_arg <- l_args[i]
           for(j in 1:2){
             if(!is.null(p_args_ls[[j]][[p_arg]])){
-              dl[[l_arg]] <- p_args_ls[[j]][[p_arg]]
+              dl[[l_arg]][j] <- p_args_ls[[j]][[p_arg]]
             }
           }
         }
         if(!is.null(axis_ls$`1`$axis$cex.axis)){
           dl$cex.axis <- axis_ls$`1`$axis$cex.axis
         }
-
         legend_args <- list_merge(dl, legend_args)
         do.call(graphics::legend, legend_args)
       }
