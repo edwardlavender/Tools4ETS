@@ -91,29 +91,48 @@ In this tab, the user must specify:
 
 The other arguments that `dat.assembly()` takes assume their default values. For example, all currently supported covariates (sex, length, sun\_angle, lunar\_phase, julian\_day) are automatically included in the dataframe. This means that any combination of these variables can be used to simulate depths and/or be included in models (e.g., models can contain variables that were not used to simulate depths). The outcome is a dataframe with the following structure: 
 
-\begin{tabular}{|p{3cm}|p{12cm}|}
- \hline
- Variable & Explanation \\ 
- \hline 
- individual & An integer which distinguishes each unique individual. \\ 
- \hline
- timestamp & A time in POSIXct format, which defines each unique observation/timestep, at the specified resolution. \\
- \hline
- hourofday & An integer which defines the hour of day. \\
- \hline 
- start\_event & A logical variable which defines the first observation for each individual. \\
- \hline 
- sex & A factor which distinguishes sexes ("F" = female; "M" = male). The sex of each individuals is sampled at random from a uniform distribution. Biased samples are currently not implemented. \\
- \hline
- length & An double which defines the length (cm) of each individual, simulated from a normal distribution. In the current implementation, the parameters of this distribution are fixed. \\
- \hline
- sun\_angle & A double which defines the angle (degrees) of the sun relative to the horizon at the specified location and timestamp. This is derived using the suncalc package. Note: at present, sun\_angle and are derived for the single inputted location (e.g. tagging location) only. \\
- \hline 
- lunar\_phase & A double which defines the lunar phase (rad). This is derived using the `lunar` package. \\
- \hline
- julian\_day & An integer which defines the number of days since January 1st. \\
- \hline
-\end{tabular}
+<table style="width:100%">
+  <tr>
+    <th>Variable</th>
+    <th>Explanation</th>
+  </tr> 
+  <tr>
+    <td>timestamp</td>
+    <td>A time in POSIXct format, which defines each unique observation/timestep, at the specified resolution.</td>
+ </tr>
+   <tr>
+    <td>hourofday</td>
+    <td>An integer which defines the hour of day.</td>
+ </tr>
+   <tr>
+    <td>start\_event</td>
+    <td>A logical variable which defines the first observation for each individual.</td>
+ </tr>
+   <tr>
+    <td>sex</td>
+    <td>A factor which distinguishes sexes ("F" = female; "M" = male). The sex of each individuals is sampled at random from a uniform distribution. Biased samples are currently not implemented.</td>
+ </tr>
+   <tr>
+    <td>length</td>
+    <td>An double which defines the length (cm) of each individual, simulated from a normal distribution. In the current implementation, the parameters of this distribution are fixed.</td>
+ </tr>
+  <tr>
+    <td>sun\_angle</td>
+    <td> double which defines the angle (degrees) of the sun relative to the horizon at the specified location and timestamp. This is derived using the suncalc package. Note: at present, sun\_angle and are derived for the single inputted location (e.g. tagging location) only.</td>
+ </tr>
+  <tr>
+    <td>sun\_angle</td>
+    <td>A double which defines the angle (degrees) of the sun relative to the horizon at the specified location and timestamp. This is derived using the suncalc package. Note: at present, sun\_angle and are derived for the single inputted location (e.g. tagging location) only.</td>
+ </tr>
+  <tr>
+    <td>lunar\_phase</td>
+    <td>A double which defines the lunar phase (rad). This is derived using the `lunar` package.</td>
+ </tr>
+   <tr>
+    <td>julian\_day</td>
+    <td>An integer which defines the number of days since January 1st.</td>
+ </tr>
+</table>
 
 To begin, it is recommneded that the user simulates a relatively simple dataframe structure (e.g. a short study duration, relatively low sampling resolution and one or few individuals). Once the user has successfully modelled a small dataset, this can be made progressively more complex. However, note that the application will respond progressively more slowly as the dataframe size increases (especially for very large dataframes). This means the user may have to wait a second or two to wait for a tab to respond, if the size of the dataframe is large or dramatically increased. 
 
