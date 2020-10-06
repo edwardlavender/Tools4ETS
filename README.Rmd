@@ -2,23 +2,13 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+# Tools for Ecological Timeseries (Tools4ETS)
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
-
-# Tools4ETS
-
-<!-- badges: start -->
-<!-- badges: end -->
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 `Tools4ETS` is an `R` package which provides tools for ecological timeseries. This includes data exploration, timeseries processing, the computation of simple statistics from timeseries or models of timeseries and simulations to guide model-based ecological inference. `Tools4ETS` was motivated by analyses of new, high-resolution depth timeseries for a Critically Endangered elasmobranch. 
+
+<img src="vignettes/Tools4ETS_README_fig.png"/>
 
 ## Installation
 
