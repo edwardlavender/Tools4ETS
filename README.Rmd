@@ -32,7 +32,7 @@ The `R` package `prettyGraphics` was designed to complement `Tools4ETS` via the 
 * **Rates of change.** `difference()` and `serial_difference()` compute the difference between two values and consecutive pairs of values in a sequence (numbers or timestamps) respectively. 
 * **Matching timeseries.** `match_ts_nearest()`, `match_ts_nearest_by_key()` and `pair_ts()` match timeseries (i.e., to add observations from one timeseries into another).  
 * **Flagging timeseries.** `flag_ts()` can be used to flag independent sections of timeseries in a dataset due to the presence of different factor levels (e.g. individuals) and/or breaks in timeseries. Different flag types can be added, reflecting the requirements of different modelling approaches. `add_unit_id()` is used to add unique unit IDs to a timeseries. 
-* **Thinning timeseries.** `thin_ts()`  can be used to thin a dataset, accounting for independent timeseries. `thin_ts_iter()` implements `thin_ts()` iteratively to explore the change in autocorrelation and data volume with thinning. 
+* **Thinning timeseries.** `thin_ts()`  can be used to thin a dataset, accounting for independent timeseries. `thin_ts_iter()` implements `thin_ts()` iteratively to explore the change in autocorrelation and data volume with thinning. `average_ts()` summarises a timeseries in bins. 
 * **Breaking timeseries.** `break_ts()` can be used to induce breaks in timeseries. 
 
 `Tools4ETS` includes additional functions designed specifically for processing depth timeseries, including the identification and description of recapture events (`suggest_recapture()` and `define_recapture()`) and the definition common covariates (e.g. via `define_photoperiod()`).

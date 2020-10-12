@@ -61,7 +61,8 @@ timeseries. These include:
   - **Thinning timeseries.** `thin_ts()` can be used to thin a dataset,
     accounting for independent timeseries. `thin_ts_iter()` implements
     `thin_ts()` iteratively to explore the change in autocorrelation and
-    data volume with thinning.
+    data volume with thinning. `average_ts()` summarises a timeseries in
+    bins.
   - **Breaking timeseries.** `break_ts()` can be used to induce breaks
     in timeseries.
 
