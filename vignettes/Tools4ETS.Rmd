@@ -442,7 +442,7 @@ thin_ts_iter_ls <-
                increment = 15,
                eval_mod = function(data){ mgcv::gam(depth ~ s(sun_angle), data = data) },
                resid_method = function(mod){ stats::resid(mod) },
-               compute_AR1 = function(mod){ stats::acf(stats::resid(mod), plot = FALSE)$acf[2] },
+               est_AR1 = function(mod){ stats::acf(stats::resid(mod), plot = FALSE)$acf[2] },
                legend_args = list(x = 290, y = 5.25, bty = "n")
                )
 utils::str(thin_ts_iter_ls)
@@ -463,7 +463,7 @@ nleft <- min(thin_ts_iter_ls$iteration_record$nrw); nleft
 nleft_pc <- (nleft/nstart)*100; nleft_pc
 ```
 
-For demonstration purposes, it is worth emphasising that `thin_ts_iter()` can be implemented for different model types because of the flexibility created by the `eval_mod`, `resid_method` and `compute_AR1` arguments. For example, we could implement iterative thinning with an `mgcv::gamm()` model, which can estimate the AR1 parameter, as follows:
+For demonstration purposes, it is worth emphasising that `thin_ts_iter()` can be implemented for different model types because of the flexibility created by the `eval_mod`, `resid_method` and `est_AR1` arguments. For example, we could implement iterative thinning with an `mgcv::gamm()` model, which can estimate the AR1 parameter, as follows:
 
 ```{r, fig.width = 7, fig.height = 5}
 pp <- par(oma = c(2, 2, 2, 4))
@@ -479,7 +479,7 @@ thin_ts_iter_ls <-
                                                      correlation = nlme::corAR1(value = 0.5, form = ~1|flag3, fixed = FALSE),
                                                      data = data) },
                resid_method = function(mod){   stats::resid(mod$lme, type = "normalized") },
-               compute_AR1 = function(mod){ as.numeric(stats::coef(mod$lme$modelStruct$corStruct, unconstrained = FALSE)) },
+               est_AR1 = function(mod){ as.numeric(stats::coef(mod$lme$modelStruct$corStruct, unconstrained = FALSE)) },
                legend_args = list(x = 290, y = 5.25, bty = "n")
   )
 par(pp)

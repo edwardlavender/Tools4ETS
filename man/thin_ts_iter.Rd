@@ -14,8 +14,7 @@ thin_ts_iter(
   increment = 1,
   eval_mod,
   resid_method = function(mod) {     stats::resid(mod) },
-  compute_AR1 = function(mod) {     stats::acf(stats::resid(mod), plot = FALSE)$acf[2]
-    },
+  est_AR1 = function(mod) {     stats::acf(stats::resid(mod), plot = FALSE)$acf[2] },
   thin_ts_iter_ls = NULL,
   plot = TRUE,
   p1_pretty_axis_args = list(side = 1:2, pretty = list(n = 5)),
@@ -50,7 +49,7 @@ thin_ts_iter(
 
 \item{resid_method}{A function which extracts the residuals from a model. \code{\link[stats]{resid}} is the default option, which is usually appropriate.}
 
-\item{compute_AR1}{A function which computes an autocorrelation parameter for a model, such as an AR1 parameter. The only input to this function should be the model. For models without a correlation structure, the default option is usually appropriate: this uses the autocorrelation function of residuals to estimate the approximate AR1 parameter. However, some adjustments may be required to this function (e.g. to extract model residuals appropriately or to extract a different parameter). In other cases, a model may estimate the autocorrelation parameter and the user can define a function here to extract the model estimate from the model object.}
+\item{est_AR1}{A function which computes an autocorrelation parameter for a model, such as an AR1 parameter. The only input to this function should be the model. For models without a correlation structure, the default option is usually appropriate: this uses the autocorrelation function of residuals to estimate the approximate AR1 parameter. However, some adjustments may be required to this function (e.g. to extract model residuals appropriately or to extract a different parameter). In other cases, a model may estimate the autocorrelation parameter and the user can define a function here to extract the model estimate from the model object.}
 
 \item{thin_ts_iter_ls}{A named list of outputs from a previous implementation of \code{\link[Tools4ETS]{thin_ts_iter}} which can be used to produce a plot. This bypasses the need to re-run the algorithm to produce plots.}
 
@@ -115,7 +114,7 @@ thin_ts_iter_ls1 <-
                increment = 1,
                eval_mod = function(data){ mgcv::bam(y ~ s(x), data = data) },
                resid_method = function(mod) { stats::resid(mod) },
-               compute_AR1 = function(mod){ stats::acf(stats::resid(mod), plot = FALSE)$acf[2] },
+               est_AR1 = function(mod){ stats::acf(stats::resid(mod), plot = FALSE)$acf[2] },
                thin_ts_iter_ls = NULL,
                plot = TRUE,
                p1_pretty_axis_args = list(side = 1:2, pretty = list(n = 5)),

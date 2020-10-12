@@ -7,7 +7,7 @@
 estimate_AR1_with_k(
   mod,
   ks = c(5, 10, 15),
-  compute_AR1,
+  est_AR1,
   cl = NULL,
   varlist = NULL,
   plot = TRUE,
@@ -19,7 +19,7 @@ estimate_AR1_with_k(
 
 \item{ks}{A numeric vector of basis dimensions. The model is evaluated for each element in this vector.}
 
-\item{compute_AR1}{A function which calculates the AR1 parameter from a model. The only input to this function should be the model returned by the evaluation of \code{mod}.}
+\item{est_AR1}{A function which calculates the AR1 parameter from a model. The only input to this function should be the model returned by the evaluation of \code{mod}.}
 
 \item{cl}{A cluster object created by \code{\link[parallel]{makeCluster}}. This is required if you want to fit models in parallel.}
 
@@ -33,7 +33,7 @@ estimate_AR1_with_k(
 The function returns a list with two elements: 'list_by_model' and 'dat'. 'list_by_model' is a list with two elements for each model: 'model', the evaluated model; and 'ar1', the estimated AR1 parameter. 'dat' is a dataframe which includes each basis dimension ('k') and the corresponding AR1 value ('ar1'). The function also returns a plot of the basis dimension against the AR1 parameter if \code{plot = TRUE}.
 }
 \description{
-For a model of a response as a smooth function of some variable (e.g., time), this function evaluates how the residual autocorrelation changes with the basis dimension. Specifically, for each basis dimension in a sequence of basis dimensions, a user-defined model is evaluated and the autoregressive order 1 (AR1) parameter is calculated from the model. For large vectors or basis dimensions, models can be evaluated in parallel. The function then returns a list of models and a dataframe/plot which shows the relationship between the AR1 parameter and the basis dimension.
+For a generalised additive model of a response as a smooth function of some variable (e.g., time), this function evaluates how the residual autocorrelation changes with the basis dimension. Specifically, for each basis dimension in a sequence of basis dimensions, a user-defined model is evaluated and the autoregressive order 1 (AR1) parameter is calculated from the model. For large vectors or basis dimensions, models can be evaluated in parallel. The function then returns a list of models and a dataframe/plot which shows the relationship between the AR1 parameter and the basis dimension.
 }
 \examples{
 #### Define example data
@@ -49,8 +49,8 @@ eval_AR1 <- function(mod) Tools4ETS::estimate_AR1(stats::resid(mod))
 
 #### Example (1) Implement approach using default options
 ls <- estimate_AR1_with_k(mod = eval_mod,
-                         ks = c(5, 10, 30),
-                         compute_AR1 = eval_AR1)
+                         ks = c(5, 10),
+                         est_AR1 = eval_AR1)
 # The function returns a list that includes all fitted models and some output data
 names(ls)
 # In the list of outputs for each model, each element contains the model and the estimated ar1:
@@ -62,16 +62,16 @@ ls$dat
 
 #### Example (2): Customise the plot
 ls <- estimate_AR1_with_k(mod = eval_mod,
-                         ks = c(5, 10, 30),
-                         compute_AR1 = eval_AR1,
+                         ks = c(5, 10),
+                         est_AR1 = eval_AR1,
                          type = "b",
                          xlab = "basis dimension",
                          ylab = "AR1")
 
 #### Example (3): Implement model fitting in parallel
 ls <- estimate_AR1_with_k(mod = eval_mod,
-                         ks = c(5, 10, 30, 50, 200, 500),
-                         compute_AR1 = eval_AR1,
+                         ks = c(5, 10),
+                         est_AR1 = eval_AR1,
                          type = "b",
                          xlab = "basis dimension",
                          ylab = "AR1",
@@ -80,14 +80,14 @@ ls <- estimate_AR1_with_k(mod = eval_mod,
 sapply(ls$list_by_model, function(elm) elm$ar1)
 
 #### Examine ACF plots for each model
-pp <- par(mfrow = c(2, 3))
+pp <- par(mfrow = c(1, 2))
 acfs <-
   lapply(ls$list_by_model, function(mod_ls)
     stats::acf(stats::resid(mod_ls$model)))
 par(pp)
 
 #### Visualise predictions for each model
-pp <- par(mfrow = c(2, 3))
+pp <- par(mfrow = c(1, 2))
 preds <-
   pbapply::pblapply(ls$list_by_model, function(mod_ls){
     mod <- mod_ls$model

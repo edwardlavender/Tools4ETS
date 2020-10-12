@@ -2,7 +2,7 @@
 #' @description For a generalised additive model of a response as a smooth function of some variable (e.g., time), this function evaluates how the residual autocorrelation changes with the basis dimension. Specifically, for each basis dimension in a sequence of basis dimensions, a user-defined model is evaluated and the autoregressive order 1 (AR1) parameter is calculated from the model. For large vectors or basis dimensions, models can be evaluated in parallel. The function then returns a list of models and a dataframe/plot which shows the relationship between the AR1 parameter and the basis dimension.
 #' @param mod A function used to evaluate a \code{\link[mgcv]{gam}} model of a given basis dimension. The function should take a single argument, the basis dimension, and return an evaluated model.
 #' @param ks A numeric vector of basis dimensions. The model is evaluated for each element in this vector.
-#' @param compute_AR1 A function which calculates the AR1 parameter from a model. The only input to this function should be the model returned by the evaluation of \code{mod}.
+#' @param est_AR1 A function which calculates the AR1 parameter from a model. The only input to this function should be the model returned by the evaluation of \code{mod}.
 #' @param cl A cluster object created by \code{\link[parallel]{makeCluster}}. This is required if you want to fit models in parallel.
 #' @param varlist A character vector containing the names of exported objects. This may be required if \code{cl} is supplied. This is passed to the \code{varlist} argument of \code{\link[parallel]{clusterExport}}. Exported objects must be located in the global environment.
 #' @param plot A logical input which defines whether or not to produce a plot of the basis dimension against the AR1 parameter values.
@@ -23,8 +23,8 @@
 #'
 #' #### Example (1) Implement approach using default options
 #' ls <- estimate_AR1_with_k(mod = eval_mod,
-#'                          ks = c(5, 10, 30),
-#'                          compute_AR1 = eval_AR1)
+#'                          ks = c(5, 10),
+#'                          est_AR1 = eval_AR1)
 #' # The function returns a list that includes all fitted models and some output data
 #' names(ls)
 #' # In the list of outputs for each model, each element contains the model and the estimated ar1:
@@ -36,16 +36,16 @@
 #'
 #' #### Example (2): Customise the plot
 #' ls <- estimate_AR1_with_k(mod = eval_mod,
-#'                          ks = c(5, 10, 30),
-#'                          compute_AR1 = eval_AR1,
+#'                          ks = c(5, 10),
+#'                          est_AR1 = eval_AR1,
 #'                          type = "b",
 #'                          xlab = "basis dimension",
 #'                          ylab = "AR1")
 #'
 #' #### Example (3): Implement model fitting in parallel
 #' ls <- estimate_AR1_with_k(mod = eval_mod,
-#'                          ks = c(5, 10, 30, 50, 200, 500),
-#'                          compute_AR1 = eval_AR1,
+#'                          ks = c(5, 10),
+#'                          est_AR1 = eval_AR1,
 #'                          type = "b",
 #'                          xlab = "basis dimension",
 #'                          ylab = "AR1",
@@ -54,14 +54,14 @@
 #' sapply(ls$list_by_model, function(elm) elm$ar1)
 #'
 #' #### Examine ACF plots for each model
-#' pp <- par(mfrow = c(2, 3))
+#' pp <- par(mfrow = c(1, 2))
 #' acfs <-
 #'   lapply(ls$list_by_model, function(mod_ls)
 #'     stats::acf(stats::resid(mod_ls$model)))
 #' par(pp)
 #'
 #' #### Visualise predictions for each model
-#' pp <- par(mfrow = c(2, 3))
+#' pp <- par(mfrow = c(1, 2))
 #' preds <-
 #'   pbapply::pblapply(ls$list_by_model, function(mod_ls){
 #'     mod <- mod_ls$model
@@ -82,7 +82,7 @@
 estimate_AR1_with_k <-
   function(mod,
            ks = c(5, 10, 15),
-           compute_AR1,
+           est_AR1,
            cl = NULL,
            varlist = NULL,
            plot = TRUE,...
@@ -98,7 +98,7 @@ estimate_AR1_with_k <-
         # Fit the model given k
         m <- mod(k)
         # Calc ar1 given user-inputted function
-        ar1 <- compute_AR1(m)
+        ar1 <- est_AR1(m)
         # Return a list containing the model and the ar1 value
         out <- list(model = m, ar1 = ar1)
         return(out)

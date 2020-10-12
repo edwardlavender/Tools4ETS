@@ -10,7 +10,7 @@
 #' @param AR1_req A numeric input which defines the desired number to which the AR1 parameter should be reduced by thinning.
 #' @param eval_mod A function which acts as a wrapper for implementing a model. The only input to this function should be the data used to evaluate the model.
 #' @param resid_method A function which extracts the residuals from a model. \code{\link[stats]{resid}} is the default option, which is usually appropriate.
-#' @param compute_AR1 A function which computes an autocorrelation parameter for a model, such as an AR1 parameter. The only input to this function should be the model. For models without a correlation structure, the default option is usually appropriate: this uses the autocorrelation function of residuals to estimate the approximate AR1 parameter. However, some adjustments may be required to this function (e.g. to extract model residuals appropriately or to extract a different parameter). In other cases, a model may estimate the autocorrelation parameter and the user can define a function here to extract the model estimate from the model object.
+#' @param est_AR1 A function which computes an autocorrelation parameter for a model, such as an AR1 parameter. The only input to this function should be the model. For models without a correlation structure, the default option is usually appropriate: this uses the autocorrelation function of residuals to estimate the approximate AR1 parameter. However, some adjustments may be required to this function (e.g. to extract model residuals appropriately or to extract a different parameter). In other cases, a model may estimate the autocorrelation parameter and the user can define a function here to extract the model estimate from the model object.
 #' @param plot A logical input which defines whether or not to produce a plot demonstrating the change in (a) the autocorrelation parameter and (b) the volume of data with (c) the thinning index.
 #' @param thin_ts_iter_ls A named list of outputs from a previous implementation of \code{\link[Tools4ETS]{thin_ts_iter}} which can be used to produce a plot. This bypasses the need to re-run the algorithm to produce plots.
 #' @param p1_pretty_axis_args A named list of arguments passed to \code{\link[prettyGraphics]{pretty_axis}} to make the x and y axes. These pertain to the thinning index and the autocorrelation parameter. The default options usually result in pretty axes.
@@ -60,7 +60,7 @@
 #'                increment = 1,
 #'                eval_mod = function(data){ mgcv::bam(y ~ s(x), data = data) },
 #'                resid_method = function(mod) { stats::resid(mod) },
-#'                compute_AR1 = function(mod){ stats::acf(stats::resid(mod), plot = FALSE)$acf[2] },
+#'                est_AR1 = function(mod){ stats::acf(stats::resid(mod), plot = FALSE)$acf[2] },
 #'                thin_ts_iter_ls = NULL,
 #'                plot = TRUE,
 #'                p1_pretty_axis_args = list(side = 1:2, pretty = list(n = 5)),
@@ -109,7 +109,7 @@ thin_ts_iter <-
 
     eval_mod,
     resid_method = function(mod){ stats::resid(mod) },
-    compute_AR1 = function(mod){ stats::acf(stats::resid(mod), plot = FALSE)$acf[2] },
+    est_AR1 = function(mod){ stats::acf(stats::resid(mod), plot = FALSE)$acf[2] },
 
     thin_ts_iter_ls = NULL,
     plot = TRUE,
@@ -202,7 +202,7 @@ thin_ts_iter <-
           wnupper_ls[[nth]] <- NA
         } else{
           # Compute AR1 estimate and add to list
-          AR1_est <- compute_AR1(m1a)
+          AR1_est <- est_AR1(m1a)
           AR1_est_ls[[nth]] <- AR1_est
           wnupper_ls[[nth]] <- nth
           # Compute upper limit of white noise and add to list
