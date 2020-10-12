@@ -83,7 +83,9 @@ timeseries data or models. These include:
     used to estimate the autoregressive order 1 (AR1) parameter from the
     autocorrelation function (ACF) of a model’s residuals.
     `acf_in_white_noise()` can be used to compute confidence intervals
-    around an ACF.
+    around an ACF. `estimate_AR1_with_k()` explores the effects of basis
+    dimension on the residual autocorrelation for generalised additive
+    models.
 
 ## Simulations
 
