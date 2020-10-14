@@ -30,11 +30,12 @@ introduction to the `GAMS4DTS()` function (see below).
 
 ## Data visualisation
 
-The `R` package `prettyGraphics` was designed to complement `Tools4ETS`
-via the provision of tools for rapid timeseries visualisation in
-relation to covariates, across factor levels (e.g. individuals) and
-timescales with `prettyGraphics::pretty_ts()` and an interactive R Shiny
-application (`prettyGraphics::vis_ts()`).
+The `R` package
+[`prettyGraphics`](https://github.com/edwardlavender/prettyGraphics) was
+designed to complement `Tools4ETS` via the provision of tools for rapid
+timeseries visualisation in relation to covariates, across factor levels
+(e.g. individuals) and timescales with `prettyGraphics::pretty_ts()` and
+an interactive R Shiny application (`prettyGraphics::vis_ts()`).
 
 ## Data processing
 
