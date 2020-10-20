@@ -105,7 +105,8 @@ properties; namely:
     durations and/or with breaks.
   - **Define parameters.** `parameterise_smooth()` can be used to define
     functions/parameters which relate covariates to a response and to
-    compare simulated smooths to those inferred by GAMs.  
+    compare simulated smooths to those inferred by GAMs. `sim_sine()`
+    simulates and visualises periodic, sinusoidal functions.
   - **Response simulation.** `sim_ts()` can be used to simulate the
     values of a response variable given a user-defined model. For
     simulations including residual autocorrelation, `sigma_arima()`
