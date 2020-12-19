@@ -197,7 +197,7 @@ pretty_ts(x = dat_flapper$timestamp,
 
 #### E.g. Add model predictions via
 # ... list_CIs
-# ... add_model_predictions_args,
+# ... add_error_envelope_args,
 # Example model for demonstration purposes only
 m1 <- mgcv::bam(depth ~ s(as.numeric(timestamp), k = 10, bs = "cr"), rho = 0.99, data = dA)
 pred <- mgcv::predict.gam(m1, se.fit = TRUE)
@@ -207,7 +207,7 @@ pretty_ts(x = dat_flapper$timestamp,
         fct_level = "A",
         pretty_axis_args = pretty_axis_args,
         list_CIs_args = list(pred = pred, fadj = function(x){ x * -1}),
-        add_model_predictions_args = list(), 
+        add_error_envelope_args = list(), 
         return_list = FALSE
         )
 
@@ -515,7 +515,7 @@ In this case, model inferences from different thinned datasets are similar. Both
 
 ### Observed and fitted values
 
-One of the best ways to evaluate the performance of a model is to overlay observed and expected timeseries. `prettyGraphics::add_model_predictions()` makes this easy, and this is incorporated into `pretty_ts()`:
+One of the best ways to evaluate the performance of a model is to overlay observed and expected timeseries. `prettyGraphics::add_error_envelope()` makes this easy, and this is incorporated into `pretty_ts()`:
 
 ```{r, fig.width = 7, fig.height = 5}
 #### Select the model of the first thinned dataset as an example
@@ -561,10 +561,10 @@ utils::str(pmu_mat)
 spmu <- summarise_posterior(pmat = pmu_mat, 
                             probs = c(0.025, 0.975), 
                             summary_format = "list")
-# This generates a list that we can pass to add_model_predictions()
+# This generates a list that we can pass to add_error_envelope()
 utils::str(spmu)
 # Since we've negated depth in visualisations, we need to do this here though, 
-# ... since this list is passed directly to add_model_predictions_args not list_CIs_args, which has
+# ... since this list is passed directly to add_error_envelope_args not list_CIs_args, which has
 # ... an argument which can do this for us. 
 spmu <- lapply(spmu, function(elm){elm * - 1})
 
@@ -626,7 +626,7 @@ PI <- simulate_posterior_obs(model = mod_dfp_thin1,
                              mu_method = 2,
                              n = 1000,
                              return = "summary")
-# Adjust PI list so that it can be plotted with add_model_predictions() via pretty_ts()
+# Adjust PI list so that it can be plotted with add_error_envelope() via pretty_ts()
 names(PI)[1] <- "fit"
 PI <- lapply(PI, function(x){ x * -1 })
 utils::str(PI)
@@ -656,7 +656,7 @@ pretty_ts(x = dfp_thin1_A$timestamp,
 #### Plot prediction intervals 
 pretty_ts(x = dfp_thin1_A$timestamp,
         y1 = dfp_thin1_A$dn,
-        add_model_predictions_args = list(x = dfp_thin1_A$timestamp,
+        add_error_envelope_args = list(x = dfp_thin1_A$timestamp,
                                           CI = PI,
                                           CI_gp = list(col = "lightgrey", border = FALSE), 
                                           fitted_gp = list(col = "red")
@@ -1015,7 +1015,7 @@ pbapply::pbmapply(list(mod_dat1_depthAR0, mod_dat1_depthAR1),
   pretty_ts(nd$timestamp, nd[, response]*-1,
           pretty_axis_args = list(side = c(3, 2), lim = list(NULL, c(-300, 100)), axis= list(las = TRUE)),
           add_lines_args = list(lwd = 0.5),
-          add_model_predictions_args = list(x = nd$timestamp,
+          add_error_envelope_args = list(x = nd$timestamp,
                                             CI = sim_obs,
                                             fCI = "lines",
                                             CI_gp = list(col = "red")

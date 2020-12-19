@@ -15,7 +15,7 @@ output: github_document
 You can install the development version of `Tools4ETS` from [GitHub](https://github.com) as shown below:
 
 ``` r
-devtools::install_github("edwardlavender/Tools4ETS", build_vignette = TRUE)
+devtools::install_github("edwardlavender/Tools4ETS", dependencies = TRUE, build_vignette = TRUE)
 ```
 
 To access the vignettes, use `vignette("Tools4ETS", package = "Tools4ETS")` for a general introduction to the package and `vignette("GAMS4DTS", package = "Tools4ETS")` for a specific introduction to the `GAMS4DTS()` function (see below). 
@@ -60,7 +60,7 @@ A interactive application designed specifically to explore the use of GAMs as a 
 
 * **Posterior simulation of expected values.** `simulate_posterior_mu()` can be used to simulate from the posterior of a GAM to compute ecologically meaningful metrics, with confidence intervals, which are not directly estimated by a model. 
 * **Posterior simulation of new observed values.** `simulate_posterior_obs()` can be used to simulate new 'observations' from a model, accounting for uncertainty in fitted coefficients, expected values, predictions and autocorrelation. 
-* **Summarising the posterior distribution.** `summarise_posterior()` can be used to summarise posterior matrices (e.g. so that that they can be plotted with `prettyGraphics::add_model_predictions()`.)
+* **Summarising the posterior distribution.** `summarise_posterior()` can be used to summarise posterior matrices (e.g. so that that they can be plotted with `prettyGraphics::add_error_envelope()`.)
 
 ## Interactive applications
 

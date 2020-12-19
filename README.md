@@ -20,7 +20,7 @@ You can install the development version of `Tools4ETS` from
 [GitHub](https://github.com) as shown below:
 
 ``` r
-devtools::install_github("edwardlavender/Tools4ETS", build_vignette = TRUE)
+devtools::install_github("edwardlavender/Tools4ETS", dependencies = TRUE, build_vignette = TRUE)
 ```
 
 To access the vignettes, use `vignette("Tools4ETS", package =
@@ -133,7 +133,7 @@ modelling approach in ecology; namely:
     autocorrelation.
   - **Summarising the posterior distribution.** `summarise_posterior()`
     can be used to summarise posterior matrices (e.g. so that that they
-    can be plotted with `prettyGraphics::add_model_predictions()`.)
+    can be plotted with `prettyGraphics::add_error_envelope()`.)
 
 ## Interactive applications
 

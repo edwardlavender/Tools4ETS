@@ -17,13 +17,13 @@
 #' @param p2_pretty_axis_args A named list of arguments passed to \code{\link[prettyGraphics]{pretty_axis}} to make the second y axis. This pertains to the volume of data left after thinning. The default options usually result in a pretty axis.
 #' @param p1_args A named list of arguments to customise the first plot, which demonstrates the decline in the autocorrelation parameter with the thinning index.
 #' @param p2_args A named list of arguments to customise the second plot, which is added ontop of the first plot to demonstrate the simultaneous decline in the volume of data with the thinning index.
-#' @param add_model_predictions_args A list of arguments passed to \code{\link[prettyGraphics]{add_model_predictions}} to customise the 95 percent confidence envelope for an AR1 parameter in white noise.
+#' @param add_error_envelope_args A list of arguments passed to \code{\link[prettyGraphics]{add_error_envelope}} to customise the 95 percent confidence envelope for an AR1 parameter in white noise.
 #' @param add_legend A logical input which defines whether or not to add a legend.
 #' @param legend_args A named list of arguments passed to \code{\link[graphics]{legend}} to customise the legend. Most parameters should be successfully extracted internally from \code{p1_args}, \code{p2_args} and \code{pretty_axis_args}. The placement of the legend is implemented automatically but can be overridden by the user here. Legend placement is implemented in relation to the x axis and the second y axis.
 #' @param mtext_args A named list of arguments passed to \code{\link[graphics]{mtext}} to add axes labels. A nested list is used to control each axis independently.
 #' @param verbose A logical input which defines whether or not to print messages; namely, the estimated autocorrelation parameter on each algorithm iteration which can be used to monitor algorithm process/speed of convergence.
 #'
-#' @return The function returns a list and/or a plot. On the first implementation of the algorithm, a list is contained with five elements: (1) \code{start_time}, the start time of the algorithm; (2) \code{end_time}, the end time of the algorithm; (3) \code{iteration_duration}, the duration (in minutes) of the algorithm; (4) \code{iteration_record}, a dataframe providing a record of algorithm outputs including (a) \code{nth} (the value of the thinning index on each iteration), (b) \code{AR1_est} (the value of the autocorrelation parameter on each iteration), (c) \code{nrw_log} (the logarithm of the number of observations remaining in \code{dat} on each iteration), (d) \code{lowerCI} (the lower 95 percent confidence interval for the AR1 parameter in white noise) and (e) \code{upperCI} (the upper 95 percent confidence interval for the AR1 parameter in white noise) and (4) \code{CI}, a list with three elements (\code{x}, the values of nth, as above; \code{lowerCI}, as above; \code{upperCI}, as above) used to add confidence intervals to the plot via \code{\link[prettyGraphics]{add_model_predictions}}.
+#' @return The function returns a list and/or a plot. On the first implementation of the algorithm, a list is contained with five elements: (1) \code{start_time}, the start time of the algorithm; (2) \code{end_time}, the end time of the algorithm; (3) \code{iteration_duration}, the duration (in minutes) of the algorithm; (4) \code{iteration_record}, a dataframe providing a record of algorithm outputs including (a) \code{nth} (the value of the thinning index on each iteration), (b) \code{AR1_est} (the value of the autocorrelation parameter on each iteration), (c) \code{nrw_log} (the logarithm of the number of observations remaining in \code{dat} on each iteration), (d) \code{lowerCI} (the lower 95 percent confidence interval for the AR1 parameter in white noise) and (e) \code{upperCI} (the upper 95 percent confidence interval for the AR1 parameter in white noise) and (4) \code{CI}, a list with three elements (\code{x}, the values of nth, as above; \code{lowerCI}, as above; \code{upperCI}, as above) used to add confidence intervals to the plot via \code{\link[prettyGraphics]{add_error_envelope}}.
 #'
 #' @examples
 #' #### Define model parameters and simulate observations
@@ -77,7 +77,7 @@
 #'                               col = "dimgrey",
 #'                               cex = 0.5
 #'                ),
-#'                add_model_predictions_args = list(),
+#'                add_error_envelope_args = list(),
 #'                add_legend = TRUE,
 #'                legend_args = list(),
 #'                mtext_args = list(list(side = 1, text = "Thinning Index", line = 2.5),
@@ -127,7 +127,7 @@ thin_ts_iter <-
                    col = "dimgrey",
                    cex = 0.5
                    ),
-    add_model_predictions_args = list(),
+    add_error_envelope_args = list(),
     add_legend = TRUE,
     legend_args = list(),
     mtext_args = list(list(side = 1, text = "Thinning Index", line = 2.5),
@@ -272,9 +272,9 @@ thin_ts_iter <-
                    add_fitted = FALSE,
                    fitted_gp = list()
       )
-      add_model_predictions_args <- list_merge(damp, add_model_predictions_args)
+      add_error_envelope_args <- list_merge(damp, add_error_envelope_args)
       # Add CI envelope
-      do.call(prettyGraphics::add_model_predictions, add_model_predictions_args)
+      do.call(prettyGraphics::add_error_envelope, add_error_envelope_args)
 
       #### Restore clip
       do.call("clip", as.list(usr))

@@ -136,7 +136,7 @@ parameterise_contrast_2l <-
 #' @param dat The dataframe used to fit the GAM.
 #' @param term A character specifying the term of interest.
 #' @param plot_gam_ls The output of \code{\link[mgcv]{plot.gam}}. This is used as a quick method to add model predictions for the effect of a term on the response, confidence intervals and (optionally) partial residuals to the plot, since these are all computed by \code{\link[mgcv]{plot.gam}}.
-#' @param add_model_predictions_args A named list of arguments passed to \code{\link[prettyGraphics]{add_model_predictions}} to add predictions to the plot.
+#' @param add_error_envelope_args A named list of arguments passed to \code{\link[prettyGraphics]{add_error_envelope}} to add predictions to the plot.
 #' @param residuals A logical input which defines whether or not to add partial residuals to the plot.
 #' @param add_residuals_args A named list of arguments to customise the partial residuals on the plot.
 #' @param shift A number which defines a value by which to shift model predictions/partial residuals vertically. This can be necessary because \code{\link[mgcv]{plot.gam}} smooths are centred.
@@ -185,7 +185,7 @@ parameterise_smooth <-
     model,
     term,
     plot_gam_ls,
-    add_model_predictions_args = list(),
+    add_error_envelope_args = list(),
     residuals = FALSE,
     add_residuals_args = list(),
     shift = 0,
@@ -274,8 +274,8 @@ parameterise_smooth <-
                     add_fitted = TRUE,
                     fitted_gp = list(col = "black", lwd = 1, lty = 1)
         )
-        add_model_predictions_args <- list_merge(amp, add_model_predictions_args)
-        do.call(prettyGraphics::add_model_predictions, add_model_predictions_args)
+        add_error_envelope_args <- list_merge(amp, add_error_envelope_args)
+        do.call(prettyGraphics::add_error_envelope, add_error_envelope_args)
 
         #### Add partial residuals
         if(residuals){

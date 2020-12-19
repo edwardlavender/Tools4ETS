@@ -47,7 +47,7 @@ summary1 <-
                       probs = c(0.025, 0.975),
                       summary_format = "list")
 utils::str(summary1)
-# This can be plotted with prettyGraphics::add_model_predictions()
+# This can be plotted with prettyGraphics::add_error_envelope()
 # ... see (below).
 
 #### Example (2) Summarise the posterior in a matrix:
@@ -66,14 +66,14 @@ summary3 <-
                       summary_format = "list")
 utils::str(summary3)
 
-#### Summarised posterior distributions can be plotted with add_model_predictions()
+#### Summarised posterior distributions can be plotted with add_error_envelope()
 plot(d$x, d$y)
 # 95 \% CIs with mean
 names(summary1)[1] <- "fit"
-prettyGraphics::add_model_predictions(x = nd$x, CI = summary1)
+prettyGraphics::add_error_envelope(x = nd$x, CI = summary1)
 # 89\% CIs:
 names(summary3)[1] <- "fit"
-prettyGraphics::add_model_predictions(x = nd$x,
+prettyGraphics::add_error_envelope(x = nd$x,
                                   CI = summary3,
                                    CI_gp = list(col = "dimgrey",
                                                 border = FALSE

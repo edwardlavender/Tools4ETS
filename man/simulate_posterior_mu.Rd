@@ -92,8 +92,8 @@ sim3 <-
 utils::str(sim3)
 utils::head(sim3)
 
-#### Example (4): The function can be used in combination with add_model_predictions()
-# This can be plotted using prettyGraphics::add_model_predictions()
+#### Example (4): The function can be used in combination with add_error_envelope()
+# This can be plotted using prettyGraphics::add_error_envelope()
 nd <- data.frame(x = seq(min(d$x), max(d$x), length.out = 100))
 sim4 <-
   simulate_posterior_mu(
@@ -103,7 +103,7 @@ sim4 <-
     return = "summary")
 plot(d$x, d$y)
 names(sim4)[1] <- "fit"
-prettyGraphics::add_model_predictions(x = nd$x, CI = sim4)
+prettyGraphics::add_error_envelope(x = nd$x, CI = sim4)
 
 #### Example (5): Both the full posterior matrix and the summary can be returned:
 sim5 <-

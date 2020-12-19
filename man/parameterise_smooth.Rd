@@ -18,7 +18,7 @@ parameterise_smooth(
   model,
   term,
   plot_gam_ls,
-  add_model_predictions_args = list(),
+  add_error_envelope_args = list(),
   residuals = FALSE,
   add_residuals_args = list(),
   shift = 0,
@@ -58,7 +58,7 @@ parameterise_smooth(
 
 \item{plot_gam_ls}{The output of \code{\link[mgcv]{plot.gam}}. This is used as a quick method to add model predictions for the effect of a term on the response, confidence intervals and (optionally) partial residuals to the plot, since these are all computed by \code{\link[mgcv]{plot.gam}}.}
 
-\item{add_model_predictions_args}{A named list of arguments passed to \code{\link[prettyGraphics]{add_model_predictions}} to add predictions to the plot.}
+\item{add_error_envelope_args}{A named list of arguments passed to \code{\link[prettyGraphics]{add_error_envelope}} to add predictions to the plot.}
 
 \item{residuals}{A logical input which defines whether or not to add partial residuals to the plot.}
 

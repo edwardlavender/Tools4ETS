@@ -45,7 +45,7 @@
 #'     return = "summary")
 #' plot(d$x, d$y)
 #' names(sim_mu)[1] <- "fit"
-#' prettyGraphics::add_model_predictions(x = nd$x, CI = sim_mu)
+#' prettyGraphics::add_error_envelope(x = nd$x, CI = sim_mu)
 #' # But what about our confidence in predictions? This is where
 #' # ... simulate_posterior_obs() comes in.
 #'
@@ -168,7 +168,7 @@
 #'     mu_method = 2,
 #'     n = 250,
 #'     return = "summary") # return a summary (default returns a list of 95% CIs which can be plotted)
-#' # The function returns a list, with three elements that can be plotted using add_model_predictions()
+#' # The function returns a list, with three elements that can be plotted using add_error_envelope()
 #' utils::str(sim_pos5)
 #' # Define a plot, using pretty_axis() to generate suitable axes that account for predictions:
 #' names(sim_pos5)[1] <- "fit"
@@ -184,7 +184,7 @@
 #' # Create plot and add axes and prediction intervals
 #' plot(d$x, d$yAR, xlim = axis_ls[[1]]$lim, ylim = axis_ls[[2]]$lim, axes = FALSE)
 #' prettyGraphics::pretty_axis(axis_ls = axis_ls, add = TRUE)
-#' prettyGraphics::add_model_predictions(nd$x, sim_pos5)
+#' prettyGraphics::add_error_envelope(nd$x, sim_pos5)
 #' # Compare prediction interval to confidence interval for mu,
 #' # ... which is much narrower:
 #' sim_mu_AR1 <-
@@ -194,7 +194,7 @@
 #'     n = 250,
 #'     return = "summary")
 #' names(sim_mu_AR1)[1] <- "fit"
-#' prettyGraphics::add_model_predictions(x = nd$x, CI = sim_mu_AR1,
+#' prettyGraphics::add_error_envelope(x = nd$x, CI = sim_mu_AR1,
 #'                                   CI_gp = list(col = "dimgrey",
 #'                                                 border = FALSE))
 #'
@@ -241,12 +241,12 @@
 #' names(sim_pos6_AR1_PI)[1] <- "fit"
 #' # Plot
 #' plot(d$x, d$yAR, cex = 0.1, col = "grey")
-#' prettyGraphics::add_model_predictions(nd$x, sim_pos6_AR0_PI,
+#' prettyGraphics::add_error_envelope(nd$x, sim_pos6_AR0_PI,
 #'                                    CI_gp = list(col = "red",
 #'                                                 border = FALSE),
 #'                                    add_fitted = FALSE
 #' )
-#' prettyGraphics::add_model_predictions(nd$x, sim_pos6_AR1_PI,
+#' prettyGraphics::add_error_envelope(nd$x, sim_pos6_AR1_PI,
 #'                                   CI_gp = list(col = "blue",
 #'                                                 border = FALSE),
 #'                                    add_fitted = FALSE
@@ -299,9 +299,9 @@
 #' prettyGraphics::pretty_axis(axis_ls = axis_ls, add = TRUE)
 #' names(sim_pos7_mu1)[1] <- "fit"
 #' names(sim_pos7_mu2)[1] <- "fit"
-#' prettyGraphics::add_model_predictions(nd$x, sim_pos7_mu1,
+#' prettyGraphics::add_error_envelope(nd$x, sim_pos7_mu1,
 #'                                   CI_gp = list(col = "red", border = FALSE))
-#' prettyGraphics::add_model_predictions(nd$x, sim_pos7_mu2,
+#' prettyGraphics::add_error_envelope(nd$x, sim_pos7_mu2,
 #'                                    CI_gp = list(col = "skyblue",
 #'                                    border = FALSE))
 #' # similar results in this case.
@@ -378,7 +378,7 @@
 #' # Plot prediction intervals:
 #' plot(d2$x2, d2$y2.1, xlim = axis_ls[[1]]$lim, ylim = axis_ls[[2]]$lim, axes = FALSE)
 #' prettyGraphics::pretty_axis(axis_ls = axis_ls, add = TRUE)
-#' prettyGraphics::add_model_predictions(nd$x2, sim_pos_prob1.1)
+#' prettyGraphics::add_error_envelope(nd$x2, sim_pos_prob1.1)
 #'
 #' # Plot (2):
 #' # Define axes:
@@ -394,7 +394,7 @@
 #' # Plot prediction intervals:
 #' plot(d2$x2, d2$y2.2, xlim = axis_ls[[1]]$lim, ylim = axis_ls[[2]]$lim, axes = FALSE)
 #' prettyGraphics::pretty_axis(axis_ls = axis_ls, add = TRUE)
-#' prettyGraphics::add_model_predictions(nd$x2, sim_pos_prob1.2)
+#' prettyGraphics::add_error_envelope(nd$x2, sim_pos_prob1.2)
 #' # It is clear that we're not capturing the variation appropriately in one part of the plot.
 #' # This appears as problematic diagnostics.
 #' # ... However, in this case, our model inferences are not affected strongly:
@@ -662,8 +662,8 @@ simulate_posterior_obs <-
 #' utils::str(sim3)
 #' utils::head(sim3)
 #'
-#' #### Example (4): The function can be used in combination with add_model_predictions()
-#' # This can be plotted using prettyGraphics::add_model_predictions()
+#' #### Example (4): The function can be used in combination with add_error_envelope()
+#' # This can be plotted using prettyGraphics::add_error_envelope()
 #' nd <- data.frame(x = seq(min(d$x), max(d$x), length.out = 100))
 #' sim4 <-
 #'   simulate_posterior_mu(
@@ -673,7 +673,7 @@ simulate_posterior_obs <-
 #'     return = "summary")
 #' plot(d$x, d$y)
 #' names(sim4)[1] <- "fit"
-#' prettyGraphics::add_model_predictions(x = nd$x, CI = sim4)
+#' prettyGraphics::add_error_envelope(x = nd$x, CI = sim4)
 #'
 #' #### Example (5): Both the full posterior matrix and the summary can be returned:
 #' sim5 <-
@@ -797,7 +797,7 @@ simulate_posterior_mu <-
 #'                       probs = c(0.025, 0.975),
 #'                       summary_format = "list")
 #' utils::str(summary1)
-#' # This can be plotted with prettyGraphics::add_model_predictions()
+#' # This can be plotted with prettyGraphics::add_error_envelope()
 #' # ... see (below).
 #'
 #' #### Example (2) Summarise the posterior in a matrix:
@@ -816,14 +816,14 @@ simulate_posterior_mu <-
 #'                       summary_format = "list")
 #' utils::str(summary3)
 #'
-#' #### Summarised posterior distributions can be plotted with add_model_predictions()
+#' #### Summarised posterior distributions can be plotted with add_error_envelope()
 #' plot(d$x, d$y)
 #' # 95 % CIs with mean
 #' names(summary1)[1] <- "fit"
-#' prettyGraphics::add_model_predictions(x = nd$x, CI = summary1)
+#' prettyGraphics::add_error_envelope(x = nd$x, CI = summary1)
 #' # 89% CIs:
 #' names(summary3)[1] <- "fit"
-#' prettyGraphics::add_model_predictions(x = nd$x,
+#' prettyGraphics::add_error_envelope(x = nd$x,
 #'                                   CI = summary3,
 #'                                    CI_gp = list(col = "dimgrey",
 #'                                                 border = FALSE
