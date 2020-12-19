@@ -143,7 +143,7 @@ parameterise_contrast_2l <-
 #'
 #' @param add_rug A logical input which defines whether or not to plot a rug. If so, \code{dat}, the dataframe used to fit the model, should be provided (see above).
 #' @param add_rug_args A named list of arguments passed to \code{\link[graphics]{rug}} to customise the rug.
-#' @param add_moons A logical input which defines whether or not to add moons to a plot. This is useful for visualising the effects of lunar phase in models of animal movement timeseries.
+#' @param add_moons A logical input which defines whether or not to add moons to a plot. This is useful for visualising the effects of lunar phase in models of animal movement time-series.
 #' @param add_moons_args A named list of arguments passed to \code{\link[prettyGraphics]{add_moons}}.
 #'
 #' @param pretty_axis_args A named list of arguments, passed to \code{\link[prettyGraphics]{pretty_axis}} to customise axes.

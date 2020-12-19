@@ -1,5 +1,5 @@
 ---
-title: "Vignette: An R package providing tools for ecological timeseries (Tools4ETS)"
+title: "Vignette: An R package providing tools for ecological time-series (Tools4ETS)"
 author: "Edward Lavender^[Centre for Research into Ecological and Environmental Modelling, The Observatory, University of St Andrews, St Andrews, Scotland, KY16 9LZ and Scottish Oceans Institute, East Sands, University of St Andrews, St Andrews, Scotland, KY16 8LB, el72@st-andrews.ac.uk]"
 date: "`r Sys.Date()`"
 bibliography: library.bib
@@ -33,32 +33,32 @@ body{
 
 # Abstract
 
-In ecology, the need to move beyond the consideration of patterns at snapshots in time to consider of how patterns change through time is an omnipresent challenge. Fortunately, in some fields (such as biologging), the collection of large volumes of data through time (such as depth timeseries) is increasingly possible. `R` provides a powerful language and environment for analysing timeseries, including data visualisation, processing and modelling. However, these steps can be cumbersome, particularly for the ecologist whose focus lies with detailed ecological inferences. For example, base `R` functionality for rapid timeseries visualisation in relation to covariates, across factor levels (e.g. individuals) and timescales (i.e., the level of detail required to address ecological hypotheses) is limited. More importantly, the consequences of decisions made during data collection, processing and modelling for ecological inferences can be challenging to evaluate and often receive insufficient attention. For example, to simplify timeseries, ecologists often thin timeseries, but rarely evaluate the consequences of such post-processing for model-based inferences. Here, I introduce the `Tools4ETS` `R` package and the accompanying `prettyGraphics` package  which provide tools for ecological timeseries in `R` to facilitate visualisation, post-processing and this evaluation. Package development has been particularly driven by new, high-resolution depth timeseries collected for a Critically Endangered benthopelagic elasmobranch, the flapper skate (_Dipturus intermedius_). Notable functionality includes: (a) `prettyGraphics::vis_ts()`, an interactive application which facilitates detailed exploration of timeseries data, powered by a flexible function for plotting publication-quality timeseries (`prettyGraphics::pretty_ts()`); (b) functions which facilitate common data processing steps (e.g. flagging independent segments of timeseries, thinning timeseries and, for depth timeseries, identifying recapture events); and (c) `Tools4ETS::GAMS4DTS()`, an interactive application which helps to elucidate the consequences of data structure, post-processing and model structure for ecological inferences via comparisons of simulated relationships and generalised additive model-based inferences under different scenarios. 
+In ecology, the need to move beyond the consideration of patterns at snapshots in time to consider of how patterns change through time is an omnipresent challenge. Fortunately, in some fields (such as biologging), the collection of large volumes of data through time (such as depth time-series) is increasingly possible. `R` provides a powerful language and environment for analysing time-series, including data visualisation, processing and modelling. However, these steps can be cumbersome, particularly for the ecologist whose focus lies with detailed ecological inferences. For example, base `R` functionality for rapid time-series visualisation in relation to covariates, across factor levels (e.g. individuals) and timescales (i.e., the level of detail required to address ecological hypotheses) is limited. More importantly, the consequences of decisions made during data collection, processing and modelling for ecological inferences can be challenging to evaluate and often receive insufficient attention. For example, to simplify time-series, ecologists often thin time-series, but rarely evaluate the consequences of such post-processing for model-based inferences. Here, I introduce the `Tools4ETS` `R` package and the accompanying `prettyGraphics` package  which provide tools for ecological time-series in `R` to facilitate visualisation, post-processing and this evaluation. Package development has been particularly driven by new, high-resolution depth time-series collected for a Critically Endangered benthopelagic elasmobranch, the flapper skate (_Dipturus intermedius_). Notable functionality includes: (a) `prettyGraphics::vis_ts()`, an interactive application which facilitates detailed exploration of time-series data, powered by a flexible function for plotting publication-quality time-series (`prettyGraphics::pretty_ts()`); (b) functions which facilitate common data processing steps (e.g. flagging independent segments of time-series, thinning time-series and, for depth time-series, identifying recapture events); and (c) `Tools4ETS::GAMS4DTS()`, an interactive application which helps to elucidate the consequences of data structure, post-processing and model structure for ecological inferences via comparisons of simulated relationships and generalised additive model-based inferences under different scenarios. 
 
 # Keywords
 $\circ$ ecology $\circ$ benthic $\circ$ data exploration $\circ$ simulation  $\circ$ generalised additive model $\circ$
 
 # Introduction
 
-Ecological systems are dynamic [@Post_2019]. This dynamicity leads to an omnipresent caveat in ecological research: observed patterns usually represent a snapshot of conditions at a particular place, time and scale. Moving beyond this relatively static perspective is a pervasive challenge in ecology [@Rull_et_al_2014; @DAntonio_and_Flory_2017; @Watts_et_al_2020]. However, technological developments are beginning to make this possible [@Pfeifer_et_al_2012; @Sethi_et_al_2018]. For example, in the field of biologging, it is increasingly common to collect large volumes of movement data, such as depth timeseries, at high resolution over extended periods of time [@Hussey_et_al_2015; @Kays_et_al_2015]. These data provide opportunities to investigate movement patterns, and their drivers, across temporal scales. 
+Ecological systems are dynamic [@Post_2019]. This dynamicity leads to an omnipresent caveat in ecological research: observed patterns usually represent a snapshot of conditions at a particular place, time and scale. Moving beyond this relatively static perspective is a pervasive challenge in ecology [@Rull_et_al_2014; @DAntonio_and_Flory_2017; @Watts_et_al_2020]. However, technological developments are beginning to make this possible [@Pfeifer_et_al_2012; @Sethi_et_al_2018]. For example, in the field of biologging, it is increasingly common to collect large volumes of movement data, such as depth time-series, at high resolution over extended periods of time [@Hussey_et_al_2015; @Kays_et_al_2015]. These data provide opportunities to investigate movement patterns, and their drivers, across temporal scales. 
 
-Ecological timeseries take many forms. Depth timeseries, for instance, vary dramatically depending on species' ecology: air breathing marine mammals often leave characteristic dive profiles in depth timeseries which may be attributable to different behaviours [@Photopoulou_et_al_2015; @Carter_et_al_2016]; truly pelagic species may also show dive-like behaviour [@Wilson_and_Block_2009]; while the movements of benthic species into shallower or deeper water may leave very different signatures in depth timeseries which reflect a combination of individual movements and the bathymetric landscape [@humphries2016]. 
+Ecological time-series take many forms. Depth time-series, for instance, vary dramatically depending on species' ecology: air breathing marine mammals often leave characteristic dive profiles in depth time-series which may be attributable to different behaviours [@Photopoulou_et_al_2015; @Carter_et_al_2016]; truly pelagic species may also show dive-like behaviour [@Wilson_and_Block_2009]; while the movements of benthic species into shallower or deeper water may leave very different signatures in depth time-series which reflect a combination of individual movements and the bathymetric landscape [@humphries2016]. 
 
-Following data collection, the starting point for all ecological analyses is data exploration. For timeseries, this begins with visualisation of raw timeseries, potentially for different factor levels (e.g individuals), at different scales (e.g. short-term and long-term trends) and in relation to covariates. However, the ease with which this detailed exploration of timeseries -- the level of exploration necessary to address ecological hypotheses -- can be implemented is limited in base `R` and even producing example publication-quality timeseries plots, perhaps of a response variable alongside covariates, can be cumbersome.
+Following data collection, the starting point for all ecological analyses is data exploration. For time-series, this begins with visualisation of raw time-series, potentially for different factor levels (e.g individuals), at different scales (e.g. short-term and long-term trends) and in relation to covariates. However, the ease with which this detailed exploration of time-series -- the level of exploration necessary to address ecological hypotheses -- can be implemented is limited in base `R` and even producing example publication-quality time-series plots, perhaps of a response variable alongside covariates, can be cumbersome.
 
-Following visualisation, timeseries data, particularly large, high-resolution timeseries, may require processing prior to analyses. For depth timeseries in particular, it may be necessary to identify and describe recapture events (i.e. periods of time when individuals are caught and released), to ensure analyses of behaviour exclude periods of human influence, or to investigate the effects of catch-and-release on behaviour. However, the definition of recapture events within depth timeseries (even with accompanying environmental data, e.g., temperature timeseries) is surprisingly challenging because depths recorded by electronic tags are often proportionally less accurate in shallow water, recapture events may span extended periods of time and water temperature profiles are complex. More generally, ecological timeseries are often thinned prior to analysis, perhaps by averaging the response across all the timesteps in a pre-defined temporal window or by selecting every $n^{th}$ observation. However, the consequences of such data processing for ecological inferences are considered less often.  
+Following visualisation, time-series data, particularly large, high-resolution time-series, may require processing prior to analyses. For depth time-series in particular, it may be necessary to identify and describe recapture events (i.e. periods of time when individuals are caught and released), to ensure analyses of behaviour exclude periods of human influence, or to investigate the effects of catch-and-release on behaviour. However, the definition of recapture events within depth time-series (even with accompanying environmental data, e.g., temperature time-series) is surprisingly challenging because depths recorded by electronic tags are often proportionally less accurate in shallow water, recapture events may span extended periods of time and water temperature profiles are complex. More generally, ecological time-series are often thinned prior to analysis, perhaps by averaging the response across all the timesteps in a pre-defined temporal window or by selecting every $n^{th}$ observation. However, the consequences of such data processing for ecological inferences are considered less often.  
 
-Following data processing, ecological considerations and the nature of different timeseries may inspire different types of analyses. For the depth timeseries of air breathing mammals, for instance, a common approach is to define different types of dives using clustering algorithms and then examine trends in different dive types and likely drivers [@Photopoulou_et_al_2015; @Carter_et_al_2016]. More generally, statistical model-based approaches, such as Generalised Additive Models (GAMs) and Markov switching autoregresssive models (of which Hidden Markov models, HMMs, are a special case) can be used to query trends in ecological timeseries and their drivers [@pinto2016; @michelot2016; @wood2017]. GAMs, in particular, are a widely implemented modelling framework in ecology which strike an important balance between flexibility and ease-of-implementation; but other approaches, such as HMMs, are gaining traction [@michelot2016; @10.7717/peerj.6876].  
+Following data processing, ecological considerations and the nature of different time-series may inspire different types of analyses. For the depth time-series of air breathing mammals, for instance, a common approach is to define different types of dives using clustering algorithms and then examine trends in different dive types and likely drivers [@Photopoulou_et_al_2015; @Carter_et_al_2016]. More generally, statistical model-based approaches, such as Generalised Additive Models (GAMs) and Markov switching autoregresssive models (of which Hidden Markov models, HMMs, are a special case) can be used to query trends in ecological time-series and their drivers [@pinto2016; @michelot2016; @wood2017]. GAMs, in particular, are a widely implemented modelling framework in ecology which strike an important balance between flexibility and ease-of-implementation; but other approaches, such as HMMs, are gaining traction [@michelot2016; @10.7717/peerj.6876].  
 
-For all ecological analyses, simulations are powerful tool which can help elucidate the consequences of data structure, processing and model structure for ecological inferences. For example, timeseries may be collected at different temporal resolutions and over different timeseries, necessitating an understanding as to how these aspects of data structure affect the inferred effects of covariates operating at different temporal scales for different samples. Similarly, different samples may be punctuated by gaps in which observations are lacking and ecological inferences for different samples need to be contexualised by an understanding as to how missing observations influence a model's ability to infer relationships. Likewise, the consequences of data processing (e.g. thinning) for ecological inferences should be evaluated. In this context, simulations can guide and contexualise ecological inferences because, unlike real data, with simulated data it is possible to evaluate a model's ability to infer true relationships under different circumstances. Even with observed data, simulating new 'observed' datasets from a model can be extremely useful, although this can be complex, especially for autocorrelated timeseries. 
+For all ecological analyses, simulations are powerful tool which can help elucidate the consequences of data structure, processing and model structure for ecological inferences. For example, time-series may be collected at different temporal resolutions and over different time-series, necessitating an understanding as to how these aspects of data structure affect the inferred effects of covariates operating at different temporal scales for different samples. Similarly, different samples may be punctuated by gaps in which observations are lacking and ecological inferences for different samples need to be contexualised by an understanding as to how missing observations influence a model's ability to infer relationships. Likewise, the consequences of data processing (e.g. thinning) for ecological inferences should be evaluated. In this context, simulations can guide and contexualise ecological inferences because, unlike real data, with simulated data it is possible to evaluate a model's ability to infer true relationships under different circumstances. Even with observed data, simulating new 'observed' datasets from a model can be extremely useful, although this can be complex, especially for autocorrelated time-series. 
 
-New large, high-resolution, depth timeseries for a Critically Endangered benthopelagic elasmobranch, the flapper skate (_Dipturus intermedius_), bring some of these issues into focus. Only recently recognised as a distinct species in the common skate (_Dipturus batis_) species' complex, the flapper skate is the world's largest rajid, reaching reaching more than 250 cm in length and 100 kg in weight [@Brander_1981; @Dulvy2006; @Iglesias_et_al_2010; @Griffiths_et_al_2010]. Once widely distributed from the Mediterranean to Northern Norway, the flapper skate was the first marine species to be declared locally extinct, following extirpation from the Irish Sea [@Brander_1981; @Dulvy2006]. However, a remnant population remains off the West Coast of Scotland where the Loch Sunart to the Sound of Jura Nature Conservation Marine Protected Area has been established [@Neat_et_al_2015]. To understand the depth use of individuals within this area, Marine Scotland Science and Scottish Natural Heritage tagged multiple individuals with archival tags, programmed to record depth and temperature at high resolution. These data inspired the creation of an `R` package to provide tools for ecological timeseries in `R` (`Tools4ETS`). 
+New large, high-resolution, depth time-series for a Critically Endangered benthopelagic elasmobranch, the flapper skate (_Dipturus intermedius_), bring some of these issues into focus. Only recently recognised as a distinct species in the common skate (_Dipturus batis_) species' complex, the flapper skate is the world's largest rajid, reaching reaching more than 250 cm in length and 100 kg in weight [@Brander_1981; @Dulvy2006; @Iglesias_et_al_2010; @Griffiths_et_al_2010]. Once widely distributed from the Mediterranean to Northern Norway, the flapper skate was the first marine species to be declared locally extinct, following extirpation from the Irish Sea [@Brander_1981; @Dulvy2006]. However, a remnant population remains off the West Coast of Scotland where the Loch Sunart to the Sound of Jura Nature Conservation Marine Protected Area has been established [@Neat_et_al_2015]. To understand the depth use of individuals within this area, Marine Scotland Science and Scottish Natural Heritage tagged multiple individuals with archival tags, programmed to record depth and temperature at high resolution. These data inspired the creation of an `R` package to provide tools for ecological time-series in `R` (`Tools4ETS`). 
 
-The aim of `Tools4ETS` is to facilitate and streamline the data exploration -- data processing -- modelling pipeline for (ecological) timeseries data in `R`. This initial version includes many widely applicable functions (e.g. interactive exploration of ecological timeseries) alongside more system-specific functionality for depth timeseries, particularly that motivated by the needs of flapper skate depth timeseries research. Specific objectives include the following:
+The aim of `Tools4ETS` is to facilitate and streamline the data exploration -- data processing -- modelling pipeline for (ecological) time-series data in `R`. This initial version includes many widely applicable functions (e.g. interactive exploration of ecological time-series) alongside more system-specific functionality for depth time-series, particularly that motivated by the needs of flapper skate depth time-series research. Specific objectives include the following:
 
-1. To facilitate the visualisation of ecological timeseries, including (a) graphical exploration of relationships between a response (e.g. depth), covariates (e.g. light levels, sun angle) and/or surrounding environmental (e.g. hydrodynamic) conditions through time and (b) trends in summary statistics via (i) interactive visualisation and (ii) the production of publication-quality figures.
-2. To facilitate post-processing of timeseries, including the identification and description of recapture events (for depth timeseries only), the definition of independent sections of timeseries and data thinning.
-3. To facilitate exploration of the consequences of timeseries structure, post-processing and model structure for model-based ecological inferences, via functions which enable the comparison of simulated timeseries and relationships with those inferred by GAMs and an interactive application.
+1. To facilitate the visualisation of ecological time-series, including (a) graphical exploration of relationships between a response (e.g. depth), covariates (e.g. light levels, sun angle) and/or surrounding environmental (e.g. hydrodynamic) conditions through time and (b) trends in summary statistics via (i) interactive visualisation and (ii) the production of publication-quality figures.
+2. To facilitate post-processing of time-series, including the identification and description of recapture events (for depth time-series only), the definition of independent sections of time-series and data thinning.
+3. To facilitate exploration of the consequences of time-series structure, post-processing and model structure for model-based ecological inferences, via functions which enable the comparison of simulated time-series and relationships with those inferred by GAMs and an interactive application.
 
 The aim of this vignette is to outline some of the functions in `Tools4ETS` and to demonstrate their linkages and applications. To do this, I begin with a sample of real data, which I pass through the data exploration -- processing -- modelling pipeline using functions in both packages. The interrogation of statistical models at the end of this process leads us into the second aspect of `Tools4ETS`, which is the use of simulations to clarify the effects of data structure, processing and model structure for ecological inferences. 
 
@@ -80,7 +80,7 @@ set.seed(1)
 
 ## Example dataset
 
-`Tools4ETS` contains an example ecological timeseries in the form of a dataframe with depth (m) and temperature ($^\circ C$) observations at defined timestamps collected from two flapper skate, _Dipturus intermedius_, off the West Coast of Scotland by Scottish Natural Heritage and Marine Scotland Science. For visualisation purposes, we'll define a new column, `dn` which gives the depth of each individual expressed as a negative number. We'll also create a subsetted dataframe including just one individual, which we'll use for some visualisations. 
+`Tools4ETS` contains an example ecological time-series in the form of a dataframe with depth (m) and temperature ($^\circ C$) observations at defined timestamps collected from two flapper skate, _Dipturus intermedius_, off the West Coast of Scotland by Scottish Natural Heritage and Marine Scotland Science. For visualisation purposes, we'll define a new column, `dn` which gives the depth of each individual expressed as a negative number. We'll also create a subsetted dataframe including just one individual, which we'll use for some visualisations. 
 
 ```{r}
 # Examine dat_flapper
@@ -95,16 +95,16 @@ dA <- dat_flapper[which(dat_flapper$id == "A"), ]
 
 ## Data exploration with `pretty_ts()`
 
-The first stage in ecological analysis, even prior to data processing (if possible), is data exploration. Thorough data exploration elucidates data structure, potential processing requirements and the extent to which ecological hypotheses are supported by the data. This contexualises later analyses (e.g. via modelling) and can guide model interpretation. In the case of ecological timeseries, the first stage is to plot raw timeseries. A later step is to overlay covariate timeseries and/or environmental conditions to explore hypothesised relationships between a response and covariates. 
+The first stage in ecological analysis, even prior to data processing (if possible), is data exploration. Thorough data exploration elucidates data structure, potential processing requirements and the extent to which ecological hypotheses are supported by the data. This contexualises later analyses (e.g. via modelling) and can guide model interpretation. In the case of ecological time-series, the first stage is to plot raw time-series. A later step is to overlay covariate time-series and/or environmental conditions to explore hypothesised relationships between a response and covariates. 
 
-The `prettyGraphics` package was initially designed as a complement to `Tools4ETS` to facilitate timeseries visualisation. In particular, the `pretty_ts()` function makes the exploration of ecological timeseries straightforward. This function is based on multiple 'building block' functions within the `prettyGraphics` package with which it is helpful to be to be familiar (see the vignette for `prettyGraphics`). In brief, `pretty_ts()` includes the following functionality:
+The `prettyGraphics` package was initially designed as a complement to `Tools4ETS` to facilitate time-series visualisation. In particular, the `pretty_ts()` function makes the exploration of ecological time-series straightforward. This function is based on multiple 'building block' functions within the `prettyGraphics` package with which it is helpful to be to be familiar (see the vignette for `prettyGraphics`). In brief, `pretty_ts()` includes the following functionality:
 
-* Flexible and/or automated definition of pretty axes for numeric or timeseries data at different scales;
+* Flexible and/or automated definition of pretty axes for numeric or time-series data at different scales;
 * Flexible relationship exploration via the addition of multiple variables to a plot, either by the inclusion of additional axes, line colouration or shading; 
 * Flexible summarisation of trends to clarify signal from noise;
-* Flexible addition of model predictions (e.g. fitted values, confidence intervals, prediction intervals) to observed timeseries;
+* Flexible addition of model predictions (e.g. fitted values, confidence intervals, prediction intervals) to observed time-series;
 
-Here, I cut to the chase and create a collection of plots to demonstrate the power of `pretty_ts()` for the exploration of ecological timeseries. 
+Here, I cut to the chase and create a collection of plots to demonstrate the power of `pretty_ts()` for the exploration of ecological time-series. 
 
 ```{r, fig.width = 7, fig.height = 10}
 #### Set plotting parameters
@@ -115,7 +115,7 @@ pp <- par(mfrow = c(4, 2), oma = c(2, 2, 2, 2), mar = c(3, 3, 3, 3))
 # ... the creation of axes 
 pretty_axis_args <- list(side = c(3, 2), pretty = list(n = 5), axis = list(las = TRUE))
 
-#### Plot a simple timeseries for the individual of interest with pretty axes
+#### Plot a simple time-series for the individual of interest with pretty axes
 pretty_ts(x = dat_flapper$timestamp,
         y1 = dat_flapper$dn,
         fct = dat_flapper$id,
@@ -132,7 +132,7 @@ pretty_plot(dA$timestamp,
             type = "l"
             ) %>% invisible()
 
-#### E.g. Colour the timeseries by temperature by specifying y2
+#### E.g. Colour the time-series by temperature by specifying y2
 # Further customisation options are via
 # ... add_lines_args,
 # ... add_colour_bar_args,
@@ -238,18 +238,18 @@ Function arguments and the building blocks are covered in more detail in the `pr
 
 ## Data exploration with `vis_ts()`
 
-Some of the functions within `prettyGraphics` and `Tools4ETS` are are wrapped inside interactive Shiny applications. For data exploration, Visualise Timeseries (`prettyGraphics::vis_ts()`) is an `R` Shiny application which aims to enable the rapid visualisation of a response through time alongside corresponding trends in covariates. This harnesses the power of `prettyGraphics::pretty_ts()` in an interactive environment, which enhances the ability to easily and rapidly create visualisations, including across multiple factor levels (e.g. timeseries for multiple individuals), in relation to multiple covariates and at multiple temporal scales. This enables the user to focus on the ecological questions at hand which, without an interactive environment, would require considerable programming address satisfactorily.
+Some of the functions within `prettyGraphics` and `Tools4ETS` are are wrapped inside interactive Shiny applications. For data exploration, Visualise Time-series (`prettyGraphics::vis_ts()`) is an `R` Shiny application which aims to enable the rapid visualisation of a response through time alongside corresponding trends in covariates. This harnesses the power of `prettyGraphics::pretty_ts()` in an interactive environment, which enhances the ability to easily and rapidly create visualisations, including across multiple factor levels (e.g. time-series for multiple individuals), in relation to multiple covariates and at multiple temporal scales. This enables the user to focus on the ecological questions at hand which, without an interactive environment, would require considerable programming address satisfactorily.
 
 ## Data processing
 
-With observed and/or simulated data, coupling covariates with observed data and data processing is often necessary prior to analysis. For example, for depth timeseries, putative drivers of depth include sun angle, lunar phase and photoperiod. For these data, it may be necessary to identify and describe recapture events (i.e. periods of time when individuals are caught and released). `Tools4ETS` provides two functions (`define_recapture()` and `suggest_recapture()`) to facilitate this process. More generally, it is often necessary to flag independent segments of timeseries or thin timeseries prior to modelling, which can be achieved using the `flag_ts()`, `thin_ts()` and `thin_ts_iter()` functions.  
+With observed and/or simulated data, coupling covariates with observed data and data processing is often necessary prior to analysis. For example, for depth time-series, putative drivers of depth include sun angle, lunar phase and photoperiod. For these data, it may be necessary to identify and describe recapture events (i.e. periods of time when individuals are caught and released). `Tools4ETS` provides two functions (`define_recapture()` and `suggest_recapture()`) to facilitate this process. More generally, it is often necessary to flag independent segments of time-series or thin time-series prior to modelling, which can be achieved using the `flag_ts()`, `thin_ts()` and `thin_ts_iter()` functions.  
 
 ### Covariates
 
-We will begin data processing by adding covariates to our observed data. For the example depth timeseries, we will consider sun angle ($^\circ$), a proxy for light levels, as our only covariate of interest. However, note that `Tools4ETS` contains some functions which can help with the addition of other commonly assumed drivers of ecological timeseries (e.g. day/night, season, photoperiod; see `?define_photoperiod` and `?prettyGraphics::define_time_blocks`. 
+We will begin data processing by adding covariates to our observed data. For the example depth time-series, we will consider sun angle ($^\circ$), a proxy for light levels, as our only covariate of interest. However, note that `Tools4ETS` contains some functions which can help with the addition of other commonly assumed drivers of ecological time-series (e.g. day/night, season, photoperiod; see `?define_photoperiod` and `?prettyGraphics::define_time_blocks`. 
 ```{r}
 #### Compute sun angles in degrees using the suncalc package 
-# ... evaluated at Oban, West Scotland, as a covariate for example timeseries
+# ... evaluated at Oban, West Scotland, as a covariate for example time-series
 dat_flapper$sun_angle <-
   suncalc::getSunlightPosition(date = dat_flapper$timestamp,
                                lat = -5.47184,
@@ -260,7 +260,7 @@ dat_flapper$sun_angle <-
 
 ### Suggesting unknown recaptures: `suggest_recapture()`
 
-`Tools4ETS` provides two functions which help the user to identify recapture events. In the absence of any available information to restrict algorithmic searches for recapture events, the function `suggest_recapture()` provides a starting point by highlighting all timestamps in which the recorded depth was shallower than a user-specified threshold. Each putative recapture event can be plotted, with the algorithm pausing between plots if `prompt = TRUE` to facilitate examination of the timeseries around putative recapture events. In the following example, I exemplify the use of `suggest_recapture()` for the example depth timeseries. Further details are available in the help file (`?suggest_recapture`).
+`Tools4ETS` provides two functions which help the user to identify recapture events. In the absence of any available information to restrict algorithmic searches for recapture events, the function `suggest_recapture()` provides a starting point by highlighting all timestamps in which the recorded depth was shallower than a user-specified threshold. Each putative recapture event can be plotted, with the algorithm pausing between plots if `prompt = TRUE` to facilitate examination of the time-series around putative recapture events. In the following example, I exemplify the use of `suggest_recapture()` for the example depth time-series. Further details are available in the help file (`?suggest_recapture`).
 
 ```{r, fig.width = 7, fig.height = 4}
 #### Define plotting window 
@@ -290,13 +290,13 @@ par(pp)
 
 ### Defining known recaptures: `define_recapture()`
 
-The results of `suggest_recapture()` suggest that each individual was recaught once in the middle of their timeseries. In fact, we know that these individuals were recaught on 2016-05-16 and 2016-05-10 respectively. When the date of recapture is known, `define_recapture()` can take advantage of this information to facilitate the identification and description of the the precise time of recapture (and other biologically important moments in this process) using an automatic or a semi-automatic approach. Under either approach, three methods can be used to define the time of recapture. Three methods are implemented because their efficacy differs depending on the circumstances. In general, at least one of the methods will usually identify a recapture event quite accurately, but this can refined by the user using point-and-click under the semi-automated approach. The help file (`?define_recapture`) provides much more detail. 
+The results of `suggest_recapture()` suggest that each individual was recaught once in the middle of their time-series. In fact, we know that these individuals were recaught on 2016-05-16 and 2016-05-10 respectively. When the date of recapture is known, `define_recapture()` can take advantage of this information to facilitate the identification and description of the the precise time of recapture (and other biologically important moments in this process) using an automatic or a semi-automatic approach. Under either approach, three methods can be used to define the time of recapture. Three methods are implemented because their efficacy differs depending on the circumstances. In general, at least one of the methods will usually identify a recapture event quite accurately, but this can refined by the user using point-and-click under the semi-automated approach. The help file (`?define_recapture`) provides much more detail. 
 
-For now, let's cut to the case and implement all three methods to define the timing of recapture events under the automated approach. Around each recapture event, we will remove all the data one hour before/after that event so that we do not include 'unnatural' behaviour in our models of depth timeseries. Ideally, additional data and/or simulations would be used to inform the size of recapture window. We will return to the consequences of removing these data for ecological inferences later. 
+For now, let's cut to the case and implement all three methods to define the timing of recapture events under the automated approach. Around each recapture event, we will remove all the data one hour before/after that event so that we do not include 'unnatural' behaviour in our models of depth time-series. Ideally, additional data and/or simulations would be used to inform the size of recapture window. We will return to the consequences of removing these data for ecological inferences later. 
 
 ```{r, fig.width = 7, fig.height = 5}
 #### Method
-# We will precisely identify recapture events in the two example flapper skate timeseries,
+# We will precisely identify recapture events in the two example flapper skate time-series,
 # ... based on knowledge of the following recapture dates:
 # Individual A was recaught on "2016-05-16"
 # Individual B was recaught on "2016-05-10"
@@ -311,7 +311,7 @@ dat_recap <- data.frame(id = c("A", "B"), date = as.Date(c("2016-05-16", "2016-0
 pp <- par(mfrow = c(1, 2))
 define_recap <-
   define_recapture(
-    # Supply depth timeseries and recapture dataframes
+    # Supply depth time-series and recapture dataframes
     data_depth = dat_flapper,
     data_recapture = dat_recap,
     # Implement method 1:3
@@ -349,17 +349,17 @@ dfp <- define_recap$data_depth_rem_recap
 
 ```
 
-We can see that the algorithm has successfully identified the recapture window in both cases, with a rapid ascent to the surface apparent in both figures. In this case, we can see that the first method (the black line), which uses the time of minimum depth (i.e. the shallowest moment) to define the time of recapture has worked well. However, note that this is not always the case (see the help file). The second approach (the green line), which is based on the rate of change in depth, tends to identify the start of the recapture events, although this depends on the bin size. The third method (the blue line), which identifies the time of local peaks in temperature, can function well under some circumstances but lags slightly behind the first method in this case. The red lines define the recapture window, outside of which we are assuming that individuals resume their 'normal' behaviour. Examination of the timeseries over a larger window might suggest that a wider recapture interval is necessary. 
+We can see that the algorithm has successfully identified the recapture window in both cases, with a rapid ascent to the surface apparent in both figures. In this case, we can see that the first method (the black line), which uses the time of minimum depth (i.e. the shallowest moment) to define the time of recapture has worked well. However, note that this is not always the case (see the help file). The second approach (the green line), which is based on the rate of change in depth, tends to identify the start of the recapture events, although this depends on the bin size. The third method (the blue line), which identifies the time of local peaks in temperature, can function well under some circumstances but lags slightly behind the first method in this case. The red lines define the recapture window, outside of which we are assuming that individuals resume their 'normal' behaviour. Examination of the time-series over a larger window might suggest that a wider recapture interval is necessary. 
 
-### Flagging independent timeseries: `flag_ts()`
+### Flagging independent time-series: `flag_ts()`
 
-For all ecological timeseries, the definition of 'independent' sections of timeseries is an essential step prior to modelling, especially for models with correlation structures. `flag_ts()` considers two drivers of independence: (a) a grouping factor (`fct`) which defines inherently independent timeseries in a dataset (e.g. a dataset may comprise timeseries for different individuals) and (b) gaps in the timeseries which, when greater than a user-defined threshold (`duration_threshold`), may be considered effectively independent, even if they are derived from the same level of a grouping factor. Using these criteria, `flag_ts()` can flag independent timeseries within a dataset with up to three different flags. These flags are required by different modelling approaches. Specifically:
+For all ecological time-series, the definition of 'independent' sections of time-series is an essential step prior to modelling, especially for models with correlation structures. `flag_ts()` considers two drivers of independence: (a) a grouping factor (`fct`) which defines inherently independent time-series in a dataset (e.g. a dataset may comprise time-series for different individuals) and (b) gaps in the time-series which, when greater than a user-defined threshold (`duration_threshold`), may be considered effectively independent, even if they are derived from the same level of a grouping factor. Using these criteria, `flag_ts()` can flag independent time-series within a dataset with up to three different flags. These flags are required by different modelling approaches. Specifically:
 
-* **flag1** is a logical vector in which TRUE marks the first observation in each independent segment of timeseries;
-* **flag2** identifies the first, second,..., $n^{th}$, independent segment of each individual's timeseries;
-* **flag3** provides a unique identifier for each independent segment of timeseries;
+* **flag1** is a logical vector in which TRUE marks the first observation in each independent segment of time-series;
+* **flag2** identifies the first, second,..., $n^{th}$, independent segment of each individual's time-series;
+* **flag3** provides a unique identifier for each independent segment of time-series;
 
-`flag_ts()` will work with integer/numeric data or timeseries (i.e. Dates or POSIXct) objects. For the example depth timeseries, we'll consider each individual's timeseries to be independent. We'll also consider any breaks in the timeseries longer than 60 minutes to separate independent timeseries. We'll need to come back to this assumption later. 
+`flag_ts()` will work with integer/numeric data or time-series (i.e. Dates or POSIXct) objects. For the example depth time-series, we'll consider each individual's time-series to be independent. We'll also consider any breaks in the time-series longer than 60 minutes to separate independent time-series. We'll need to come back to this assumption later. 
 
 ```{r}
 #### Define flags 
@@ -373,7 +373,7 @@ dfp <- cbind(dfp, flags)
 utils::head(dfp, 3)
 ```
 
-### Thinning timeseries: `thin_ts()` and `thin_ts_iter()`
+### Thinning time-series: `thin_ts()` and `thin_ts_iter()`
 
 At this stage, we might proceed to fit a preliminary model. To begin, we could consider depth as normally distributed around an expected value, driven by individual and sun angle, with an unknown variance, according to the model:
 
@@ -385,7 +385,7 @@ depth_{i,t} \sim N(\mu_{i, t}, \sigma^2)
 \mu_{i, t} = \alpha + \emptyset_i \delta + s(sun angle_t)
 \end{equation}
 
-where $\alpha$ is the model intercept, $\delta$ is the difference in intercept between individuals, $\emptyset_i$ is an indicator variable which takes a value of 0 for individual "A" and 1 for individual "B", `s` is a thin plate regression spline of sun angle and $\sigma$ is the residual standard deviation (also unhelpfully called the 'residual standard error' in `R`!). Let us proceed to fit this model. Since we're modelling a high frequency timeseries, I'll jump straight in to examine the autocorrelation function of the model's residuals to examine whether or not we need to be thinking about serial autocorrelation (this might have been captured by the effect of $sun angle$). 
+where $\alpha$ is the model intercept, $\delta$ is the difference in intercept between individuals, $\emptyset_i$ is an indicator variable which takes a value of 0 for individual "A" and 1 for individual "B", `s` is a thin plate regression spline of sun angle and $\sigma$ is the residual standard deviation (also unhelpfully called the 'residual standard error' in `R`!). Let us proceed to fit this model. Since we're modelling a high frequency time-series, I'll jump straight in to examine the autocorrelation function of the model's residuals to examine whether or not we need to be thinking about serial autocorrelation (this might have been captured by the effect of $sun angle$). 
 
 ```{r, fig.width = 7, fig.height = 5}
 #### Define model 
@@ -403,11 +403,11 @@ pretty_residuals(stats::resid(m1_dfp),
                  pretty_axis_args = paa_acf)
 ```
 
-This reveals very strong serial autocorrelation. The decline in the autocorrelation function is suggestive of an autoregressive order 1 (AR1) process in which each residual is correlated with the immediately proceeding residual, with a parameter, $\rho$, describing the strength of the correlation between timesteps. This leads to several modelling options, of which thinning the data is the simplest. Under this approach, the data are thinned such that sequential observations become sufficiently far apart in time that they are less dependent on each other. One common thinning method is via systematic window averaging (i.e., each independent timeseries is divided into bins and the response is averaged in each bin). Another method is via systematic point selection (i.e., every $n^{th}$ point is selected for inclusion in a model). In practice, both approaches can be effective under some circumstances. However, systematic point selection is usually recommended. One reason for this is that systematic point selection often reduces serial autocorrelation more efficiently (i.e. the relative magnitude of systematic point selection required to achieve a given reduction in serial autocorrelation is usually less than for systematic window averaging). Nevertheless, in all cases, it is essential to consider the consequences of the method and magnitude of thinning for ecological inferences. We will return to this later. 
+This reveals very strong serial autocorrelation. The decline in the autocorrelation function is suggestive of an autoregressive order 1 (AR1) process in which each residual is correlated with the immediately proceeding residual, with a parameter, $\rho$, describing the strength of the correlation between timesteps. This leads to several modelling options, of which thinning the data is the simplest. Under this approach, the data are thinned such that sequential observations become sufficiently far apart in time that they are less dependent on each other. One common thinning method is via systematic window averaging (i.e., each independent time-series is divided into bins and the response is averaged in each bin). Another method is via systematic point selection (i.e., every $n^{th}$ point is selected for inclusion in a model). In practice, both approaches can be effective under some circumstances. However, systematic point selection is usually recommended. One reason for this is that systematic point selection often reduces serial autocorrelation more efficiently (i.e. the relative magnitude of systematic point selection required to achieve a given reduction in serial autocorrelation is usually less than for systematic window averaging). Nevertheless, in all cases, it is essential to consider the consequences of the method and magnitude of thinning for ecological inferences. We will return to this later. 
 
 `thin_ts()` implements systematic point selection to thin datasets. Key attributes of this function include the following:
 
-* **Independent timeseries.** `thin_ts()` accounts for each independent timeseries in a dataset (as defined by `flag_ts()`), treating each independent timeseries identically. 
+* **Independent time-series.** `thin_ts()` accounts for each independent time-series in a dataset (as defined by `flag_ts()`), treating each independent time-series identically. 
 * **Different subsets.** `thin_ts()` can compute multiple datasets which are thinned by the same amount but retain different subsets of data. This is necessary to ensure that the exact sample of data retained by thinning does not influence ecological inferences. 
 
 To begin, let us compute two alternative thinned datasets, both thinned by `nth = 10`. We'll re-implement the model for one of those, and examine whether we've successfully captured autocorrelation: 
@@ -427,7 +427,7 @@ pretty_residuals(stats::resid(m1_dfp_thin),
                  pretty_axis_args = paa_acf)
 ```
 
-Despite thinning, substantial serial autocorrelation remains. This is a common attribute of high frequency timeseries. In this context, we may need to reconsider whether thinning can solve our problems. `thin_ts_iter()` implements an iterative thinning approach to compute to the decline in autocorrelation as the degree of thinning increases (and the volume of data available for model fitting decreases). User-specified functions for evaluating the model, computing residuals and the autocorrelation parameter mean that this function can work for a variety of models. For example, we could use the approach below for our `mgcv::gam()` model. For speed, we'll start with a thinning index of `nth = 100` and increase this by an `increment` of 15 on every iteration of the algorithm. We'll plot the results, using default options with some adjustment to the automatic placing of the legend. Further details are provided in the help file (`?thin_ts_iter`). 
+Despite thinning, substantial serial autocorrelation remains. This is a common attribute of high frequency time-series. In this context, we may need to reconsider whether thinning can solve our problems. `thin_ts_iter()` implements an iterative thinning approach to compute to the decline in autocorrelation as the degree of thinning increases (and the volume of data available for model fitting decreases). User-specified functions for evaluating the model, computing residuals and the autocorrelation parameter mean that this function can work for a variety of models. For example, we could use the approach below for our `mgcv::gam()` model. For speed, we'll start with a thinning index of `nth = 100` and increase this by an `increment` of 15 on every iteration of the algorithm. We'll plot the results, using default options with some adjustment to the automatic placing of the legend. Further details are provided in the help file (`?thin_ts_iter`). 
 
 ```{r, fig.width = 7, fig.height = 5}
 #### Implement iterative thinning 
@@ -485,7 +485,7 @@ thin_ts_iter_ls <-
 par(pp)
 ```
 
-## Modelling timeseries with GAMs 
+## Modelling time-series with GAMs 
 
 In this case, such extensive thinning of the data is required to reduce autocorrelation to negligible levels that this is an inappropriate approach. Hence, let's combine a small amount of thinning ($nth = 10$, implemented previously), together with an AR1 structure, to see whether we can effectively capture the serial of autocorrelation using a combined approach. We'll implement the approach for both thinned subsets to check that our results are consistent:
 
@@ -509,13 +509,13 @@ mods_dfp_thin <-
 par(pp)
 ```
 
-In this case, model inferences from different thinned datasets are similar. Both thinned subsets suggest that individuals tend to be slightly deeper during the day (high sun angle) than at night. This pattern is commonly observed in marine systems and may be a reflection of diel vertical migration, but the biological importance of the effect here seems small. Remembering that we still need to consider the effect of removing recaptures and thinning on ecological inferences, let's proceed to examine how well this model captures observed timeseries using `pretty_ts()`, `pretty.plot::pretty_residuals()` and some useful functions for simulating from an GAM in `Tools4ETS`. 
+In this case, model inferences from different thinned datasets are similar. Both thinned subsets suggest that individuals tend to be slightly deeper during the day (high sun angle) than at night. This pattern is commonly observed in marine systems and may be a reflection of diel vertical migration, but the biological importance of the effect here seems small. Remembering that we still need to consider the effect of removing recaptures and thinning on ecological inferences, let's proceed to examine how well this model captures observed time-series using `pretty_ts()`, `pretty.plot::pretty_residuals()` and some useful functions for simulating from an GAM in `Tools4ETS`. 
 
 ## Evaluating model predictions and performance: `pretty_ts()`, `pretty_residuals()`, `simulate_posterior_mu()`, `simulate_posterior_obs()`, `simulate_posterior_obs()`
 
 ### Observed and fitted values
 
-One of the best ways to evaluate the performance of a model is to overlay observed and expected timeseries. `prettyGraphics::add_error_envelope()` makes this easy, and this is incorporated into `pretty_ts()`:
+One of the best ways to evaluate the performance of a model is to overlay observed and expected time-series. `prettyGraphics::add_error_envelope()` makes this easy, and this is incorporated into `pretty_ts()`:
 
 ```{r, fig.width = 7, fig.height = 5}
 #### Select the model of the first thinned dataset as an example
@@ -527,7 +527,7 @@ dfp_thin1_A <- dfp_thin1[which(dfp_thin1$id == "A"), ]
 dfp_thin1_A$flag3 <- factor(dfp_thin1_A$flag3)
 pred <- mgcv::predict.bam(mod_dfp_thin1, newdata = dfp_thin1_A, se.fit = TRUE)
 
-#### Plot observed and expected timeseries for individual "A" using pretty_ts()
+#### Plot observed and expected time-series for individual "A" using pretty_ts()
 pretty_ts(x = dfp_thin1$timestamp,
         y1 = dfp_thin1$dn,
         fct = dfp_thin1$id,
@@ -542,7 +542,7 @@ posA <- which(dfp$id == "A")
 lines(dfp$timestamp[posA], dfp$dn[posA], col = "red", lwd = 0.5)
 ```
 
-In this case, we can see that our thinning approach retained most variation in the depth timeseries. However, we have lost some variation at small temporal scales that is, in some cases, quite substantial. The model is clearly a poor description of the data, so we should not place too much confidence in the assertion that individuals tend to be shallower at night. This fits with the relatively weak effect of sun angle.
+In this case, we can see that our thinning approach retained most variation in the depth time-series. However, we have lost some variation at small temporal scales that is, in some cases, quite substantial. The model is clearly a poor description of the data, so we should not place too much confidence in the assertion that individuals tend to be shallower at night. This fits with the relatively weak effect of sun angle.
 
 Confidence intervals can also be computed by posterior simulation with `simulate_posterior_mu()` and `summarise_posterior()` under the assumption of multivariate normality. For example:
 
@@ -605,7 +605,7 @@ quantile(pdiff, prob = c(0.025, 0.975))
 
 ### Observed and simulated values
 
-A comparison of observed and expected timeseries can help to demonstrate the extent to which a model captures observed features of the data. In some circumstances, a comparison of observed timeseries with new predictions or prediction intervals is also useful. `simulate_posterior_obs()` can be used to simulate new observations from a model, either returning a single realisation of the model (`type = "snapshot"`) or a posterior distribution of predicted values (`type = "envelope"`). In the latter case, two methods are implemented to simulate 'observed' values. The first method starts by considering uncertainty at the level of expected values and simulates a distribution of new expected values from which observed values are simulated. The second method starts by considering uncertainty at the level of fitted coefficients and simulates a distribution of fitted coefficients; these are combined with the data to generate a distribution of expected values from which observed values are simulated. (All approaches can account for an AR1 structure if necessary.) `type = "snapshot"` is particularly useful for examining the appropriateness of an AR1 structure for timeseries; `type = "envelope"` can be used to produce prediction intervals and to examine the extent to which the model's error distribution effectively captures the residual variation. Below I exemplify these approaches. Further details are provided in the help files. 
+A comparison of observed and expected time-series can help to demonstrate the extent to which a model captures observed features of the data. In some circumstances, a comparison of observed time-series with new predictions or prediction intervals is also useful. `simulate_posterior_obs()` can be used to simulate new observations from a model, either returning a single realisation of the model (`type = "snapshot"`) or a posterior distribution of predicted values (`type = "envelope"`). In the latter case, two methods are implemented to simulate 'observed' values. The first method starts by considering uncertainty at the level of expected values and simulates a distribution of new expected values from which observed values are simulated. The second method starts by considering uncertainty at the level of fitted coefficients and simulates a distribution of fitted coefficients; these are combined with the data to generate a distribution of expected values from which observed values are simulated. (All approaches can account for an AR1 structure if necessary.) `type = "snapshot"` is particularly useful for examining the appropriateness of an AR1 structure for time-series; `type = "envelope"` can be used to produce prediction intervals and to examine the extent to which the model's error distribution effectively captures the residual variation. Below I exemplify these approaches. Further details are provided in the help files. 
 
 ```{r, fig.width = 7, fig.height = 10}
 #### Simulate a single realisation of the model on the scale of the response 
@@ -635,7 +635,7 @@ utils::str(PI)
 pp <- par(mfrow = c(3, 1), oma = c(2, 2, 2, 1), mar = c(2, 2, 2, 2))
 paa <- list(side = c(3, 2), axis = list(las = TRUE))
 
-#### Plot observed (thinned) timeseries for context
+#### Plot observed (thinned) time-series for context
 pretty_ts(x = dfp_thin1_A$timestamp,
         y1 = dfp_thin1_A$dn,
         pretty_axis_args = paa, 
@@ -671,7 +671,7 @@ mtext(side = 2, "Depth (m)", font = 2, outer = TRUE)
 par(pp)
 ```
 
-The first figure shows the observed (thinned) timeseries used for modelling, with the timeseries for sun angle overlaid.  Close examination of the observed timeseries reveals a complex, variable structure with periods of low variation and movement punctuating periods of higher vertical activity. Overlaying the trend for sun angle makes it clear that these trends are poorly explained by sun angle. The second figure shows a single, simulated realisation of the model of these data. In this case, comparison of the observed timeseries in relation to a simulated timeseries which reproduces the correlation structure in the model is instructive. This comparison suggests that the model poorly captures the correlation in the timeseries: at small temporal scales, the simulated timeseries fails to reproduce any of the periods of low variation which punctuate the observed timeseries and, at larger temporal scales, the simulated timeseries is much more variable than the observed timeseries. This suggests the error structure of the model is limited for these data. This impression is reinforced by the final figure, which shows the observed timeseries with prediction intervals computed by posterior simulation overlaid. This figure emphasises that the model poorly captures observed variation. Biologically, these issues with autocorrelation and variance may reflect switches in behaviour (e.g. resting, foraging) that are not captured by the model's error structure. 
+The first figure shows the observed (thinned) time-series used for modelling, with the time-series for sun angle overlaid.  Close examination of the observed time-series reveals a complex, variable structure with periods of low variation and movement punctuating periods of higher vertical activity. Overlaying the trend for sun angle makes it clear that these trends are poorly explained by sun angle. The second figure shows a single, simulated realisation of the model of these data. In this case, comparison of the observed time-series in relation to a simulated time-series which reproduces the correlation structure in the model is instructive. This comparison suggests that the model poorly captures the correlation in the time-series: at small temporal scales, the simulated time-series fails to reproduce any of the periods of low variation which punctuate the observed time-series and, at larger temporal scales, the simulated time-series is much more variable than the observed time-series. This suggests the error structure of the model is limited for these data. This impression is reinforced by the final figure, which shows the observed time-series with prediction intervals computed by posterior simulation overlaid. This figure emphasises that the model poorly captures observed variation. Biologically, these issues with autocorrelation and variance may reflect switches in behaviour (e.g. resting, foraging) that are not captured by the model's error structure. 
 
 ### Diagnostic residual plots
 
@@ -698,26 +698,26 @@ These plots reinforce earlier impressions. For example, the residual variance is
 I have exemplified the use of `Tools4ETS` to streamline and enhance the data exploration -- processing -- modelling workflow using a real ecological dataset. In this case, `Tools4ETS` functions helped to:
 
 * demonstrate trends and putative relationships in observed data; 
-* identify and remove recapture events in depth timeseries;
-* flag independent timeseries in a dataset (due to timeseries for different factor levels and breaks) for modelling;
-* thin timeseries prior to modelling (accounting for independent timeseries); examine the extent of thinning required to reduce autocorrelation by a given amount and, in so doing, guide model development; and check the consistency of model inferences across different thinned datasets;
-* explore, interpret and diagnose issues with GAMs for timeseries using timeseries plots, posterior simulation and diagnostic plots; 
+* identify and remove recapture events in depth time-series;
+* flag independent time-series in a dataset (due to time-series for different factor levels and breaks) for modelling;
+* thin time-series prior to modelling (accounting for independent time-series); examine the extent of thinning required to reduce autocorrelation by a given amount and, in so doing, guide model development; and check the consistency of model inferences across different thinned datasets;
+* explore, interpret and diagnose issues with GAMs for time-series using time-series plots, posterior simulation and diagnostic plots; 
 
-In terms of understanding the ecological drivers of these sample flapper skate depth timeseries, this work shows that flapper skate timeseries are complex, with possible changes in the mean, variance (i.e. vertical activity) and autocorrelation at multiple temporal scales. There may be a weak link between the mean depth and sun angle, but these complexities mean that this link is unclear. Taken together, this exploration suggests that flapper skate may switch between different movement modes with different biological and statistical properties. More generally, they highlight the statistical challenges posed by high-resolution timeseries and provide a simple evaluation of GAMs as an approach for ecological inference for these high-resolution movement timeseries. 
+In terms of understanding the ecological drivers of these sample flapper skate depth time-series, this work shows that flapper skate time-series are complex, with possible changes in the mean, variance (i.e. vertical activity) and autocorrelation at multiple temporal scales. There may be a weak link between the mean depth and sun angle, but these complexities mean that this link is unclear. Taken together, this exploration suggests that flapper skate may switch between different movement modes with different biological and statistical properties. More generally, they highlight the statistical challenges posed by high-resolution time-series and provide a simple evaluation of GAMs as an approach for ecological inference for these high-resolution movement time-series. 
 
-However, we need to return to choices we made in the data collection -- processing -- modelling process which may have influenced ecological inferences. These include the duration of timeseries that we have collected, the resolution at which timeseries were sampled, the introduction of breaks into timeseries and the removal of observations via systematic point selection. To evaluate the effect of these (and other) choices on ecological inference, we now turn to simulation. 
+However, we need to return to choices we made in the data collection -- processing -- modelling process which may have influenced ecological inferences. These include the duration of time-series that we have collected, the resolution at which time-series were sampled, the introduction of breaks into time-series and the removal of observations via systematic point selection. To evaluate the effect of these (and other) choices on ecological inference, we now turn to simulation. 
 
 # Part 2: Simulation-informed ecological inference 
 
-Simulations are a valuable tool which can address important questions regarding the effects of data structure, data processing decisions and/or model structure for model-based inferences. `Tools4ETS` provides functions and an interactive environment (`GAMS4DTS`) to simulate ecological/depth timeseries and to compare simulated relationships with model-based inferences under different conditions. These functions and `GAMS4DTS` have been designed from a GAM-based perspective in which the response is assumed to be driven by smooth functions of covariates. This is such a widespread perspective that, even in cases where it may be difficult to simulate biologically-meaningful relationships for a particular situation using the functions in this package, they can shed light on broad questions relating to the use of GAMs for ecological timeseries. However, depending on the ecology of the species of interest, the ecological questions at hand and/or the modelling framework, custom simulations may be required. For example, another perspective gaining traction is that observable patterns in animal movement are driven by switches in underlying (behavioural states), which requires a different simulation approach not yet implemented by `Tools4ETS`.
+Simulations are a valuable tool which can address important questions regarding the effects of data structure, data processing decisions and/or model structure for model-based inferences. `Tools4ETS` provides functions and an interactive environment (`GAMS4DTS`) to simulate ecological/depth time-series and to compare simulated relationships with model-based inferences under different conditions. These functions and `GAMS4DTS` have been designed from a GAM-based perspective in which the response is assumed to be driven by smooth functions of covariates. This is such a widespread perspective that, even in cases where it may be difficult to simulate biologically-meaningful relationships for a particular situation using the functions in this package, they can shed light on broad questions relating to the use of GAMs for ecological time-series. However, depending on the ecology of the species of interest, the ecological questions at hand and/or the modelling framework, custom simulations may be required. For example, another perspective gaining traction is that observable patterns in animal movement are driven by switches in underlying (behavioural states), which requires a different simulation approach not yet implemented by `Tools4ETS`.
 
 ## Simulation workflow
 
-To simulate ecological timeseries, the workflow is to (a) assemble a dataframe with timestamps and covariate values, (b) define parameters and/or functions relating covariates to a response (possibly based on previous model outputs) and (c) use this information to simulate the values of a response. Comparisons of model-based inferences among different simulation/model scenarios can contexualise ecological inferences. 
+To simulate ecological time-series, the workflow is to (a) assemble a dataframe with timestamps and covariate values, (b) define parameters and/or functions relating covariates to a response (possibly based on previous model outputs) and (c) use this information to simulate the values of a response. Comparisons of model-based inferences among different simulation/model scenarios can contexualise ecological inferences. 
 
 ### Assembling a dataframe: `assemble_ts()`
 
-The first step is to assemble a dataframe with timestamps and covariate values which can be used to simulate a response. `assemble_ts()` assembles a dataframe with timestamps and factor levels (if applicable), possibly at varying resolutions, over different durations and with breaks. Usually, the user then needs to add covariates to this dataframe. However, since `Tools4ETS` was motivated by depth timeseries, commonly assumed drivers of depth timeseries (i.e., sex, length, sun angle, lunar phase and Julian day) can be computed internally via the `covariates` argument.
+The first step is to assemble a dataframe with timestamps and covariate values which can be used to simulate a response. `assemble_ts()` assembles a dataframe with timestamps and factor levels (if applicable), possibly at varying resolutions, over different durations and with breaks. Usually, the user then needs to add covariates to this dataframe. However, since `Tools4ETS` was motivated by depth time-series, commonly assumed drivers of depth time-series (i.e., sex, length, sun angle, lunar phase and Julian day) can be computed internally via the `covariates` argument.
 
 We will use simulated data to investigate aspects of data structure and post-processing for the models we considered previously. Thus, we will begin by simulating a dataframe similar to that used to fit models above (i.e., `dfp_thin1`), with 14 days of observations for 2 individuals with observations made every 20 minutes:
 
@@ -761,7 +761,7 @@ utils::str(sun_angle_smooth)
 
 ### Simulating a response: `sim_ts()`
 
-We can use the assembled dataframe and parameterisations in a three-step process to simulate depths. For relatively simple simulations, the `sim_ts()` function can be used. For exploratory purposes, we will simulate two depth timeseries, both similar to that which we have observed but in which one does not include serial autocorrelation while the other does. This will allow us to investigate the effects of autocorrelation on model inferences. We begin by defining some parameters based on our previous models:
+We can use the assembled dataframe and parameterisations in a three-step process to simulate depths. For relatively simple simulations, the `sim_ts()` function can be used. For exploratory purposes, we will simulate two depth time-series, both similar to that which we have observed but in which one does not include serial autocorrelation while the other does. This will allow us to investigate the effects of autocorrelation on model inferences. We begin by defining some parameters based on our previous models:
 
 ```{r}
 # Define alpha parameter using mod_dfp_thin1:
@@ -784,7 +784,7 @@ compute_lp <-
        )
 ```
 
-The final step is to specify a function which is used to simulate values of a response for each independent section of the linear predictor. We pass this to `sim_ts()` which uses `alpha`, `alpha_sigma_random` and `compute_lp` to compute the linear predictor and then `sim_obs` to simulate observations from the linear predictor, accounting for independent timeseries (`lpi`, identified by the `individual` column in `dat1` here, since we know there are no gaps in the timeseries). 
+The final step is to specify a function which is used to simulate values of a response for each independent section of the linear predictor. We pass this to `sim_ts()` which uses `alpha`, `alpha_sigma_random` and `compute_lp` to compute the linear predictor and then `sim_obs` to simulate observations from the linear predictor, accounting for independent time-series (`lpi`, identified by the `individual` column in `dat1` here, since we know there are no gaps in the time-series). 
 
 ```{r}
 dat1$depthAR0 <-
@@ -797,7 +797,7 @@ dat1$depthAR0 <-
   )
 ```
 
-The specification of `compute_lp` and `sim_obs` provides the capacity for a diverse array of simulated timeseries. For example, below, I demonstrate a method to simulate autocorrelated residuals by adjusting the function supplied to `sim_obs`. There are a couple of important points to emphasise here. The first point is that users may be tempted to use a custom `for` loop to simulate autocorrelated residuals, but the `stats::arima.sim()` function is generally much faster, particularly for large ecological timeseries: 
+The specification of `compute_lp` and `sim_obs` provides the capacity for a diverse array of simulated time-series. For example, below, I demonstrate a method to simulate autocorrelated residuals by adjusting the function supplied to `sim_obs`. There are a couple of important points to emphasise here. The first point is that users may be tempted to use a custom `for` loop to simulate autocorrelated residuals, but the `stats::arima.sim()` function is generally much faster, particularly for large ecological time-series: 
 ```{r, fig.width = 7, fig.height = 5}
 #### Define function to implement for loop appoach 
 arima.sim.for.loop <- 
@@ -844,7 +844,7 @@ error_arima <- stats::arima.sim(model = list(order = c(1, 0, 0), ar = rho), n = 
 stats::sd(error_arima); residual_sd
 ```
 
-Using `arima.sim()` and `sigma_arima()`, we can simulate autocorrelated timeseries with a comparable level of variation to the timeseries simulated above without autocorrelation by modifying `sim_obs` argument to `sim_ts()`:
+Using `arima.sim()` and `sigma_arima()`, we can simulate autocorrelated time-series with a comparable level of variation to the time-series simulated above without autocorrelation by modifying `sim_obs` argument to `sim_ts()`:
 
 ```{r}
 dat1$depthAR1 <-
@@ -858,10 +858,10 @@ dat1$depthAR1 <-
   )
 ```
 
-It is worth emphasising that the variation of the simulated depth timeseries is a combination of the variation due to the linear predictor and the variation due to the error. For example, for the autocorrelated timeseries:
+It is worth emphasising that the variation of the simulated depth time-series is a combination of the variation due to the linear predictor and the variation due to the error. For example, for the autocorrelated time-series:
 
 ```{r}
-# Flag timeseries 
+# Flag time-series 
 dat1 <- cbind(dat1, flag_ts(x = dat1$timestamp, fct = dat1$individual, duration_threshold = 120, flag = 1:3))
 
 # Variation of repsonse is a combination of mu and residual variation:
@@ -881,12 +881,12 @@ dat1$error_arima <-
 sqrt(var(dat1$mu) + var(dat1$error_arima)); sqrt(var(dat1$mu + dat1$error_arima)); residual_sd
 ```
 
-### Visualise simulated timeseries: `pretty_ts()`
+### Visualise simulated time-series: `pretty_ts()`
 
-We can now visualise simulated timeseries with `pretty_ts()`:
+We can now visualise simulated time-series with `pretty_ts()`:
 
 ```{r, fig.width = 7, fig.height = 10}
-# Plot all simulated timeseries for an example individual
+# Plot all simulated time-series for an example individual
 pp <- par(mfrow = c(2, 1), oma = c(1, 2, 2, 1), mar = c(3, 3, 3, 3))
 lapply(list("depthAR0", "depthAR1"), function(response){
   pretty_ts(x = dat1$timestamp,
@@ -901,11 +901,11 @@ mtext(side = 3, text = "Time (days)", font = 2, outer = TRUE, line = -2)
 mtext(side = 2, text = "Simulated Depth (m)", font = 2, outer = TRUE, line = -2)
 ```
 
-In this case, simulated timeseries are more variable that observed timeseries. This reinforces previous impressions that our initial models are poorly capturing observed variation and need some refinement. 
+In this case, simulated time-series are more variable that observed time-series. This reinforces previous impressions that our initial models are poorly capturing observed variation and need some refinement. 
 
-### Model simulated timeseries
+### Model simulated time-series
 
-We can now proceed to model the two timeseries we have simulated:
+We can now proceed to model the two time-series we have simulated:
 
 ```{r}
 #### Model depthAR0
@@ -914,10 +914,10 @@ mod_dat1_depthAR0 <- mgcv::bam(depthAR0 ~ s(sun_angle), data = dat1)
 #### Model depthAR1
 # Model without AR1 structure 
 mod_dat1_depthAR1 <- mgcv::bam(depthAR1 ~ s(sun_angle), data = dat1)
-# Estimate AR1 across the whole timeseries 
+# Estimate AR1 across the whole time-series 
 AR1 <- acf(stats::resid(mod_dat1_depthAR1), plot = FALSE)$acf[2]; AR1
-# Note that, actually, we have two independent timeseries but, in this case, the estimated  
-# ... AR1 parameter is very similar, as we can show by considering ther AR1 parameter of each timeseries:
+# Note that, actually, we have two independent time-series but, in this case, the estimated  
+# ... AR1 parameter is very similar, as we can show by considering ther AR1 parameter of each time-series:
 resid_ind <- data.frame(resid = stats::resid(mod_dat1_depthAR1), flag3 = dat1$flag3)
 resid_ind <- split(resid_ind, f = resid_ind$flag3)
 pp <- par(mfrow = c(2, 2))
@@ -931,7 +931,7 @@ mod_dat1_depthAR1 <- mgcv::bam(depthAR1 ~ s(sun_angle), rho = AR1, AR.start = da
 
 #### The effect of autocorrelation on fitted values and confidence intervals
 
-To examine the effect of autocorrelation on fitted values and confidence intervals, we can use `mgcv::plot.gam()` or `parameterise_smooth()`. For example, the `parameterise_smooth()` function we used previously can use the outputs of `mgcv::plot.gam()` to overlay simulated and predicted timeseries for a model term: 
+To examine the effect of autocorrelation on fitted values and confidence intervals, we can use `mgcv::plot.gam()` or `parameterise_smooth()`. For example, the `parameterise_smooth()` function we used previously can use the outputs of `mgcv::plot.gam()` to overlay simulated and predicted time-series for a model term: 
 
 ```{r, include = FALSE}
 # Save outputs of mgcv::plot.gam into lists: 
@@ -1036,7 +1036,7 @@ Also notice that we have models which explain a relatively low amount of variati
 sapply(list(mod_dat1_depthAR0, mod_dat1_depthAR1), function(mod){ mgcv::summary.gam(mod)$dev.expl })
 ```
 
-For both models, we can see that uncertainty in the mean is far outweighed by the residual standard deviation. Consequently, both models generate similar prediction intervals, even through even though one simulation included strong autocorrelation. In this case, the main effect of autocorrelation is to alter the shape of simulated timeseries within the same approximate lower and upper limits of variation. 
+For both models, we can see that uncertainty in the mean is far outweighed by the residual standard deviation. Consequently, both models generate similar prediction intervals, even through even though one simulation included strong autocorrelation. In this case, the main effect of autocorrelation is to alter the shape of simulated time-series within the same approximate lower and upper limits of variation. 
 
 ## Case studies 
 
@@ -1044,8 +1044,8 @@ Simulations are a useful tool in ecology. In this section, I provide three cases
 
 ### The effect of breaks on ecological inferences
 
-Many ecological timeseries have gaps. For example, we previously removed a sample of data around recapture events in `dat_flapper`. Simulation can be used to investigate the influence of these gaps on ecological inferences. To investigate this for the sample flapper skate data, I simulate multiple depth timeseries using identical parameters and 'process' timeseries by randomly breaking each timeseries at 0, 1, 2 or 6 
-positions using `break_ts()`. I model processed timeseries and compare the distribution of differences between the simulated and estimated AR1 parameters among scenarios.
+Many ecological time-series have gaps. For example, we previously removed a sample of data around recapture events in `dat_flapper`. Simulation can be used to investigate the influence of these gaps on ecological inferences. To investigate this for the sample flapper skate data, I simulate multiple depth time-series using identical parameters and 'process' time-series by randomly breaking each time-series at 0, 1, 2 or 6 
+positions using `break_ts()`. I model processed time-series and compare the distribution of differences between the simulated and estimated AR1 parameters among scenarios.
 
 ```{r, fig.width = 7, fig.height = 5}
 #### Define data
@@ -1054,7 +1054,7 @@ dat1_cs1 <- dat1
 #### Define sd arima
 sd_arima <- sigma_arima(rho, residual_sd)
 
-#### Define scenario i.e., number of breaks in the timeseries
+#### Define scenario i.e., number of breaks in the time-series
 # small number of iterations to minimise computation time 
 nbreaks <- c(0, 1, 2, 6)
 niter <- 15
@@ -1090,7 +1090,7 @@ cs1_ls <-
                    fct = "individual"
       )
 
-    # Optionally break the timeseries at n break points a given amount 
+    # Optionally break the time-series at n break points a given amount 
     if(scen > 0){
       # Use break_ts() function:
       dat_model <- break_ts(dat = dat1_cs1,
@@ -1100,9 +1100,9 @@ cs1_ls <-
                             before = list(function(break_t) break_t - 2*60*60),
                             after = list(function(break_t) break_t + 2*60*60),
                             output = 2)
-      # Flag timeseries
-      # Adjust duration_threshold to treat timeseries as independent or dependent
-      # ... for this example, we'll imagine these timeseries are independent 
+      # Flag time-series
+      # Adjust duration_threshold to treat time-series as independent or dependent
+      # ... for this example, we'll imagine these time-series are independent 
       flags <- flag_ts(dat_model$timestamp,
                        fct = dat_model$individual,
                        duration_threshold = 100,
@@ -1145,11 +1145,11 @@ abline(h = 0, lty = 3)
 par(pp)
 ```
 
-For sample flapper skate timeseries, this simulation suggests that the estimate of the autocorrelation parameter is quite robust to small breaks in the timeseries, but multiple breaks may lead to systematic biases in the estimation of the AR1 parameter; this becomes progressively more underestimated as the number of breaks increases. This may lead to slight overconfidence in smooths and perhaps slightly too wiggly smooths. These simulations could be extended to explore the effect of gap width, sample size, the strength of autocorrelation and the treatment of broken timeseries as dependent or independent of each other. For instance, in the simulation above, I treated broken timeseries as independent of each other. However, given the strength of autocorrelation, sequential, broken timeseries are still inter-dependent, but the strength of this inter-dependence is weaker than between adjacent residuals. These kinds of simulations can guide data processing and model development. 
+For sample flapper skate time-series, this simulation suggests that the estimate of the autocorrelation parameter is quite robust to small breaks in the time-series, but multiple breaks may lead to systematic biases in the estimation of the AR1 parameter; this becomes progressively more underestimated as the number of breaks increases. This may lead to slight overconfidence in smooths and perhaps slightly too wiggly smooths. These simulations could be extended to explore the effect of gap width, sample size, the strength of autocorrelation and the treatment of broken time-series as dependent or independent of each other. For instance, in the simulation above, I treated broken time-series as independent of each other. However, given the strength of autocorrelation, sequential, broken time-series are still inter-dependent, but the strength of this inter-dependence is weaker than between adjacent residuals. These kinds of simulations can guide data processing and model development. 
 
 ### The effect of thinning on ecological inferences
 
-Simulations can be also used to investigate the effect of thinning on ecological inferences. For many movement timeseries, this is relevant both in terms of data collection (with many electronic tags conducting on-board processing by, for instance, averaging records over a pre-defined window) and data processing. For example, in our initial models, we thinned depth timeseries by selecting every 10th observation, accounting for independent timeseries. Now, we need to examine the possible effects of this process on our ecological inferences. To do this, we will simulate multiple depth timeseries with known properties under three scenarios: (1) no thinning; (2) systematic point selection, as previously implemented; or (3) systematic window averaging, which is another commonly implemented post-processing approach for ecological timeseries. For each scenario, we will then fit an identical model and compare model inferences across scenarios. 
+Simulations can be also used to investigate the effect of thinning on ecological inferences. For many movement time-series, this is relevant both in terms of data collection (with many electronic tags conducting on-board processing by, for instance, averaging records over a pre-defined window) and data processing. For example, in our initial models, we thinned depth time-series by selecting every 10th observation, accounting for independent time-series. Now, we need to examine the possible effects of this process on our ecological inferences. To do this, we will simulate multiple depth time-series with known properties under three scenarios: (1) no thinning; (2) systematic point selection, as previously implemented; or (3) systematic window averaging, which is another commonly implemented post-processing approach for ecological time-series. For each scenario, we will then fit an identical model and compare model inferences across scenarios. 
 
 ```{r, fig.width = 7, fig.height = 5}
 #### Define dataframe
@@ -1157,7 +1157,7 @@ dat1_cs2 <- dat1
 
 #### Calculate average sun angle 
 # We will need this for the thinning method by systematic window averaging
-# Note that the timeseries length/duration/time is identical for 
+# Note that the time-series length/duration/time is identical for 
 # ... each individual so that we can use one example individual:
 dat4summarise_in_bins <- split(dat1_cs2, f = dat1_cs2$individual)
 sun_angle_av <-
@@ -1170,7 +1170,7 @@ sun_angle_av <-
                     )$stat
 utils::str(sun_angle_av)
 
-#### Flag timeseries
+#### Flag time-series
 dat1_cs2 <- cbind(dat1_cs2, flag_ts(x = dat1_cs2$timestamp, fct = dat1_cs2$individual, duration_threshold = 120, flag = 1:3))
 
 #### Define wrapper function to evaluate bam models with AR1 structure 
@@ -1306,9 +1306,9 @@ In this case, this simple simulation provides some re-assurance that thinning ha
 
 ### The effect of correlated predictors on ecological inferences
 
-In ecology, we are often interested in distinguishing between competing drivers of a process. For example, in models of depth timeseries, we might consider temperature and photoperiod as competing drivers of seasonal effects. With sufficient data, models can be used to distinguish the effect of these kinds of drivers.
+In ecology, we are often interested in distinguishing between competing drivers of a process. For example, in models of depth time-series, we might consider temperature and photoperiod as competing drivers of seasonal effects. With sufficient data, models can be used to distinguish the effect of these kinds of drivers.
 
-To investigate whether we can distinguish among competing explanations for seasonal effects in flapper skate depth timeseries, I simulate a timeseries including temperature, photoperiod and Julian day as covariates using `assemble_ts()` and `define_photoperiod()`. Then, I define smooth functions linking each covariate to depth, given observed relationships between depth and Julian day, using `parameterise_smooth()`. I simulate depth as a function of each variable in turn. Finally, I model simulated depths under two scenarios: 
+To investigate whether we can distinguish among competing explanations for seasonal effects in flapper skate depth time-series, I simulate a time-series including temperature, photoperiod and Julian day as covariates using `assemble_ts()` and `define_photoperiod()`. Then, I define smooth functions linking each covariate to depth, given observed relationships between depth and Julian day, using `parameterise_smooth()`. I simulate depth as a function of each variable in turn. Finally, I model simulated depths under two scenarios: 
 
 * To check that sufficient data are available for the model to resolve the effect of each variable correctly, I model depth ~ each covariate.
 * To investigate the ability of the model to distinguish the true driver among the three 'candidate' drivers, I model depth ~ temperature, photoperiod and Julian day. 
@@ -1402,7 +1402,7 @@ lines(temp_smooth$x, temp_smooth$y, col = "red")
 Now we can proceed to simulate three different depth variables in which depth is driven by each one of the explanatory variables:
 
 ```{r}
-#### Flag timeseries prior to modelling
+#### Flag time-series prior to modelling
 dat1_cs3 <- cbind(dat1_cs3,
                   flag_ts(x = dat1_cs3$timestamp,
                           fct = dat1_cs3$individual,
@@ -1438,10 +1438,10 @@ depth_ls <- lapply(1:length(compute_lp), function(i){
 names(depth_ls) <- c("temp", "photoperiod", "julian_day")
 ```
 
-Now, we can visualise simulated timeseries and relationships:
+Now, we can visualise simulated time-series and relationships:
 
 ```{r, fig.width = 7, fig.height = 9}
-#### Visualise simulated timeseries
+#### Visualise simulated time-series
 pp <- par(mfrow = c(3, 2))
 mapply(depth_ls, names(depth_ls), FUN = function(depth, driver){
   pretty_ts(dat1_cs3$timestamp, depth,
@@ -1506,21 +1506,21 @@ In this case, we can see that with observations on each day of the year, the mod
 
 ## GAMS4DTS
 
-Generalised Additive Models for Depth Timeseries (`GAMS4DTS`) is an interactive application which can be used to extend these simulations. `GAMS4DTS` aims to explore the effects of data structure, data processing and model structure for model-based inference (via GAMs). This application is powered by the function `Tools4ETS::GAMS4DTS()`. 
+Generalised Additive Models for Depth Time-series (`GAMS4DTS`) is an interactive application which can be used to extend these simulations. `GAMS4DTS` aims to explore the effects of data structure, data processing and model structure for model-based inference (via GAMs). This application is powered by the function `Tools4ETS::GAMS4DTS()`. 
 
 ## Part 2: Conclusions
 
-Simulation is a valuable tool in ecology. Simulation can be used to clarify the meaning of model parameters and provide understanding (e.g. the visual appearance of AR1 processes); evaluate the consequence of data collection (e.g. sampling resolution) and processing (e.g. thinning, introducing breaks) for ecological inferences; and evaluate the performance of methods, including modelling, for ecological inferences (e.g. by comparison of _de novo_ simulations or simulations from a model with observed data and/or model inferences. In this vignette, I have demonstrated the use of functions in `Tools4ETS` to explore how the volume of data, the removal of data around recapture events and thinning might have affected ecological inferences for some example depth timeseries, as well as the ability of models to distinguish among competing, correlated drivers of a process. By simulating new 'observations' from models, I briefly explored the effectiveness of GAMs (namely, `mgcv::bam()`) as a tool for modelling some example depth timeseries, demonstrating how particular issues with model fits can be related to statistical aspects of the process that are poorly captured and, in turn, shed light on the ecological processes of interest. 
+Simulation is a valuable tool in ecology. Simulation can be used to clarify the meaning of model parameters and provide understanding (e.g. the visual appearance of AR1 processes); evaluate the consequence of data collection (e.g. sampling resolution) and processing (e.g. thinning, introducing breaks) for ecological inferences; and evaluate the performance of methods, including modelling, for ecological inferences (e.g. by comparison of _de novo_ simulations or simulations from a model with observed data and/or model inferences. In this vignette, I have demonstrated the use of functions in `Tools4ETS` to explore how the volume of data, the removal of data around recapture events and thinning might have affected ecological inferences for some example depth time-series, as well as the ability of models to distinguish among competing, correlated drivers of a process. By simulating new 'observations' from models, I briefly explored the effectiveness of GAMs (namely, `mgcv::bam()`) as a tool for modelling some example depth time-series, demonstrating how particular issues with model fits can be related to statistical aspects of the process that are poorly captured and, in turn, shed light on the ecological processes of interest. 
 
 # Conclusions 
 
-`Tools4ETS` is an `R` package which aims to facilitate and streamline the data exploration – data processing – modelling pipeline for (ecological) timeseries data in `R`. Key functionality includes the following: data exploration via `pretty_ts()` and `vis_ts()` in a complementary package (`prettyGraphics`); data processing, including flagging independent timeseries (`flag_ts()`), thinning timeseries (`thin_ts()` and `thin_ts_iter()`), breaking timeseries (`break_ts()`) and, for depth timeseries, identifying recapture events (`suggest_recapture()` and `define_recapture()`); and simulation to guide ecological inference, by simulating from a model (with `simulate_posterior_mu()`, `simulate_posterior_obs()`, `summarise_posterior()`) or simulating de novo timeseries with known properties (via `assemble_ts()`, `parameterise_smooth()`, `sigma_arima()`, `sim_ts()` and, for depth timeseries, an interactive application (`GAMS4DTS()`). 
+`Tools4ETS` is an `R` package which aims to facilitate and streamline the data exploration – data processing – modelling pipeline for (ecological) time-series data in `R`. Key functionality includes the following: data exploration via `pretty_ts()` and `vis_ts()` in a complementary package (`prettyGraphics`); data processing, including flagging independent time-series (`flag_ts()`), thinning time-series (`thin_ts()` and `thin_ts_iter()`), breaking time-series (`break_ts()`) and, for depth time-series, identifying recapture events (`suggest_recapture()` and `define_recapture()`); and simulation to guide ecological inference, by simulating from a model (with `simulate_posterior_mu()`, `simulate_posterior_obs()`, `summarise_posterior()`) or simulating de novo time-series with known properties (via `assemble_ts()`, `parameterise_smooth()`, `sigma_arima()`, `sim_ts()` and, for depth time-series, an interactive application (`GAMS4DTS()`). 
 
 # Future developments 
 
-`Tools4ETS` was inspired by new high-resolution depth timeseries for flapper skate. Possible extensions include:
+`Tools4ETS` was inspired by new high-resolution depth time-series for flapper skate. Possible extensions include:
 
-* **Hydrodynamic models:** capacity to visualise timeseries together with the predictions of hydrodynamic models. 
+* **Hydrodynamic models:** capacity to visualise time-series together with the predictions of hydrodynamic models. 
 * **Behavioural-switching simulations:** capacity to simulate behavioural switching processes with different properties. 
 * **GAMS4DTS extensions:** enhancing flexibility (see additional vignette). 
 

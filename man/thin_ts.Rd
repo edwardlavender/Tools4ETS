@@ -2,18 +2,18 @@
 % Please edit documentation in R/thin_ts.R
 \name{thin_ts}
 \alias{thin_ts}
-\title{Thin a timeseries by selecting every nth observation}
+\title{Thin a time-series by selecting every nth observation}
 \usage{
 thin_ts(dat, ind = NULL, flag1, first = 1, nth)
 }
 \arguments{
 \item{dat}{A dataframe to be thinned.}
 
-\item{ind}{A character input which defines the column name \code{dat} which uniquely distinguishes each independent timeseries (i.e., \code{flag3} reported by \code{\link[Tools4ETS]{flag_ts}}).}
+\item{ind}{A character input which defines the column name \code{dat} which uniquely distinguishes each independent time-series (i.e., \code{flag3} reported by \code{\link[Tools4ETS]{flag_ts}}).}
 
-\item{flag1}{A character input which defines the column name in \code{dat} which contains a logical vector with \code{TRUE} marking the first observation in each independent segment of timeseries (i.e. \code{flag1} reported by \code{\link[Tools4ETS]{flag_ts}}).}
+\item{flag1}{A character input which defines the column name in \code{dat} which contains a logical vector with \code{TRUE} marking the first observation in each independent segment of time-series (i.e. \code{flag1} reported by \code{\link[Tools4ETS]{flag_ts}}).}
 
-\item{first}{A number or numeric vector which defines the position(s) at which thinning is initiated for each independent timeseries. If a single number is supplied, the function returns a thinned dataframe. If a vector of numbers is supplied, the function returns a list, of the same length, in which each element is a thinned dataframe comprising a different thinned dataframe - one with the same degree of thinning but in which thinning was initiated at a different position. The order of elements in the resultant list is the same as the order of elements in \code{first}.}
+\item{first}{A number or numeric vector which defines the position(s) at which thinning is initiated for each independent time-series. If a single number is supplied, the function returns a thinned dataframe. If a vector of numbers is supplied, the function returns a list, of the same length, in which each element is a thinned dataframe comprising a different thinned dataframe - one with the same degree of thinning but in which thinning was initiated at a different position. The order of elements in the resultant list is the same as the order of elements in \code{first}.}
 
 \item{nth}{A number which defines the degree of thinning (i.e. the selection of every \code{nth} row).}
 }
@@ -21,7 +21,7 @@ thin_ts(dat, ind = NULL, flag1, first = 1, nth)
 The function returns a list or dataframe, depending on the input to \code{first} (see above).
 }
 \description{
-This function thins a timeseries by selecting every nth observation. The function provides flexibility to (a) distinguish among independent timeseries (e.g. timeseries for different individuals) via a user-supplied factor that can be determined \code{\link[Tools4ETS]{flag_ts}} and (b) return multiple thinned datasets for which thinning is started at different locations. The latter is useful for models of thinned timeseries because it is important to check that model inferences are not sensitive to the particular subset of data chosen.
+This function thins a time-series by selecting every nth observation. The function provides flexibility to (a) distinguish among independent time-series (e.g. time-series for different individuals) via a user-supplied factor that can be determined \code{\link[Tools4ETS]{flag_ts}} and (b) return multiple thinned datasets for which thinning is started at different locations. The latter is useful for models of thinned time-series because it is important to check that model inferences are not sensitive to the particular subset of data chosen.
 }
 \examples{
 #### Simulate a dataframe to be thinned
@@ -29,12 +29,12 @@ This function thins a timeseries by selecting every nth observation. The functio
 t <- c(seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-02"), by = "6 hours"),
        seq.POSIXt(as.POSIXct("2016-01-02 18:00:00"), as.POSIXct("2016-01-04"), by = "6 hours")
 )
-# Apply flag_ts() function to flag independent timeseries
+# Apply flag_ts() function to flag independent time-series
 dat <- cbind(t, flag_ts(t, duration_threshold = 6*60, flag = 1:3))
 nrow(dat)
 
-#### Example (1): Thin a single timeseries by selecting every nth position
-# Thin the timeseries
+#### Example (1): Thin a single time-series by selecting every nth position
+# Thin the time-series
 dat_thin <- thin_ts(dat = dat,
                     nth = 2,
                     flag1 = "flag1"
@@ -43,10 +43,10 @@ dat_thin <- thin_ts(dat = dat,
 dat$row_retained <- dat$t \%in\% dat_thin$t
 dat
 
-#### Example (2): Thin multiple independent timeseries via the'ind' argument
-# Here, we now account for the fact that the data consists of multiple (two) independent timeseries
-# ... as identified by flag_ts(), and the selection of positions is identical for both timeseries
-# ... (i.e. the first observation in each timeseries)
+#### Example (2): Thin multiple independent time-series via the'ind' argument
+# Here, we now account for the fact that the data consists of multiple (two) independent time-series
+# ... as identified by flag_ts(), and the selection of positions is identical for both time-series
+# ... (i.e. the first observation in each time-series)
 dat$row_retained <- NULL
 dat_thin <- thin_ts(dat = dat,
                     nth = 2,

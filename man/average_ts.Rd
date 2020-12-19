@@ -2,7 +2,7 @@
 % Please edit documentation in R/average_ts.R
 \name{average_ts}
 \alias{average_ts}
-\title{Summarise a timeseries in bins}
+\title{Summarise a time-series in bins}
 \usage{
 average_ts(
   dat,
@@ -22,17 +22,17 @@ average_ts(
 \arguments{
 \item{dat}{A dataframe which includes observations collected over time.}
 
-\item{split}{(optional) A character that defines the name of the column in \code{dat} that distinguishes independent timeseries.}
+\item{split}{(optional) A character that defines the name of the column in \code{dat} that distinguishes independent time-series.}
 
 \item{timestamp}{A character that defines the name of the column in \code{dat} that contains timestamps, to be grouped into bins.}
 
 \item{response}{A character that defines the name of the column in \code{dat} that contains the values of the response to be averaged in each bin.}
 
-\item{breaks}{A number or vector which defines the number of unique cut points or the unique cut points themselves at which each independent timeseries is cut into bins. This is passed to \code{\link[base]{cut}}.}
+\item{breaks}{A number or vector which defines the number of unique cut points or the unique cut points themselves at which each independent time-series is cut into bins. This is passed to \code{\link[base]{cut}}.}
 
 \item{fun}{A function used to calculate the average response and the average value of any other other numeric variable specified in \code{average} in each bin.}
 
-\item{first}{(optional) A character vector that defines the name(s) of the column(s) in \code{dat} for which the first observation for each independent timeseries should be retained in the averaged dataframe. This is useful for 'static' variables which do not change through time (e.g., the sex of each individual).}
+\item{first}{(optional) A character vector that defines the name(s) of the column(s) in \code{dat} for which the first observation for each independent time-series should be retained in the averaged dataframe. This is useful for 'static' variables which do not change through time (e.g., the sex of each individual).}
 
 \item{average}{(optional) A character vector that defines the name(s) of any other column(s) in \code{dat} that need to be averaged in each bin, like \code{response}.}
 
@@ -45,10 +45,10 @@ average_ts(
 \item{...}{Additional arguments passed to \code{\link[base]{cut}}.}
 }
 \value{
-The function returns a dataframe in which timestamps have been aggregated into a sequence of bins and the value of the response and any other numeric columns requested have been averaged over all the data in each bin. For static variables (e.g., the sex of an individual), the first observation for each independent timeseries may also be included.
+The function returns a dataframe in which timestamps have been aggregated into a sequence of bins and the value of the response and any other numeric columns requested have been averaged over all the data in each bin. For static variables (e.g., the sex of an individual), the first observation for each independent time-series may also be included.
 }
 \description{
-This function averages a timeseries (i.e., all of the values of a response variable collected through time) in each of a series of user-specified bins. The function can handle independent timeseries (e.g., for multiple individuals), average numeric explanatory variables alongside the response, incorporate other 'static' variables (e.g., the sex of each individual) and implement different types of averages.
+This function averages a time-series (i.e., all of the values of a response variable collected through time) in each of a series of user-specified bins. The function can handle independent time-series (e.g., for multiple individuals), average numeric explanatory variables alongside the response, incorporate other 'static' variables (e.g., the sex of each individual) and implement different types of averages.
 }
 \examples{
 dat_flapper_av <- average_ts(dat = dat_flapper,

@@ -2,12 +2,12 @@
 % Please edit documentation in R/add_unit_id.R
 \name{add_unit_id}
 \alias{add_unit_id}
-\title{Add unique unit IDs to timeseries}
+\title{Add unique unit IDs to time-series}
 \usage{
 add_unit_id(dat_ts, dat_units)
 }
 \arguments{
-\item{dat_ts}{A dataframe comprising timeseries collected from 'units'. This must contain two named columns: 'timestamp', a  vector which defines the time of each observation (in \code{\link[base]{Date}} or \code{\link[base]{DateTimeClasses}} format); and 'unit', a vector which defines the unit code (which may be non unique). The column 'unit' should also be found in \code{dat_units} (see below).}
+\item{dat_ts}{A dataframe comprising time-series collected from 'units'. This must contain two named columns: 'timestamp', a  vector which defines the time of each observation (in \code{\link[base]{Date}} or \code{\link[base]{DateTimeClasses}} format); and 'unit', a vector which defines the unit code (which may be non unique). The column 'unit' should also be found in \code{dat_units} (see below).}
 
 \item{dat_units}{A dataframe which contains unit metadata. This must contain four named columns: 'unit', as above for \code{dat_ts}; 'unit_id', a unique identifier for unit; 'start_time', a vector which defines the time of each unit's deployment; and 'end_time', a vector which defines the end of each unit's deployment. 'start_time' and 'end_time' should be of the same object type, and the same type as 'timestamp' in \code{dat_ts}.}
 }
@@ -15,7 +15,7 @@ add_unit_id(dat_ts, dat_units)
 The function returns a vector of unit IDs, as defined in the \code{dat_units$unit_id} column, which correspond to each observation in the \code{dat_ts} dataframe.
 }
 \description{
-This function extracts unique unit (e.g., electronic tag) IDs from a dataframe containing unit attributes, termed \code{dat_units}, that correspond to units listed in a timeseries, termed \code{dat_ts}. This is useful when the same unit (e.g., an electronic tag) is deployed multiple times so that each 'unit' code (i.e., the code of a particular tag) does not correspond to a unique deployment. In this scenario, both the unit code and the time of deployment need to be included in the matching procedure to add unique unit IDs to the timeseries.
+This function extracts unique unit (e.g., electronic tag) IDs from a dataframe containing unit attributes, termed \code{dat_units}, that correspond to units listed in a time-series, termed \code{dat_ts}. This is useful when the same unit (e.g., an electronic tag) is deployed multiple times so that each 'unit' code (i.e., the code of a particular tag) does not correspond to a unique deployment. In this scenario, both the unit code and the time of deployment need to be included in the matching procedure to add unique unit IDs to the time-series.
 }
 \examples{
 #### Define example data

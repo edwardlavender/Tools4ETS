@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_ts.R
 \name{match_ts_nearest_by_key}
 \alias{match_ts_nearest_by_key}
-\title{Match timeseries by key and time}
+\title{Match time-series by key and time}
 \usage{
 match_ts_nearest_by_key(d1, d2, key_col, time_col)
 }

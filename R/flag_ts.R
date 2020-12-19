@@ -1,11 +1,11 @@
-#' @title Flag independent segments of a timeseries
-#' @description The function 'flags' independent sections of timeseries using up to three methods. This is useful for identifying gaps in timeseries and/or for models of timeseries data in which independent segments of timeseries need to be treated as such. To flag timeseries, the function can consider two drivers of independence: (a) a grouping factor (\code{fct}) which defines inherently independent timeseries in a dataset (e.g. a dataset may comprise timeseries for different individuals) and (b) gaps in the timeseries which, when greater than a user-defined threshold (\code{duration_threshold}), separate timeseries that can be considered effectively independent, even if they are derived from the same level of a grouping factor. Using these two criteria, timeseries can be flagged using three methods which different modelling approaches may require.
+#' @title Flag independent segments of a time-series
+#' @description The function 'flags' independent sections of time-series using up to three methods. This is useful for identifying gaps in time-series and/or for models of time-series data in which independent segments of time-series need to be treated as such. To flag time-series, the function can consider two drivers of independence: (a) a grouping factor (\code{fct}) which defines inherently independent time-series in a dataset (e.g. a dataset may comprise time-series for different individuals) and (b) gaps in the time-series which, when greater than a user-defined threshold (\code{duration_threshold}), separate time-series that can be considered effectively independent, even if they are derived from the same level of a grouping factor. Using these two criteria, time-series can be flagged using three methods which different modelling approaches may require.
 #'
 #' @param x A vector of timestamps, either as an integer/numeric object, a \code{\link[base]{DateTimeClasses}} or a \code{\link[base]{Date}}.
-#' @param fct (optional) A grouping factor defining independent segments of timeseries (e.g. individuals).
+#' @param fct (optional) A grouping factor defining independent segments of time-series (e.g. individuals).
 #' @param dat (optional) A dataframe with a column \code{x} and, optionally, a column \code{fct}, can be supplied instead of \code{x} and \code{fct}.
-#' @param duration_threshold A numeric input defining the number of units (if \code{x} is an integer/numeric) or the number of minutes (if \code{x} is \code{\link[base]{DateTimeClasses}} or a \code{\link[base]{Date}}) between records after which separated timeseries are considered effectively 'independent'. This could be informed by the autocorrelation function of the residuals of a model without any autocorrelation.
-#' @param flag A numeric input/vector of \code{1}, \code{2} or \code{3} specifying the flag type to be returned. \code{flag = 1} returns a logical vector with \code{TRUE} marking the first observation in each independent segment of timeseries (e.g. as required by \code{\link[mgcv]{bam}}). \code{flag = 2} returns identifies the first, second,... nth, independent segment of each factor level's timeseries. \code{flag = 3} provides a unique identifier for each segment of timeseries (e.g. as required by \code{\link[mgcv]{gamm}}).
+#' @param duration_threshold A numeric input defining the number of units (if \code{x} is an integer/numeric) or the number of minutes (if \code{x} is \code{\link[base]{DateTimeClasses}} or a \code{\link[base]{Date}}) between records after which separated time-series are considered effectively 'independent'. This could be informed by the autocorrelation function of the residuals of a model without any autocorrelation.
+#' @param flag A numeric input/vector of \code{1}, \code{2} or \code{3} specifying the flag type to be returned. \code{flag = 1} returns a logical vector with \code{TRUE} marking the first observation in each independent segment of time-series (e.g. as required by \code{\link[mgcv]{bam}}). \code{flag = 2} returns identifies the first, second,... nth, independent segment of each factor level's time-series. \code{flag = 3} provides a unique identifier for each segment of time-series (e.g. as required by \code{\link[mgcv]{gamm}}).
 #'
 #' @details Inputs should be ordered by ordered by \code{fct} (if applicable) then \code{x}.
 #'
@@ -13,13 +13,13 @@
 #'
 #' @examples
 #'
-#' #### Define some irregularly spaced timeseries
+#' #### Define some irregularly spaced time-series
 #' t <- c(seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-02"), by = "6 hours"),
 #'        as.POSIXct("2016-01-02 12:00:00"),
 #'        seq.POSIXt(as.POSIXct("2016-01-02 18:00:00"), as.POSIXct("2016-01-03"), by = "5 hours")
 #' )
 #'
-#' #### Example (1) Supply a vector of timestamps to flag independent sections of timeseries
+#' #### Example (1) Supply a vector of timestamps to flag independent sections of time-series
 #' flag_ts(
 #'   x = t,
 #'   duration_threshold = 8*60,
@@ -30,7 +30,7 @@
 #'         duration_threshold = 8*60,
 #'         flag = 1:3)
 #'
-#' #### Example (3) Supply a factor level which separates unique timeseries
+#' #### Example (3) Supply a factor level which separates unique time-series
 #' fct_levels <- c(rep(1, length(t)), rep(2, length(t)))
 #' t2 <- rep(t, 2)
 #' flag_ts(
@@ -39,7 +39,7 @@
 #'   duration_threshold = 8*60,
 #'   flag = 1:3)
 #'
-#' #### Example (4) Supply timeseries and a factor in a dataframe organised by fct then timestamp
+#' #### Example (4) Supply time-series and a factor in a dataframe organised by fct then timestamp
 #' flag_ts(dat = data.frame(x = t2, fct = fct_levels),
 #'         duration_threshold = 8*60,
 #'         flag = 1:3)
@@ -130,7 +130,7 @@ flag_ts <-
         # ... to the next one. And we want to distinguish that next one with the previous one
         # ... in each case.
         pos <- which(df$duration > duration_threshold) + 1
-        # Define a new column, start event, which will distinguish unique sections of timeseries
+        # Define a new column, start event, which will distinguish unique sections of time-series
         # By default, this is FALSE:
         df$start_event <- FALSE
         # Set the first value for each individual to be TRUE

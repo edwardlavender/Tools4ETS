@@ -1,10 +1,10 @@
 Package: Tools4ETS
 Type: Package
-Title: Tools for Ecological Timeseries 
+Title: Tools for Ecological Time-series 
 Version: 0.1.0
 Author: Edward Lavender
 Maintainer: Edward Lavender <el72@st-andrews.ac.uk>
-Description: Tools for  Ecological Timeseries (Tools4ETS) is package designed to facilitate the simulation, processing, exploration, visualisation and modelling of ecological timeseries. This package has been particularly inspired by new, high-resolution depth timeseries collected for a Critically Endangered benthopelagic elasmobranch. 
+Description: Tools for  Ecological Time-series (Tools4ETS) is package designed to facilitate the simulation, processing, exploration, visualisation and modelling of ecological time-series. This package has been particularly inspired by new, high-resolution depth time-series collected for a Critically Endangered benthopelagic elasmobranch. 
 Imports:
     magrittr, dplyr, data.table,
     utils, pbapply, rlist,

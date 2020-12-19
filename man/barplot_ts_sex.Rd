@@ -2,7 +2,7 @@
 % Please edit documentation in R/gams4dts_support.R
 \name{barplot_ts_sex}
 \alias{barplot_ts_sex}
-\title{Create a barplot of the number of individuals of each sex in timeseries}
+\title{Create a barplot of the number of individuals of each sex in time-series}
 \usage{
 barplot_ts_sex(
   dat,
@@ -27,7 +27,7 @@ barplot_ts_sex(
 The function returns a pre-customised barplot showing the number of individuals of each sex in a dataframe.
 }
 \description{
-This function produces a barplot showing the number of individuals of each sex in a timeseries. To do this, the function takes in a dataframe which contains a column distinguishing individuals and a column defining their sex, which are specified as character strings. The function then identifies the sex of each unique individual, sums the number of individuals of each sex and produces a barplot. This function is primarily intended for use in \code{\link[Tools4ETS]{GAMS4DTS}}.
+This function produces a barplot showing the number of individuals of each sex in a time-series. To do this, the function takes in a dataframe which contains a column distinguishing individuals and a column defining their sex, which are specified as character strings. The function then identifies the sex of each unique individual, sums the number of individuals of each sex and produces a barplot. This function is primarily intended for use in \code{\link[Tools4ETS]{GAMS4DTS}}.
 }
 \author{
 Edward Lavender

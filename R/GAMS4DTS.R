@@ -4,7 +4,7 @@
 #' @import shinydashboard
 #' @import shinyWidgets
 #'
-#' @description An interactive Shiny-Dashboard interface for exploring generalised additive models (GAMs) as a tool for modelling depth timeseries (DTS). Within this application, depth timeseries can be simulated, post-processed and modelled under different conditions. Comparisons of the simulated and inferred relationships under different conditions can be informative about the impacts of impacts of data structure, post-processing decisions and model structure for ecological inferences. A specific vignette provides further information for this function.
+#' @description An interactive Shiny-Dashboard interface for exploring generalised additive models (GAMs) as a tool for modelling depth time-series (DTS). Within this application, depth time-series can be simulated, post-processed and modelled under different conditions. Comparisons of the simulated and inferred relationships under different conditions can be informative about the impacts of impacts of data structure, post-processing decisions and model structure for ecological inferences. A specific vignette provides further information for this function.
 #'
 #' @examples
 #' \dontrun{
@@ -59,7 +59,7 @@ ui <-
       menuItem("Dataframe Assembly", tabName = "dat_assembly", icon = icon("angle-right")),
       menuItem("Parameterisations", tabName = "dat_smooths", icon = icon("angle-right")),
       menuItem("Simulate Depth", tabName = "dat_depth", icon = icon("angle-right")),
-      menuItem("Thin Depth Timeseries", tabName = "dat_thin", icon = icon("angle-right")),
+      menuItem("Thin Depth Time-series", tabName = "dat_thin", icon = icon("angle-right")),
       menuItem("Visualise Simulated Data", tabName = "vis_raw", icon = icon("angle-right")),
       menuItem("Define Model", tabName = "model_define", icon = icon("angle-right")),
       menuItem("Model Summary", tabName = "model_summary", icon = icon("angle-right")),
@@ -85,12 +85,12 @@ ui <-
         tabItem(tabName = "introduction",
 
                 # Define a title for the page
-                h2("A dynamic simulation and modelling environment for exploring generalised additive models as a tool for modelling depth timeseries"),
+                h2("A dynamic simulation and modelling environment for exploring generalised additive models as a tool for modelling depth time-series"),
 
                 box(width = 12,
                     h2("Abstract"),
 
-                    p("Depth-specific periodic behaviours are common in marine ecosystems. However, our understanding the drivers of these trends remains limited, in part, by available analytical techniques, which are either principally qualitative (e.g. wavelet analysis) or else require knowledge that lies outside of many ecologists' training (e.g. Hidden Markov Models). Generalised Additive Models (GAMs) strike a balance along this double-edged sword, being both a powerful modelling framework and a tool with which many ecologists are familiar, but their successful implementation requires correctly interpreting model fits and outputs, which remains challenging. Here, I present a interactive tool for the simulation and modelling of depth timeseries using GAMs. The tool allows the user to simulate complex depth timeseries according to a user-specified data-generating process that can incorporate variables commonly associated with depth in natural ecosystems (i.e., sex, body size, light levels, lunar phase, season). Simulated timeseries can then be modelled using GAMs to investigate (a) the extent to which models recover simulated parameters and/or functions under different simulation/model scenarios; and (b) the consequences of mis-specifying of various aspects of the simulated data-generating process within models for model outputs. This tool will facilitate ecologists to build and interpret GAMs of timeseries in cases where the true data-generating processes are unknown.",
+                    p("Depth-specific periodic behaviours are common in marine ecosystems. However, our understanding the drivers of these trends remains limited, in part, by available analytical techniques, which are either principally qualitative (e.g. wavelet analysis) or else require knowledge that lies outside of many ecologists' training (e.g. Hidden Markov Models). Generalised Additive Models (GAMs) strike a balance along this double-edged sword, being both a powerful modelling framework and a tool with which many ecologists are familiar, but their successful implementation requires correctly interpreting model fits and outputs, which remains challenging. Here, I present a interactive tool for the simulation and modelling of depth time-series using GAMs. The tool allows the user to simulate complex depth time-series according to a user-specified data-generating process that can incorporate variables commonly associated with depth in natural ecosystems (i.e., sex, body size, light levels, lunar phase, season). Simulated time-series can then be modelled using GAMs to investigate (a) the extent to which models recover simulated parameters and/or functions under different simulation/model scenarios; and (b) the consequences of mis-specifying of various aspects of the simulated data-generating process within models for model outputs. This tool will facilitate ecologists to build and interpret GAMs of time-series in cases where the true data-generating processes are unknown.",
                       style = "font-size: 25px; font-family: Times New Roman; text-align: justify;"
                     ) # close paragraph
                 ) # close box
@@ -595,7 +595,7 @@ ui <-
                     # close box
                     ),
 
-                # Open new box to view the simulated timeseries
+                # Open new box to view the simulated time-series
                 box(title = "Examine the full dataframe that you have assembled",
                 width = 10,
                 DT::dataTableOutput("rendered_dat_full"))
@@ -607,23 +607,23 @@ ui <-
 
         ################################################
         ################################################
-        #### Thin Depth timeseries ("dat_thin")
+        #### Thin Depth time-series ("dat_thin")
 
         tabItem(tabName = "dat_thin",
-                h1("Thin Depth timeseries"),
-                h4("Choose whether or not you would like to thin the depth timeseries and, if so, your method of choice and by how much."),
+                h1("Thin Depth Time-series"),
+                h4("Choose whether or not you would like to thin the depth time-series and, if so, your method of choice and by how much."),
                 # open box:
-                box(title = "Options for thinning the depth timeseries",
+                box(title = "Options for thinning the depth time-series",
                     width = 2,
                     radioButtons(inputId = "thin_yn",
-                                 label = "Would you like to thin the depth timeseries?",
+                                 label = "Would you like to thin the depth time-series?",
                                  choices = c("Yes", "No"),
                                  selected = "No",
                                  inline = T),
                     conditionalPanel(condition = "input.thin_yn == 'Yes'",
-                                     # select the method by which you would like to thin the timeseries:
+                                     # select the method by which you would like to thin the time-series:
                                      radioButtons(inputId = "thin_method",
-                                                  label = "Select the method used to thin the timeseries",
+                                                  label = "Select the method used to thin the time-series",
                                                   choiceValues = c("swa", "sma", "sps"),
                                                   choiceNames = c("Static window average",
                                                                   "Simple moving average",
@@ -653,7 +653,7 @@ ui <-
                 # close box
                 ),
 
-                # Open new box to view the simulated timeseries
+                # Open new box to view the simulated time-series
                 conditionalPanel(condition = "input.thin_yn == 'Yes'",
                                  box(title = "Examine the full dataframe that you have assembled",
                                      width = 10,
@@ -716,37 +716,37 @@ ui <-
 
                 ################################################
                 ################################################
-                #### timeseries plots: depth and covariates:
+                #### time-series plots: depth and covariates:
 
                 # Define a new row:
                 fluidRow(
 
                 # Title of this section:
-                h3("Timeseries Plots"),
+                h3("Time-series Plots"),
 
 
 
                 ################################################
-                #### Define the options for visualising timeseries
+                #### Define the options for visualising time-series
 
-                # Define a box to display the options for visualising simulated timeseries:
-                box(title = "Select the options for visualising the timeseries you have simulated.",
+                # Define a box to display the options for visualising simulated time-series:
+                box(title = "Select the options for visualising the time-series you have simulated.",
                     width = 6,
 
                     # Select the individual for which data will be plotted
                     uiOutput("select_an_individual")
 
-                    ) # close box for for selecting options to define depth timeseries
-                ), # close fluidRow for inputs for visualising timeseries
+                    ) # close box for for selecting options to define depth time-series
+                ), # close fluidRow for inputs for visualising time-series
 
 
 
                 ################################################
-                #### Visualise depth timeseries
+                #### Visualise depth time-series
 
                 # Define a new row
                 fluidRow(
-                  box(title = "Depth Timeseries",
+                  box(title = "Depth Time-series",
                       width = 12,
                       plotOutput("depth_timeseries")
                   ) # close box for "Depth timeseries"
@@ -755,13 +755,13 @@ ui <-
 
 
                 ################################################
-                #### Visualise sun angle time series
+                #### Visualise sun angle time-series
 
                 # Define new row
                 fluidRow(
                   # Define a conditionPanel - only do this if "sun_angle" has been input as a covariate
                   conditionalPanel(condition = "input.covariates .includes('sun_angle')",
-                                   box(title = "Sun Angle Timeseries",
+                                   box(title = "Sun Angle Time-series",
                                        width = 12,
                                        plotOutput("sun_angle_timeseries")
                                        ) # close box for sun_angle
@@ -771,13 +771,13 @@ ui <-
 
 
                 ################################################
-                #### Visualise lunar_phase time series
+                #### Visualise lunar_phase time-series
 
                 # Define new row
                 fluidRow(
                   # Define a conditionPanel - only do this if "lunar_phase" has been input as a covariate
                   conditionalPanel(condition = "input.covariates .includes('lunar_phase')",
-                                   box(title = "Lunar Phase Timeseries",
+                                   box(title = "Lunar Phase Time-series",
                                        width = 12,
                                        plotOutput("lunar_phase_timeseries")
                                    ) # close box for lunar_phase
@@ -788,13 +788,13 @@ ui <-
 
 
                 ################################################
-                #### Visualise julian_day time series
+                #### Visualise julian_day time-series
 
                 # Define new row
                 fluidRow(
                   # Define a conditionPanel - only do this if "julian_day" has been input as a covariate
                   conditionalPanel(condition = "input.covariates .includes('julian_day')",
-                                   box(title = "Julian Day Timeseries",
+                                   box(title = "Julian Day Time-series",
                                        width = 12,
                                        plotOutput("julian_day_timeseries")
                                    ) # close box for julian_day
@@ -814,7 +814,7 @@ ui <-
 
         tabItem(tabName = "model_define",
                 h1("Define the model"),
-                h4("You have now simulated a depth timeseries dataset. The next step is to define a model for this timeseries. At first, it is advised to keep the model similar to the truth (i.e. what you have simulated), to check whether you correctly recover what you expect. Then, you can start to make the data-generating process asssumed by the model different from the simulated data-generating process and explore the consequences. (Remember, in reality, the data-generating process is unknown, so this process will help you understand model performance when the true data-generating process is unknown.)"),
+                h4("You have now simulated a depth time-series dataset. The next step is to define a model for this time-series. At first, it is advised to keep the model similar to the truth (i.e. what you have simulated), to check whether you correctly recover what you expect. Then, you can start to make the data-generating process asssumed by the model different from the simulated data-generating process and explore the consequences. (Remember, in reality, the data-generating process is unknown, so this process will help you understand model performance when the true data-generating process is unknown.)"),
 
                 box(title = "Define the inputs to your model",
                     width = 3,
@@ -1464,7 +1464,7 @@ server <- function(input, output) {
 
  ################################################
  ################################################
- #### Thin Depth timeseries
+ #### Thin Depth time-series
 
  # Define a reactive UI option for thinning the dataframe,
  # whereby the minimum value by which the dataframe can be thinned
@@ -1586,7 +1586,7 @@ server <- function(input, output) {
 
 
  ################################################
- #### Time Series Plots
+ #### Time-series Plots
 
  #### Define reactive user interface options
  # Define a drop down menu for one of the simulated individuals to be selected:
@@ -1614,7 +1614,7 @@ server <- function(input, output) {
              )
    )
 
- #### Sun angle time series
+ #### Sun angle time-series
  output$sun_angle_timeseries <-
    renderPlot(
      prettyGraphics::pretty_ts(x = dat_model()$timestamp,
@@ -2031,7 +2031,7 @@ server <- function(input, output) {
 
 
  ################################################
- #### B) Predictions on the simulated time series
+ #### B) Predictions on the simulated time-series
 
  ####
  # sim_ts_bam

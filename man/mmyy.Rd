@@ -2,7 +2,7 @@
 % Please edit documentation in R/time_categories.R
 \name{mmyy}
 \alias{mmyy}
-\title{Define month-year categories from timeseries}
+\title{Define month-year categories from time-series}
 \usage{
 mmyy(x, levels = TRUE)
 }
@@ -15,7 +15,7 @@ mmyy(x, levels = TRUE)
 The function returns a vector which specifies the month and year of each observation in \code{x} as mm-yyyy. By default (i.e., when \code{levels = TRUE}), this is a factor with chronologically ordered levels (i.e., levels ordered by year then month, for the inputted \code{x}). If \code{levels = FALSE}, a character vector is returned.
 }
 \description{
-This function defines month-year categories from timeseries data (i.e., \code{\link[base]{Date}} and \code{\link[base]{DateTimeClasses}} objects).
+This function defines month-year categories from time-series data (i.e., \code{\link[base]{Date}} and \code{\link[base]{DateTimeClasses}} objects).
 }
 \examples{
 #### Example (1): Extract the month-year category from Dates:

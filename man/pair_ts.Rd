@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_ts.R
 \name{pair_ts}
 \alias{pair_ts}
-\title{Pair timeseries}
+\title{Pair time-series}
 \usage{
 pair_ts(
   d1,
@@ -42,10 +42,10 @@ pair_ts(
 The function returns a dataframe, \code{d1}, as inputted, with an added column (whose name is given by \code{val_col}), comprising values added from another dataframe, \code{d2}. Any observations in \code{d1} for which there are not observations in \code{d2} occurring within some time window (defined by \code{min_gap} and \code{max_gap}), if specified, are counted and, if requested, removed from the returned dataframe.
 }
 \description{
-This function adds observations from one timeseries to another timeseries using a matching process (e.g., nearest neighbour interpolation). This is useful when you have a main dataframe to which you need to add observations (e.g., those occurring closest in time) from another dataframe.
+This function adds observations from one time-series to another time-series using a matching process (e.g., nearest neighbour interpolation). This is useful when you have a main dataframe to which you need to add observations (e.g., those occurring closest in time) from another dataframe.
 }
 \examples{
-#### Example (1) Pair timeseries using method = "match_nearest_ts()"
+#### Example (1) Pair time-series using method = "match_nearest_ts()"
 # Define dataframe to which we want to add information
 d1 <- data.frame(t = seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-02"), by = "hours"))
 # Define dataframe in which information is contained
@@ -53,7 +53,7 @@ d2 <- data.frame(t = seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-02
 d2$vals <- runif(nrow(d2), 0, 50)
 pair_ts(d1, d2, time_col = "t", val_col = "vals", method = "match_ts_nearest")
 
-#### Example (2) Pair timeseries sing method = "match_nearest_ts_by_key()"
+#### Example (2) Pair time-series sing method = "match_nearest_ts_by_key()"
 # Define dataframes
 d1 <- data.frame(t = as.POSIXct(c("2016-01-01 18:00:00",
                                   "2016-01-01 17:00:00",

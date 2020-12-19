@@ -26,7 +26,7 @@ sim_ts(
 
 \item{dat}{A dataframe which contains variables used to predict the values of a response.}
 
-\item{fct}{(optional) A character input which defines the name of a column in \code{dat} which distinguishes different timeseries (i.e., those for different individuals).}
+\item{fct}{(optional) A character input which defines the name of a column in \code{dat} which distinguishes different time-series (i.e., those for different individuals).}
 
 \item{seed}{(optional) A number passed to \code{\link[base]{set.seed}} which ensures simulated observations are reproducible.}
 }
@@ -40,7 +40,7 @@ This function is used to simulate values of a response according to (a) user-def
 
 #### Simulate a dataframe which we will use to simulate the depth of a
 # ... hypothetical animal through time.
-# We will simulate a small timeseries (2 days in length) for two individuals,
+# We will simulate a small time-series (2 days in length) for two individuals,
 # ... one male and one female.
 # We will include sex, length, sun_angle, lunar_phase and julian_day in the dataframe:
 set.seed(2)
@@ -97,7 +97,7 @@ dat$depth <-
     fct = "individual",
     seed = 1)
 
-# Visualise simulated depth timeseries
+# Visualise simulated depth time-series
 plot(dat$timestamp, dat$depth, type = "n")
 lines(dat$timestamp[dat$individual == 1], dat$depth[dat$individual == 1])
 lines(dat$timestamp[dat$individual == 2], dat$depth[dat$individual == 2])
