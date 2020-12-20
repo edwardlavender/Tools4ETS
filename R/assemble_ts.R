@@ -118,7 +118,7 @@ assemble_ts <-
     if("sex" %in% covariates | "length" %in% covariates){
       warning(paste0(
         "You have defined 'sex' and/or 'length' to be included in the dataframe, but n_individuals = 1.\n",
-        "You may not be able to incorporate these variables in models of depth time-series."))
+        "You may not be able to incorporate these variables in models of the time-series."))
     }
   }
 
