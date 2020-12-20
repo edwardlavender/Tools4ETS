@@ -951,7 +951,7 @@ mapply(list(mod_dat1_depthAR0, mod_dat1_depthAR1), list(pg1, pg2), FUN = functio
                     dat = dat1,
                     model = mod,
                     term = "sun_angle", 
-                    shift = as.numeric(mean(dat1$depthAR0) - alpha), 
+                    shift_predictions = as.numeric(mean(dat1$depthAR0) - alpha), 
                     add_rug = TRUE,
                     mtext_args = 
                       list(

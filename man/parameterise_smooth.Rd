@@ -21,7 +21,8 @@ parameterise_smooth(
   add_error_envelope_args = list(),
   residuals = FALSE,
   add_residuals_args = list(),
-  shift = 0,
+  shift_truth = 0,
+  shift_predictions = 0,
   add_rug = FALSE,
   add_rug_args = list(),
   add_moons = FALSE,
@@ -64,7 +65,9 @@ parameterise_smooth(
 
 \item{add_residuals_args}{A named list of arguments to customise the partial residuals on the plot.}
 
-\item{shift}{A number which defines a value by which to shift model predictions/partial residuals vertically. This can be necessary because \code{\link[mgcv]{plot.gam}} smooths are centred.}
+\item{shift_truth}{A number which defines a value by which to shift f(x) vertically.}
+
+\item{shift_predictions}{A number which defines a value by which to shift model predictions/partial residuals vertically.}
 
 \item{add_rug}{A logical input which defines whether or not to plot a rug. If so, \code{dat}, the dataframe used to fit the model, should be provided (see above).}
 

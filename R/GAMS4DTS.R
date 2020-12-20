@@ -33,7 +33,7 @@ cex.axis <- cex.lab - 0.2
 
 ################################################
 ################################################
-#### User Inferace
+#### User Interface
 
 # Define the user interface
 ui <-
@@ -865,7 +865,7 @@ ui <-
                     # length
                     conditionalPanel(condition = "input.covariates_model .includes('length')",
                                      numericInput(inputId = "length_nknots",
-                                                  label = "Define the number of knots for s(length).",
+                                                  label = "Define the basis dimension for s(length).",
                                                   value = 3,
                                                   step = 1,
                                                   min = 3
@@ -874,7 +874,7 @@ ui <-
                     # sun angle
                     conditionalPanel(condition = "input.covariates_model .includes('sun_angle')",
                                      numericInput(inputId = "sun_angle_nknots",
-                                                  label = "Define the number of knots for s(sun_angle).",
+                                                  label = "Define the basis dimension for s(sun_angle).",
                                                   value = 10,
                                                   step = 1,
                                                   min = 3
@@ -883,7 +883,7 @@ ui <-
                     # lunar phase
                     conditionalPanel(condition = "input.covariates_model .includes('lunar_phase')",
                                      numericInput(inputId = "lunar_phase_nknots",
-                                                  label = "Define the number of knots for s(lunar_phase).",
+                                                  label = "Define the basis dimension for s(lunar_phase).",
                                                   value = 10,
                                                   step = 1,
                                                   min = 3
@@ -941,10 +941,8 @@ ui <-
                 h3("Examine the summary output of your model."),
                 h4("You will have already checked the model family, link function and formula from the previous tab. Here, first examine the estimates for the parametric coefficients. Have they been correctly estimated? How well has the model recovered these? Next, examine the approximate significance of smooth terms, the model deviance and other terms provided. Guidance is given in the Vignette (tab: Introduction) on what you should be looking for here."),
 
-
                 # Print mean depth
-                verbatimTextOutput("mean_depth"),
-                verbatimTextOutput("alpha_est"),
+                # verbatimTextOutput("mean_depth"),
 
                 # Print the model summary
                 verbatimTextOutput("model_summary")
@@ -1208,7 +1206,7 @@ server <- function(input, output) {
 
   length_smooth <- reactive({
     if("length" %in% input$covariates){
-      length_smooth <- parameterise_smooth(x = seq(min(dat()$length), max(dat()$length), length.out = 100),
+      length_smooth <- parameterise_smooth(x = dat()$length,
                                               f = linear,
                                               param = list(a = 0, b = input$length_beta),
                                               plot = FALSE
@@ -1219,7 +1217,9 @@ server <- function(input, output) {
 
  output$length_smooth <-
     renderPlot({
-      parameterise_smooth(parameterise_smooth_ls = length_smooth(),
+      parameterise_smooth(x = seq(min(dat()$length), max(dat()$length), length.out = 100),
+                          f = length_smooth()$f,
+                          param = length_smooth()$param,
                           plot = TRUE,
                           pretty_axis_args = list(side = c(1, 2),
                                                   pretty = list(n = 5),
@@ -1245,7 +1245,7 @@ server <- function(input, output) {
              sun_angle_pars <- list("a" = input$sun_angle_a, "b" = input$sun_angle_b, "h" = input$sun_angle_h, "k" = input$sun_angle_k)
              fsa <- quadratic
            }
-      sun_angle_smooth <- parameterise_smooth(x = seq(-60, 60, length.out = 100),
+      sun_angle_smooth <- parameterise_smooth(x = dat()$sun_angle,
                                               f = fsa,
                                               param = sun_angle_pars,
                                               plot = FALSE
@@ -1257,7 +1257,9 @@ server <- function(input, output) {
   output$sun_angle_smooth <-
     renderPlot(
       if("sun_angle" %in% input$covariates){
-        parameterise_smooth(parameterise_smooth_ls = sun_angle_smooth(),
+        parameterise_smooth(x = seq(-60, 60, length.out = 100),
+                            f = sun_angle_smooth()$f,
+                            param = sun_angle_smooth()$param,
                             plot = TRUE,
                             pretty_axis_args = list(side = c(1, 2), pretty = list(n = 5), axis = list(cex.axis = cex.axis, las = TRUE)),
                             add_rug = TRUE,
@@ -1289,7 +1291,7 @@ server <- function(input, output) {
                                  "k" = input$lunar_phase_k)
         fsa <- quadratic
       }
-      lunar_phase_smooth <- parameterise_smooth(x = seq(0, 2*pi, length.out = 100),
+      lunar_phase_smooth <- parameterise_smooth(x = dat()$lunar_phase,
                                               f = fsa,
                                               param = lunar_phase_pars,
                                               plot = FALSE
@@ -1301,7 +1303,9 @@ server <- function(input, output) {
   output$lunar_phase_smooth <-
     renderPlot({
       if("lunar_phase" %in% input$covariates){
-        parameterise_smooth(parameterise_smooth_ls = lunar_phase_smooth(),
+        parameterise_smooth(x = seq(0, 2*pi, length.out = 100),
+                            f = lunar_phase_smooth()$f,
+                            param = lunar_phase_smooth()$param,
                             plot = TRUE,
                             pretty_axis_args = list(side = c(1, 2),
                                                     lim = list(x = dat_ts_axis$lunar_phase$lim, y = NULL),
@@ -1343,7 +1347,7 @@ server <- function(input, output) {
                                  "k" = input$julian_day_k)
         fsa <- quadratic
       }
-      julian_day_smooth <- parameterise_smooth(x = seq(0, 366, length.out = 100),
+      julian_day_smooth <- parameterise_smooth(x = dat()$julian_day,
                                                 f = fsa,
                                                 param = julian_day_pars,
                                                 plot = FALSE
@@ -1355,7 +1359,9 @@ server <- function(input, output) {
   output$julian_day_smooth <-
     renderPlot({
       if("julian_day" %in% input$covariates){
-        parameterise_smooth(parameterise_smooth_ls = julian_day_smooth(),
+        parameterise_smooth(x = seq(0, 366, length.out = 100),
+                            f = julian_day_smooth()$f,
+                            param = julian_day_smooth()$param,
                             plot = TRUE,
                             pretty_axis_args = list(side = c(1, 2),
                                                     lim = list(x = dat_ts_axis$julian_day$lim, y = NULL),
@@ -1426,7 +1432,7 @@ server <- function(input, output) {
    # close reactive expression
    })
 
-  #### Define sim.obs
+  #### Define sim_obs
   sim_obs <- reactive({
     if(input$rho == 0){
       return(function(lpi){ stats::rnorm(length(lpi), mean = lpi, sd = input$sigma_global) })
@@ -1690,7 +1696,7 @@ server <- function(input, output) {
  output$julian_day_nknots <- renderUI({
    if("julian_day" %in% input$covariates_model){
      numericInput(inputId = "julian_day_nknots",
-                  label = "Define the number of knots for s(julian_day).",
+                  label = "Define the basis dimension for s(julian_day).",
                   value = min(c(5, length(unique(dat_model()$julian_day)))),
                   step = 1,
                   min = 3,
@@ -1810,20 +1816,8 @@ server <- function(input, output) {
  output$model_summary <- renderPrint(print(summary(m1())))
 
  # print the arithmetic mean depth: this is what bam() returns as the model intercept
- output$mean_depth <- renderPrint(print(mean(dat_model()$depth, na.rm = T)))
+ # output$mean_depth <- renderPrint(print(mean(dat_model()$depth, na.rm = T)))
 
- # provide a plotted estimate for alpha: this is what I have termed the global intercept
- # alpha_est <- reactive({
- #  nd <- data.frame(sex = "F", length = 0, sun_angle = 0, lunar_phase = 0, julian_day = 0)
-  # p0 <- stats::predict(m1(), newdata = nd, se.fit = TRUE)
-  # return(p0)
- # })
- # output$alpha_est <- renderPrint(alpha_est())
-
- shift <- reactive({
-   0
-   # as.numeric(mean(dat_model()$depth)) - as.numeric(alpha_est()$fit)
-   })
 
  ################################################
  ################################################
@@ -1863,7 +1857,9 @@ server <- function(input, output) {
  #### length
  output$length_smooth_preds <-
    renderPlot(
-     parameterise_smooth(parameterise_smooth_ls = length_smooth(),
+     parameterise_smooth(x = seq(min(dat()$length), max(dat()$length), length.out = 100),
+                         f = length_smooth()$f,
+                         param = length_smooth()$param,
                          plot = TRUE,
                          plot_gam = TRUE,
                          dat = dat_model(),
@@ -1872,7 +1868,8 @@ server <- function(input, output) {
                          plot_gam_ls = plot_gam_ls(),
                          residuals = input$partial_residuals,
                          add_residuals_args = add_residuals_args,
-                         shift = shift(),
+                         shift_truth = -mean(length_smooth()$y),
+                         shift_predictions = 0,
                          add_rug = TRUE,
                          add_rug_args = list(),
                          add_moons = FALSE,
@@ -1890,7 +1887,9 @@ server <- function(input, output) {
  #### sun_angle
  output$sun_angle_smooth_preds <-
    renderPlot(
-     parameterise_smooth(parameterise_smooth_ls = sun_angle_smooth(),
+     parameterise_smooth(x = seq(-60, 60, length.out = 100),
+                         f = sun_angle_smooth()$f,
+                         param = sun_angle_smooth()$param,
                          plot = TRUE,
                          plot_gam = TRUE,
                          dat = dat_model(),
@@ -1899,7 +1898,8 @@ server <- function(input, output) {
                          plot_gam_ls = plot_gam_ls(),
                          residuals = input$partial_residuals,
                          add_residuals_args = add_residuals_args,
-                         shift = shift(),
+                         shift_truth = -mean(sun_angle_smooth()$y),
+                         shift_predictions = 0,
                          add_rug = TRUE,
                          add_rug_args = list(),
                          add_moons = FALSE,
@@ -1917,7 +1917,9 @@ server <- function(input, output) {
  #### lunar_phase
  output$lunar_phase_smooth_preds <-
    renderPlot(
-     parameterise_smooth(parameterise_smooth_ls = lunar_phase_smooth(),
+     parameterise_smooth(x = seq(0, 2*pi, length.out = 100),
+                         f = lunar_phase_smooth()$f,
+                         param = lunar_phase_smooth()$param,,
                          plot = TRUE,
                          plot_gam = TRUE,
                          dat = dat_model(),
@@ -1926,7 +1928,8 @@ server <- function(input, output) {
                          plot_gam_ls = plot_gam_ls(),
                          residuals = input$partial_residuals,
                          add_residuals_args = add_residuals_args,
-                         shift = shift(),
+                         shift_truth = -mean(lunar_phase_smooth()$y),
+                         shift_predictions = 0,
                          add_rug = TRUE,
                          add_moons = TRUE,
                          add_moons_args = list(radius1 = 0.05),
@@ -1953,7 +1956,9 @@ server <- function(input, output) {
  #### julian_day
  output$julian_day_smooth_preds <-
    renderPlot(
-     parameterise_smooth(parameterise_smooth_ls = julian_day_smooth(),
+     parameterise_smooth(x = seq(0, 366, length.out = 100),
+                         f = julian_day_smooth()$f,
+                         param = julian_day_smooth()$param,
                          plot = TRUE,
                          plot_gam = TRUE,
                          dat = dat_model(),
@@ -1962,7 +1967,8 @@ server <- function(input, output) {
                          plot_gam_ls = plot_gam_ls(),
                          residuals = input$partial_residuals,
                          add_residuals_args = add_residuals_args,
-                         shift = shift(),
+                         shift_truth = -mean(julian_day_smooth()$y),
+                         shift_predictions = 0,
                          add_rug = TRUE,
                          add_rug_args = list(),
                          add_moons = FALSE,

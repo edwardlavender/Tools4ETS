@@ -139,7 +139,8 @@ parameterise_contrast_2l <-
 #' @param add_error_envelope_args A named list of arguments passed to \code{\link[prettyGraphics]{add_error_envelope}} to add predictions to the plot.
 #' @param residuals A logical input which defines whether or not to add partial residuals to the plot.
 #' @param add_residuals_args A named list of arguments to customise the partial residuals on the plot.
-#' @param shift A number which defines a value by which to shift model predictions/partial residuals vertically. This can be necessary because \code{\link[mgcv]{plot.gam}} smooths are centred.
+#' @param shift_truth A number which defines a value by which to shift f(x) vertically.
+#' @param shift_predictions A number which defines a value by which to shift model predictions/partial residuals vertically.
 #'
 #' @param add_rug A logical input which defines whether or not to plot a rug. If so, \code{dat}, the dataframe used to fit the model, should be provided (see above).
 #' @param add_rug_args A named list of arguments passed to \code{\link[graphics]{rug}} to customise the rug.
@@ -188,7 +189,8 @@ parameterise_smooth <-
     add_error_envelope_args = list(),
     residuals = FALSE,
     add_residuals_args = list(),
-    shift = 0,
+    shift_truth = 0,
+    shift_predictions = 0,
 
     add_rug = FALSE,
     add_rug_args = list(),
@@ -201,8 +203,6 @@ parameterise_smooth <-
 
   ){
 
-
-
     #### Evaluate function
     if(is.null(parameterise_smooth_ls)){
       param$x <- x
@@ -211,6 +211,7 @@ parameterise_smooth <-
       x <- parameterise_smooth_ls$x
       y <- parameterise_smooth_ls$y
     }
+    if(shift_truth != 0) y <- y + shift_truth
 
     #### Parameters if plotting a GAM
     if(plot_gam){
@@ -221,9 +222,9 @@ parameterise_smooth <-
       p$fit <- as.numeric(p$fit)
       p$se <- as.numeric(p$se)
       p$p.resid <- as.numeric(p$p.resid)
-      if(shift != 0){
-        p$fit <- p$fit + shift
-        p$p.resid <- p$p.resid + shift
+      if(shift_predictions != 0){
+        p$fit <- p$fit + shift_predictions
+        p$p.resid <- p$p.resid + shift_predictions
       }
 
       CI <- prettyGraphics::list_CIs(pred = list(fit = p$fit, se.fit = p$se), plot_suggestions = FALSE)
@@ -245,7 +246,9 @@ parameterise_smooth <-
         pretty_axis_x <- x
         pretty_axis_y <- y
       }
-      axis_ls <- prettyGraphics::implement_pretty_axis_args(list(x = range(pretty_axis_x), y = range(pretty_axis_y)), pretty_axis_args)
+      axis_ls <- prettyGraphics::implement_pretty_axis_args(list(x = range(pretty_axis_x),
+                                                                 y = range(pretty_axis_y)),
+                                                            pretty_axis_args)
 
       #### Blank plot with parameterisation
       plot(x, y,
@@ -258,12 +261,7 @@ parameterise_smooth <-
       usr <- graphics::par("usr")
       graphics::clip(axis_ls[[1]]$lim[1], axis_ls[[1]]$lim[2], axis_ls[[2]]$lim[1], axis_ls[[2]]$lim[2])
 
-      #### Add parameterisation
-      asa <- list(x = x, y = y)
-      add_sim_args <- list_merge(asa, add_sim_args)
-      do.call(graphics::lines, add_sim_args)
-      prettyGraphics::pretty_axis(axis_ls = axis_ls, add = TRUE)
-
+      #### Add model predictions
       if(plot_gam){
 
         #### Add fitted values and CI envelope
@@ -284,6 +282,12 @@ parameterise_smooth <-
           do.call(graphics::points, add_residuals_args)
         }
       }
+
+      #### Add parameterisation
+      asa <- list(x = x, y = y)
+      add_sim_args <- list_merge(asa, add_sim_args)
+      do.call(graphics::lines, add_sim_args)
+      prettyGraphics::pretty_axis(axis_ls = axis_ls, add = TRUE)
 
       #### Add rug
       if(add_rug){
