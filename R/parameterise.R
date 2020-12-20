@@ -149,6 +149,7 @@ parameterise_contrast_2l <-
 #'
 #' @param pretty_axis_args A named list of arguments, passed to \code{\link[prettyGraphics]{pretty_axis}} to customise axes.
 #' @param mtext_args A named list of arguments, passed to \code{\link[graphics]{mtext}}, to add axis labels.
+#' @param ... Additional plotting parameters passed to \code{\link[prettyGraphics]{pretty_plot}}.
 #'
 #' @examples
 #' #### Example 1: Simulate a quadratic effect of variable (e.g. Julian day) on a response (e.g. depth)
@@ -198,8 +199,8 @@ parameterise_smooth <-
     add_moons = FALSE,
     add_moons_args = list(),
 
-    pretty_axis_args = list(side = c(1, 2), pretty = list(n = 10), axis = list(cex.axis = 1.5, las = TRUE)),
-    mtext_args = list()
+    pretty_axis_args = list(side = 1:2, pretty = list(n = 10), control_axis = list(las = TRUE)),
+    mtext_args = list(),...
 
   ){
 
@@ -251,11 +252,12 @@ parameterise_smooth <-
                                                             pretty_axis_args)
 
       #### Blank plot with parameterisation
+      check...(c("type", "axes", "xlim", "ylim"))
       plot(x, y,
            type = "n",
            axes = FALSE,
            xlab = xlab, ylab = ylab,
-           xlim = axis_ls[[1]]$lim, ylim = axis_ls[[2]]$lim)
+           xlim = axis_ls[[1]]$lim, ylim = axis_ls[[2]]$lim,...)
 
       #### Clip plotting area
       usr <- graphics::par("usr")

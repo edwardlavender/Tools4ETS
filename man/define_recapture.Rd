@@ -19,10 +19,16 @@ define_recapture(
   after4plot = 3600,
   ylim = c(-250, 0),
   vcols = c("black", "green", "blue"),
+  type = "b",
+  cex = 0.5,
+  pch = 21,
+  col = "black",
+  bg = "black",
   prompt = TRUE,
   manual_flag = TRUE,
   select = 1,
-  remove_recaptures = FALSE
+  remove_recaptures = FALSE,
+  ...
 )
 }
 \arguments{
@@ -51,6 +57,8 @@ define_recapture(
 \item{ylim}{A numeric vector of two which specifies the y limits of the plot. Note that depth is negated for plotting purposes (see \code{inspect_plot}), so \code{ylim} needs to be negated too. The default is \code{ylim = c(-250, 0)}.}
 
 \item{vcols}{A vector of colours. The recapture time estimated by each method is added to the time-series plot as a vertical line, with the specified colour.}
+
+\item{type, pch, col, bg, cex, ...}{Additional graphical customisation options passed to \code{\link[prettyGraphics]{pretty_plot}}, excluding \code{xlim}, \code{pretty_axis_args} and \code{main} which are handled internally.}
 
 \item{prompt}{A logical input which defines whether or not to pause following the creation of a plot (see above). If \code{prompt = TRUE}, the function proceeds once the user has digested the plot and pressed Enter. Otherwise, the user can press Esc to end the algorithm.}
 

@@ -9,8 +9,6 @@ suggest_recapture(
   threshold_depth = 1,
   plot = TRUE,
   window = 60 * 60 * 12,
-  xlab = "Timestamp",
-  ylab = "Depth",
   prompt = TRUE,
   ndates_warning = 100,
   ...
@@ -25,15 +23,11 @@ suggest_recapture(
 
 \item{window}{A numeric value which defines the number of seconds either side of first and last potential 'recapture' event on any given day for which the depth time-series is plotted. The default is 43200 s (i.e. 12 hours).}
 
-\item{xlab}{A label for the x axis.}
-
-\item{ylab}{A label for the y axis.}
-
 \item{prompt}{A logical value which defines whether or not to pause following the display of each graph. If TRUE, the user needs to press Enter prior to moving on to the next recapture event.}
 
 \item{ndates_warning}{A numeric value defining the number of dates with putative recapture events above which the function will warn the user to reconsider \code{prompt = TRUE}.}
 
-\item{...}{Extra arguments passed to \code{\link[graphics]{plot}}, excluding \code{xlim} which is set based on the window argument provided.}
+\item{...}{Extra arguments passed to \code{\link[prettyGraphics]{pretty_plot}}, excluding \code{xlim} and \code{pretty_axis_args} which are handled internally.}
 }
 \value{
 A dataframe with 4 columns: 'timestamp' (as inputted), 'depth' (as inputted), 'recapture_window' (a logical value specifying whether the position is inside a recapture window, defined by \code{window}), and 'above_depth_threshold' (a logical value which specifies the positions at which the depth is shallower than the depth threshold). A plot can also be returned, with depth (negated) shown over time. Red lines show the recapture window under consideration and blue lines show any possible moments of recapture in this window.

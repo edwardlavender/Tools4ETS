@@ -27,9 +27,10 @@ parameterise_smooth(
   add_rug_args = list(),
   add_moons = FALSE,
   add_moons_args = list(),
-  pretty_axis_args = list(side = c(1, 2), pretty = list(n = 10), axis = list(cex.axis =
-    1.5, las = TRUE)),
-  mtext_args = list()
+  pretty_axis_args = list(side = 1:2, pretty = list(n = 10), control_axis = list(las =
+    TRUE)),
+  mtext_args = list(),
+  ...
 )
 }
 \arguments{
@@ -80,6 +81,8 @@ parameterise_smooth(
 \item{pretty_axis_args}{A named list of arguments, passed to \code{\link[prettyGraphics]{pretty_axis}} to customise axes.}
 
 \item{mtext_args}{A named list of arguments, passed to \code{\link[graphics]{mtext}}, to add axis labels.}
+
+\item{...}{Additional plotting parameters passed to \code{\link[prettyGraphics]{pretty_plot}}.}
 }
 \description{
 This function helps the user to define reasonable functions for the effect of a covariate on a linear predictor/response for simulations. Then, model-based inferences of the effect of that covariate can be plotted on top of simulated effects to examine the performance of a model in terms of its ability to correctly estimate the simulated function under different scenarios. This function is intended for use primarily in \code{\link[Tools4ETS]{GAMS4DTS}}.

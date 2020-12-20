@@ -5,11 +5,9 @@
 #' @param threshold_depth A numeric value which defines the depth threshold; i.e. the depth such that when the animal is at or above (shallower) than this depth, a recapture event may have occurred and should be checked.
 #' @param plot A logical input which defines whether or not to create a plot.
 #' @param window A numeric value which defines the number of seconds either side of first and last potential 'recapture' event on any given day for which the depth time-series is plotted. The default is 43200 s (i.e. 12 hours).
-#' @param prompt A logical value which defines whether or not to pause following the display of each graph. If TRUE, the user needs to press Enter prior to moving on to the next recapture event.
-#' @param xlab A label for the x axis.
-#' @param ylab A label for the y axis.
 #' @param ndates_warning A numeric value defining the number of dates with putative recapture events above which the function will warn the user to reconsider \code{prompt = TRUE}.
-#' @param ... Extra arguments passed to \code{\link[graphics]{plot}}, excluding \code{xlim} which is set based on the window argument provided.
+#' @param prompt A logical value which defines whether or not to pause following the display of each graph. If TRUE, the user needs to press Enter prior to moving on to the next recapture event.
+#' @param ... Extra arguments passed to \code{\link[prettyGraphics]{pretty_plot}}, excluding \code{xlim} and \code{pretty_axis_args} which are handled internally.
 #'
 #' @return A dataframe with 4 columns: 'timestamp' (as inputted), 'depth' (as inputted), 'recapture_window' (a logical value specifying whether the position is inside a recapture window, defined by \code{window}), and 'above_depth_threshold' (a logical value which specifies the positions at which the depth is shallower than the depth threshold). A plot can also be returned, with depth (negated) shown over time. Red lines show the recapture window under consideration and blue lines show any possible moments of recapture in this window.
 #'
@@ -55,17 +53,16 @@
 
 ##########################################################
 ##########################################################
-#### suggest.recapture
+#### suggest_recapture
 
 suggest_recapture <-
   function(data,
            threshold_depth = 1,
            plot = TRUE,
            window = 60*60*12,
-           xlab = "Timestamp",
-           ylab = "Depth",
            prompt = TRUE,
-           ndates_warning = 100,...){
+           ndates_warning = 100,
+           ...){
 
     #### Define dataframe to be returned
     dat <- data
@@ -120,13 +117,20 @@ suggest_recapture <-
             y2plot <- data$depth[pos2plot]
 
             # Plot a graph
-            plot(x2plot, y2plot*-1,
-                 xlim = xlim, xlab = xlab, ylab = ylab,...)
+            axis_ls <- prettyGraphics::pretty_plot(x2plot, y2plot*-1,
+                                                   xlim = xlim,
+                                                   pretty_axis_args = list(side = 3:2,
+                                                                           control_axis = list(las = TRUE)),
+                                                   return_list = TRUE,...)
 
             # Add lines demarking each recapture event
-            graphics::abline(v = x, col = "blue", lty = 2)
+            for(i in 1:length(x)){
+              graphics::lines(rep(x[i], 2), axis_ls[[2]]$lim, col = "blue", lty = 2)
+            }
             # Add lines delimiting the window
-            graphics::abline(v = xlim_old, col = "red", lty = 3)
+            for(i in 1:2){
+              graphics::lines(rep(xlim_old[i], 2), axis_ls[[2]]$lim, col = "red", lty = 3)
+            }
             # Add lines delimiting the day
             # dd2 <- dd + 1
             # dd1 <- as.POSIXct(dd, tz = tz)

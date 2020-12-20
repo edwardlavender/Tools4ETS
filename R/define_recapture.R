@@ -14,6 +14,7 @@
 #' @param after4plot A numeric input, as above, used to define the upper x limit of the plot. The default is 3600 (i.e. the time-series plot will extend until one hour after the estimated recapture time).
 #' @param ylim A numeric vector of two which specifies the y limits of the plot. Note that depth is negated for plotting purposes (see \code{inspect_plot}), so \code{ylim} needs to be negated too. The default is \code{ylim = c(-250, 0)}.
 #' @param vcols A vector of colours. The recapture time estimated by each method is added to the time-series plot as a vertical line, with the specified colour.
+#' @param type,pch,col,bg,cex,... Additional graphical customisation options passed to \code{\link[prettyGraphics]{pretty_plot}}, excluding \code{xlim}, \code{pretty_axis_args} and \code{main} which are handled internally.
 #' @param prompt A logical input which defines whether or not to pause following the creation of a plot (see above). If \code{prompt = TRUE}, the function proceeds once the user has digested the plot and pressed Enter. Otherwise, the user can press Esc to end the algorithm.
 #' @param manual_flag A logical input which defines whether or not to manually flag points on the plot. This is useful because the function's estimate of the recapture time may not be exactly correct and may need to be refined by the user, and because the user may want to define flag points in the recapture window which represent the times of biologically important events. If \code{TRUE}, the function pauses whilst the user clicks points on the plot to be saved.
 #' @param select A numeric value which, if \code{manual_flag = TRUE}, specifies the position of the click which defines the exact time of recapture. (This is useful if the user uses multiple clicks to define important points in the recapture window, only one of which represents the 'moment' of recapture.)
@@ -102,10 +103,12 @@ define_recapture <-
     after4plot = 3600,
     ylim = c(-250, 0),
     vcols = c("black", "green", "blue"),
+    type = "b", cex = 0.5, pch = 21, col = "black", bg = "black",
     prompt = TRUE,
     manual_flag = TRUE,
     select = 1,
-    remove_recaptures = FALSE
+    remove_recaptures = FALSE,
+    ...
   ){
 
 
@@ -246,6 +249,7 @@ define_recapture <-
 
         #### If the user has selected to inspect a plot...
         if(inspect_plot){
+          check...(c("xlim", "main", "pretty_axis_args"),...)
           # Message
           # print("Manually check the graph. The red lines enclose the approximate recapture window around the time of recapture estimated by the first inputted method. Each line corresponds with the time of recapture estimated by one method. Ensure that the recapture time (this should be in the daytime!) and interval are suitably defined; the precise timing of recapture can then be determined manually...")
 
@@ -264,17 +268,17 @@ define_recapture <-
           dat2plot <- data_depth[rows_to_plot, c("timestamp", "depth")]
           dat2plot$depth <- dat2plot$depth * -1
           # Define plot
-          graphics::plot(dat2plot,
-                         type = "b",
-                         cex = 0.5,
-                         pch = 21,
-                         bg = "black",
-                         xlim = xlim,
-                         ylim = ylim,
-                         main = paste("id = ", recap$id, ";", recap$date))
-          graphics::abline(v = start_recap, col = "red"); graphics::abline(v = end_recap, col = "red")
+          prettyGraphics::pretty_plot(dat2plot$timestamp, dat2plot$depth,
+                                      pretty_axis_args = list(side = 3:2, control_axis = list(las = TRUE)),
+                                      xlim = xlim,
+                                      ylim = ylim,
+                                      main = paste0("ID ", recap$id, " (", recap$date, ")"),
+                                      type = type, cex = cex, pch = pch, col = col, bg = bg,
+                                      ...)
+          graphics::lines(rep(start_recap, 2), ylim, col = "red")
+          graphics::lines(rep(end_recap, 2), ylim, col = "red")
           for(i in 1:length(rc_time_ls)){
-            graphics::abline(v = rc_time_ls[[i]], col = vcols[i])
+            graphics::lines(rep(rc_time_ls[[i]], 2), ylim, col = vcols[i])
           }
 
           # Prompt
