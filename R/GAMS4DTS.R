@@ -1164,6 +1164,8 @@ server <- function(input, output) {
       pp <- graphics::par(oma = c(2, 3, 2, 2))
       prettyGraphics::pretty_curve(x = dat()$length,
                                    f = stats::dgamma,
+                                   x_interp = FALSE, type = "p",
+                                   xlab = "", ylab = "", main = "",
                                    param = list(shape = input$length_density_curve[1],
                                                 scale = input$length_density_curve[2]),
                                    pretty_axis_args = list(side = 1:2, pretty = list(n = 5),
@@ -1569,6 +1571,7 @@ server <- function(input, output) {
                                freq = TRUE,
                                xaxis = list(cex.axis = cex.axis),
                                yaxis = list(las = TRUE, cex.axis = cex.axis),
+                               xlab = "", ylab = "",
                                mtext_args = list(list(side = 1, text = "Depth (m)", line = 2.5, cex = cex.lab),
                                                  list(side = 2, text = "Frequency", line = 2.5, cex = cex.lab))
    )
