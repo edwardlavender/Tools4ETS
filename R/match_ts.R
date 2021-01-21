@@ -7,8 +7,8 @@
 #'
 #' @description This function is like \code{\link[base]{match}}, but the aim is, for a given sequence of times (\code{times}), to find the positions in another sequence of times (\code{lookup}) that are nearest in time to those in the first sequence. This is useful if, for example, you have an existing dataframe to which you want to add the observations, held in another dataframe, that are nearest in time to observations in the first dataframe (i.e., nearest neighbour interpolation). This function uses \code{\link[data.table]{data.table}} for fast matching, even with very large vectors.
 #'
-#' @param times A vector of timestamps for which you want to identify the position of the nearest timestamp in another vector (\code{lookup}).
-#' @param lookup A vector of timestamps for which you will determine the position of the nearest timestamp to each time in \code{times}.
+#' @param times A vector of time stamps for which you want to identify the position of the nearest time stamp in another vector (\code{lookup}).
+#' @param lookup A vector of time stamps for which you will determine the position of the nearest time stamp to each time in \code{times}.
 #'
 #' @details If there are multiple matches, only the first is returned.
 #'
@@ -101,10 +101,10 @@ match_ts_nearest <- function(times, lookup){
 #' @title Match time series by key and time
 #' @description For two dataframes, \code{d1} and \code{d2}, this function finds the positions in the second dataframe which, for each key (e.g., factor level) in the first dataframe, are nearest in time (i.e., nearest neighbour interpolation accounting for observations from different factor levels).
 #'
-#' @param d1 A dataframe which includes a column that defines factor levels and a column that defines timestamps. The names of these columns need to match those in \code{d2}.
-#' @param d2 A dataframe which includes a column that defines factor levels and a column that defines timestamps. The names of these columns need to match those in \code{d1}.
+#' @param d1 A dataframe which includes a column that defines factor levels and a column that defines time stamps. The names of these columns need to match those in \code{d2}.
+#' @param d2 A dataframe which includes a column that defines factor levels and a column that defines time stamps. The names of these columns need to match those in \code{d1}.
 #' @param key_col A character that defines the column name in \code{d1} and \code{d2} that distinguishes factor levels.
-#' @param time_col A character that defines the column name in \code{d1} and \code{d2} that defines timestamps.
+#' @param time_col A character that defines the column name in \code{d1} and \code{d2} that defines time stamps.
 #'
 #' @details If there are multiple matches, only the first is returned.
 #'
@@ -154,7 +154,7 @@ match_ts_nearest <- function(times, lookup){
 #' d1$position_in_d2 <- match_ts_nearest_by_key(d1, d2, key_col = "key", time_col = "t")
 #' # Show that the index adds the correct key
 #' d1$key_in_d2 <- d2$key[d1$position_in_d2]
-#' # Show that the index adds the correct timestamp for that key
+#' # Show that the index adds the correct time stamp for that key
 #' d1$t_in_d2 <- d2$t[d1$position_in_d2]
 #' # We can now safely add values from d2 to d1:
 #' d1$val_in_d2 <- d2$vals[d1$position_in_d2]
@@ -199,9 +199,9 @@ match_ts_nearest_by_key <- function(d1, d2, key_col, time_col){
 #' @title Pair time series
 #' @description This function adds observations from one time series to another time series using a matching process (e.g., nearest neighbour interpolation). This is useful when you have a main dataframe to which you need to add observations (e.g., those occurring closest in time) from another dataframe.
 #'
-#' @param d1 A dataframe that contains, at a minimum, a vector of timestamps, to which observations need to be added from \code{d2}.
-#' @param d2 A dataframe that contains, at a minimum, a vector of timestamps and associated observations, to be added to \code{d1}.
-#' @param time_col A character that defines the name of the column that contains timestamps in \code{d1} and \code{d2}.
+#' @param d1 A dataframe that contains, at a minimum, a vector of time stamps, to which observations need to be added from \code{d2}.
+#' @param d2 A dataframe that contains, at a minimum, a vector of time stamps and associated observations, to be added to \code{d1}.
+#' @param time_col A character that defines the name of the column that contains time stamps in \code{d1} and \code{d2}.
 #' @param key_col (optional) A character that defines the name of the column that contains keys in \code{d1} and \code{d2}. This is required for \code{method = "match_ts_nearest_by_key"} (see below).
 #' @param val_col A character that defines the name of the column that contains observations in \code{d2}.
 #' @param method A character that defines the matching method. The options currently implemented are \code{"match_ts_nearest"}, which implements \code{\link[Tools4ETS]{match_ts_nearest}} and \code{"match_ts_nearest_by_key"} which implements \code{\link[Tools4ETS]{match_ts_nearest_by_key}}.

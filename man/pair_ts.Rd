@@ -18,11 +18,11 @@ pair_ts(
 )
 }
 \arguments{
-\item{d1}{A dataframe that contains, at a minimum, a vector of timestamps, to which observations need to be added from \code{d2}.}
+\item{d1}{A dataframe that contains, at a minimum, a vector of time stamps, to which observations need to be added from \code{d2}.}
 
-\item{d2}{A dataframe that contains, at a minimum, a vector of timestamps and associated observations, to be added to \code{d1}.}
+\item{d2}{A dataframe that contains, at a minimum, a vector of time stamps and associated observations, to be added to \code{d1}.}
 
-\item{time_col}{A character that defines the name of the column that contains timestamps in \code{d1} and \code{d2}.}
+\item{time_col}{A character that defines the name of the column that contains time stamps in \code{d1} and \code{d2}.}
 
 \item{key_col}{(optional) A character that defines the name of the column that contains keys in \code{d1} and \code{d2}. This is required for \code{method = "match_ts_nearest_by_key"} (see below).}
 

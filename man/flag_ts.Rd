@@ -7,7 +7,7 @@
 flag_ts(x, fct = NULL, dat = NULL, duration_threshold, flag = 1:3)
 }
 \arguments{
-\item{x}{A vector of timestamps, either as an integer/numeric object, a \code{\link[base]{DateTimeClasses}} or a \code{\link[base]{Date}}.}
+\item{x}{A vector of time stamps, either as an integer/numeric object, a \code{\link[base]{DateTimeClasses}} or a \code{\link[base]{Date}}.}
 
 \item{fct}{(optional) A grouping factor defining independent segments of time series (e.g. individuals).}
 
@@ -34,13 +34,13 @@ t <- c(seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-02"), by = "6 ho
        seq.POSIXt(as.POSIXct("2016-01-02 18:00:00"), as.POSIXct("2016-01-03"), by = "5 hours")
 )
 
-#### Example (1) Supply a vector of timestamps to flag independent sections of time series
+#### Example (1) Supply a vector of time stamps to flag independent sections of time series
 flag_ts(
   x = t,
   duration_threshold = 8*60,
   flag = 1:3)
 
-#### Example (2) Supply a dataframe with a timestamp column instead
+#### Example (2) Supply a dataframe with a time stamp column instead
 flag_ts(dat = data.frame(x = t),
         duration_threshold = 8*60,
         flag = 1:3)
@@ -54,7 +54,7 @@ flag_ts(
   duration_threshold = 8*60,
   flag = 1:3)
 
-#### Example (4) Supply time series and a factor in a dataframe organised by fct then timestamp
+#### Example (4) Supply time series and a factor in a dataframe organised by fct then time stamp
 flag_ts(dat = data.frame(x = t2, fct = fct_levels),
         duration_threshold = 8*60,
         flag = 1:3)

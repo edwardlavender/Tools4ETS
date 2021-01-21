@@ -1,14 +1,14 @@
 #' @title Simulate a time series
 #' @importFrom magrittr %>%
 #'
-#' @description This function assembles a basic dataframe structure that defines, for each factor level (i.e., individual) inputted, a sequence of time steps, possibly differing in duration and resolution across factor levels. Since this function was inspired by the simulation of depth time series, commonly assumed drivers of depth (namely, sex, length, sun angle, lunar phase and Julian day) can be included in the dataframe by supplying these to the \code{covariates} argument. In this case, sex is simulated for each individual from a discrete distribution with a user-defined parameter (the probability of sampling a female) and length is simulated for each individual from a Gamma distribution with user-specified parameters. Sun angle, lunar phase and Julian day are calculated for each timestamp using \code{\link[suncalc]{getSunlightPosition}}, \code{\link[lunar]{lunar.phase}} and \code{\link[lubridate]{yday}} respectively. For other covariates/ecological time series, the user can use this dataframe to define covariate values. In both cases, this information can then be used simulate values of a response (see \code{\link[Tools4ETS]{sim_ts}}).
+#' @description This function assembles a basic dataframe structure that defines, for each factor level (i.e., individual) inputted, a sequence of time steps, possibly differing in duration and resolution across factor levels. Since this function was inspired by the simulation of depth time series, commonly assumed drivers of depth (namely, sex, length, sun angle, lunar phase and Julian day) can be included in the dataframe by supplying these to the \code{covariates} argument. In this case, sex is simulated for each individual from a discrete distribution with a user-defined parameter (the probability of sampling a female) and length is simulated for each individual from a Gamma distribution with user-specified parameters. Sun angle, lunar phase and Julian day are calculated for each time stamp using \code{\link[suncalc]{getSunlightPosition}}, \code{\link[lunar]{lunar.phase}} and \code{\link[lubridate]{yday}} respectively. For other covariates/ecological time series, the user can use this dataframe to define covariate values. In both cases, this information can then be used simulate values of a response (see \code{\link[Tools4ETS]{sim_ts}}).
 #'
 #' @param start_date A character specifying the date of the first observation, specified as "yyyy-mm-dd".
 #' @param start_date_variable A logical input specifying whether or not the start date for simulated time series should differ among individuals (if multiple individuals are specified). This is controlled via the \code{parameters} argument.
 #'
 #' @param max_duration_days A number specifying the maximum duration, in days, over which to simulate data.
 #' @param duration_days_variable A logical input specifying whether or not the duration of time series for each factor level should vary (if multiple levels have been specified).
-#' @param resolution_minutes A number or vector specifying the duration, in minutes, between consecutive simulated timestamps. If a single number is specified, the resolution is taken to be the same across all individuals. If more than one number is defined, supplied numbers are taken to be the resolutions at which individual time series will be sampled. The duration between consecutive simulated timestamps for each individual is sampled randomly from this vector, according to the specifications in the \code{parameters} list (see below).
+#' @param resolution_minutes A number or vector specifying the duration, in minutes, between consecutive simulated time stamps. If a single number is specified, the resolution is taken to be the same across all individuals. If more than one number is defined, supplied numbers are taken to be the resolutions at which individual time series will be sampled. The duration between consecutive simulated time stamps for each individual is sampled randomly from this vector, according to the specifications in the \code{parameters} list (see below).
 #' @param n_individuals A number specifying the number of individuals (factor levels) for which to simulate data.
 #' @param longitude A number specifying the longitude (decimal degrees) of the simulated location. This is required to calculate the covariate \code{sun_angle} (see below).
 #' @param latitude A number specifying the latitude (decimal degrees) of the simulated location. This is required to calculate the covariate \code{sun_angle} (see below).
@@ -18,7 +18,7 @@
 #'
 #' @return The function outputs a dataframe, with the following columns: (1) 'individual', an integer which distinguishes each unique individual; (2) 'timestamp', a time in POSIXct format, which defines each unique observation/time step, at the specified resolution, (3) 'hourofday', an integer which defines the hour of day; and (4) columns for each of the inputted covariates (if applicable).
 #'
-#' @details A dataframe comprising a sequence of timestamps (as possible covariate values) is simulated in order to set up a dataframe which can be used to simulate values of a response. \code{\link[Tools4ETS]{sim_ts}} provides a starting framework to simulate the response.
+#' @details A dataframe comprising a sequence of time stamps (as possible covariate values) is simulated in order to set up a dataframe which can be used to simulate values of a response. \code{\link[Tools4ETS]{sim_ts}} provides a starting framework to simulate the response.
 #'
 #' @seealso \code{\link[stats]{GammaDist}}, \code{\link[base]{sample}}, \code{\link[Tools4ETS]{sim_ts}}
 #'
@@ -125,7 +125,7 @@ assemble_ts <-
 
 
   ################################################
-  #### Set up basic dataframe structure with timestamps
+  #### Set up basic dataframe structure with time stamps
 
   # convert start_date to POSIXct object
   start_date <- as.POSIXct(start_date, tz = tz)
@@ -194,11 +194,11 @@ assemble_ts <-
     mapply(
       # simultaneously loop over id, start, duration and res
       function(id, start, duration, res){
-        # create an individual-specific sequence of timestamps
+        # create an individual-specific sequence of time stamps
         timestamp <- seq.POSIXt(from = start,
                                 to = start + (duration * 24 * 60 * 60),
                                 by = res * 60)
-        # repeat the id number for each timestamp
+        # repeat the id number for each time stamp
         individual <- rep(id, length(timestamp))
         # group this into a dataframe
         d <- data.frame(individual = individual, timestamp = timestamp)
@@ -314,7 +314,7 @@ assemble_ts <-
   #### Add temporal covariates
 
   #### sun angle
-  # if sun_angle gave been specified, calculate these for each timestamp
+  # if sun_angle gave been specified, calculate these for each time stamp
   # ... using the suncalc package
   if("sun_angle" %in% covariates){
 
@@ -340,7 +340,7 @@ assemble_ts <-
 
 
   #### tidal height
-  # If tidal_height has been specified, obtain these for timestamp
+  # If tidal_height has been specified, obtain these for time stamp
   # NB: this is not yet implemented
   if("tidal_height" %in% covariates){
 
@@ -351,7 +351,7 @@ assemble_ts <-
 
 
   #### lunar phase
-  # If lunar_phase has been specified, obtain these for timestamp
+  # If lunar_phase has been specified, obtain these for time stamp
   # ... using the lunar package
   if("lunar_phase" %in% covariates){
     # calculate lunar phase
@@ -363,7 +363,7 @@ assemble_ts <-
 
 
   #### Julian day
-  # If Julian_day has been specified, calculate this for each timestamp
+  # If Julian_day has been specified, calculate this for each time stamp
   # ... using yday() function in the lubridate package
   if("julian_day" %in% covariates){
     # add Julian day to dataframe

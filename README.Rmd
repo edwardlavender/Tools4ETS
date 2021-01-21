@@ -29,7 +29,7 @@ The `R` package [`prettyGraphics`](https://github.com/edwardlavender/prettyGraph
 `Tools4ETS` streamlines common data processing operations for ecological time series. These include: 
 
 * **Define time categories**. `hour_nearest()` and `hour_dbl()` define the nearest integer hour and the time of day respectively. `mmyy()` defines (ordered) month-year categories. `yday2date()` flicks from Julian days to dates/months/seasons. `yday_dbl()` defines the fraction of the year in days. 
-* **Rates of change.** `difference()` and `serial_difference()` compute the difference between two values and consecutive pairs of values in a sequence (numbers or timestamps) respectively. 
+* **Rates of change.** `difference()` and `serial_difference()` compute the difference between two values and consecutive pairs of values in a sequence (numbers or time stamps) respectively. 
 * **Matching time series.** `match_ts_nearest()`, `match_ts_nearest_by_key()` and `pair_ts()` match time series (i.e., to add observations from one time series into another).  
 * **Flagging time series.** `flag_ts()` can be used to flag independent sections of time series in a dataset due to the presence of different factor levels (e.g. individuals) and/or breaks in time series. Different flag types can be added, reflecting the requirements of different modelling approaches. `add_unit_id()` is used to add unique unit IDs to a time series. 
 * **Thinning time series.** `thin_ts()`  can be used to thin a dataset, accounting for independent time series. `thin_ts_iter()` implements `thin_ts()` iteratively to explore the change in autocorrelation and data volume with thinning. `average_ts()` summarises a time series in bins. 
@@ -50,7 +50,7 @@ A few functions facilitate the computation of simple statistics from time series
 
 This includes functions for simulating _de novo_ time series with known properties; namely: 
 
-* **Dataframe assembly.** `assemble_ts()` can be used to simulate time series with timestamps for multiple factor levels (if applicable), possibly at different resolutions, over different durations and/or with breaks. 
+* **Dataframe assembly.** `assemble_ts()` can be used to simulate time series with time stamps for multiple factor levels (if applicable), possibly at different resolutions, over different durations and/or with breaks. 
 * **Define parameters.** `parameterise_smooth()` can be used to define functions/parameters which relate covariates to a response and to compare simulated smooths to those inferred by GAMs. `sim_sine()` simulates and visualises periodic, sinusoidal functions.
 * **Response simulation.** `sim_ts()` can be used to simulate the values of a response variable given a user-defined model. For simulations including residual autocorrelation, `sigma_arima()` facilitates the simulation of autocorrelated observations with known variance. 
 

@@ -122,7 +122,7 @@ The other arguments that `assemble_ts()` takes assume their default values. The 
  </tr>
   <tr>
     <td>sun\_angle</td>
-    <td>A double which defines the angle (degrees) of the sun relative to the horizon at the specified location and timestamp. This is derived using the suncalc package. Note: at present, sun\_angle and are derived for the single inputted location (e.g. tagging location) only.</td>
+    <td>A double which defines the angle (degrees) of the sun relative to the horizon at the specified location and time stamp. This is derived using the suncalc package. Note: at present, sun\_angle and are derived for the single inputted location (e.g. tagging location) only.</td>
  </tr>
   <tr>
     <td>lunar\_phase</td>
@@ -244,13 +244,13 @@ While model covariate plots, like those presented in *Model Covariate Plots* are
 
 ### Model Diagnostics 
 
-The *Model Diagnostics* tab provides further information on model diagnostics. These are used to visualise whether the assumptions of the model are violated. Four standard diagnostic plots are usually considered. The validity of the assumption of particular error structure for the residuals can be visualised using quantile-quantile plots and histograms of the model's residuals. The assumption that the variation is constant with the mean can be visualised in a plot of residuals ~ the linear predictor, and the correlation between the response and fitted values can be visualised by a plot of response ~ fitted values. It is also instructive to plot residuals ~ covariates (including timestamps) and the autocorrelation function of residuals. The latter two plots are used to indicate whether autocorrelation needs to be included in the model. 
+The *Model Diagnostics* tab provides further information on model diagnostics. These are used to visualise whether the assumptions of the model are violated. Four standard diagnostic plots are usually considered. The validity of the assumption of particular error structure for the residuals can be visualised using quantile-quantile plots and histograms of the model's residuals. The assumption that the variation is constant with the mean can be visualised in a plot of residuals ~ the linear predictor, and the correlation between the response and fitted values can be visualised by a plot of response ~ fitted values. It is also instructive to plot residuals ~ covariates (including time stamps) and the autocorrelation function of residuals. The latter two plots are used to indicate whether autocorrelation needs to be included in the model. 
 
 For models in which an autocorrelation parameter has been included, standard residual plots, based on deviance residuals, are no longer appropriate because they do not account for the autocorrelation included in the model. Therefore, plots of 'unstandardised' residuals will continue to look troublesome. However, plots of standardised residuals, which are approximately uncorrelated under the correct model, should look reasonable. In models with autocorrelation, diagnostic plots of both unstandardised (on the left) and standardised residuals provided by `mgcv::bam()` (on the right) are shown for comparison. Thus, the contents of this tab differ depending on whether or not autocorrelation has been simulated and/or modelled: 
 
 1. No simulated or modelled autocorrelation. In the section, `gam.check()`, text-based output of `mgcv::gam.check()` is reported. In the section, `Residuals Diagnostic Plots`, a large number of residuals plots are produced, including a histogram of residuals, a quantile-quantile plot, plots of the residuals against the fitted values and the linear predictor, plots of the residuals against possible covariates (including time) and an autocorrelation function of the residuals. All plots are based on deviance residuals. 
 
-2. Simulated but not modelled correlation. The tab is identical to the scenario above, but some diagnostics may start to look troublesome. For example, the residuals ~ timestamp plot may look concerning and the ACF will show some serial autocorrelation. The estimated $\rho$ at lag one should be close to the simulated $\rho$ value. 
+2. Simulated but not modelled correlation. The tab is identical to the scenario above, but some diagnostics may start to look troublesome. For example, the residuals ~ time stamp plot may look concerning and the ACF will show some serial autocorrelation. The estimated $\rho$ at lag one should be close to the simulated $\rho$ value. 
 
 3. Simulated and modelled correlation. Diagnostic plots are now shown for both unstandardised (on the left) and standardised (on the right) residuals. Diagnostic plots based on unstandardised residuals should look troublesome while plots based on standardised models should look reasonable if the model has successfully captured the simulated serial autocorrelation. 
 

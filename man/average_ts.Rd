@@ -24,7 +24,7 @@ average_ts(
 
 \item{split}{(optional) A character that defines the name of the column in \code{dat} that distinguishes independent time series.}
 
-\item{timestamp}{A character that defines the name of the column in \code{dat} that contains timestamps, to be grouped into bins.}
+\item{timestamp}{A character that defines the name of the column in \code{dat} that contains time stamps, to be grouped into bins.}
 
 \item{response}{A character that defines the name of the column in \code{dat} that contains the values of the response to be averaged in each bin.}
 
@@ -45,7 +45,7 @@ average_ts(
 \item{...}{Additional arguments passed to \code{\link[base]{cut}}.}
 }
 \value{
-The function returns a dataframe in which timestamps have been aggregated into a sequence of bins and the value of the response and any other numeric columns requested have been averaged over all the data in each bin. For static variables (e.g., the sex of an individual), the first observation for each independent time series may also be included.
+The function returns a dataframe in which time stamps have been aggregated into a sequence of bins and the value of the response and any other numeric columns requested have been averaged over all the data in each bin. For static variables (e.g., the sex of an individual), the first observation for each independent time series may also be included.
 }
 \description{
 This function averages a time series (i.e., all of the values of a response variable collected through time) in each of a series of user-specified bins. The function can handle independent time series (e.g., for multiple individuals), average numeric explanatory variables alongside the response, incorporate other 'static' variables (e.g., the sex of each individual) and implement different types of averages.

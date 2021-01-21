@@ -25,7 +25,7 @@ This function thins a time series by selecting every nth observation. The functi
 }
 \examples{
 #### Simulate a dataframe to be thinned
-# Define timestamps
+# Define time stamps
 t <- c(seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-02"), by = "6 hours"),
        seq.POSIXt(as.POSIXct("2016-01-02 18:00:00"), as.POSIXct("2016-01-04"), by = "6 hours")
 )

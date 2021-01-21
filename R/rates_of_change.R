@@ -53,9 +53,9 @@ difference <- function(x2, x1, f = NULL,...){
 #### serial_difference()
 
 #' @title Calculate the difference between sequential observations
-#' @description This function provides a quick method to calculate the duration between sequential observations. The function is based on \code{\link[Tools4ETS]{difference}} which can calculate the difference between numeric objects or timestamps (i.e. \code{\link[base]{Dates}} or \code{\link[base]{DateTimeClasses}}).
+#' @description This function provides a quick method to calculate the duration between sequential observations. The function is based on \code{\link[Tools4ETS]{difference}} which can calculate the difference between numeric objects or time stamps (i.e. \code{\link[base]{Dates}} or \code{\link[base]{DateTimeClasses}}).
 #'
-#' @param x A vector of numbers or timestamps (i.e. \code{\link[base]{Dates}} or \code{\link[base]{DateTimeClasses}}) supported by \code{\link[base]{difftime}}.
+#' @param x A vector of numbers or time stamps (i.e. \code{\link[base]{Dates}} or \code{\link[base]{DateTimeClasses}}) supported by \code{\link[base]{difftime}}.
 #' @param na.rm A logical input defining whether or not to remove NAs from the output vector. If \code{FALSE}, the last value is \code{NA} because a difference cannot be calculated between the final observation and the 'next' observation. If \code{TRUE}, this \code{NA} (and any other NAs) are removed.
 #' @param ... Other arguments passed to \code{\link[Tools4ETS]{difference}}. These include \code{units} (a character input specifying the units in which to return time differences) and \code{f}, a function to process differences.
 #'
@@ -104,10 +104,10 @@ serial_difference <-
     na.rm = FALSE,...
   ){
 
-    #### Updated: numeric and timestamp objects now supported.
-    #### check format of timestamps:
+    #### Updated: numeric and time stamp objects now supported.
+    #### check format of time stamps:
     # if(!(class(x)[1] %in% c("POSIXct", "POSIXt", "Date"))){
-    #   warning("Check the class of inputted timestamps. This should be a date-time or date object supported by difftime().")
+    #   warning("Check the class of inputted time stamps. This should be a date-time or date object supported by difftime().")
     # }
 
     #### Define differences

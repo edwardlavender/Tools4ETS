@@ -1,7 +1,7 @@
 #' @title Flag independent segments of a time series
 #' @description The function 'flags' independent sections of time series using up to three methods. This is useful for identifying gaps in time series and/or for models of time series in which independent segments of time series need to be treated as such. To flag time series, the function can consider two drivers of independence: (a) a grouping factor (\code{fct}) which defines inherently independent time series in a dataset (e.g. a dataset may comprise time series for different individuals) and (b) gaps in the time series which, when greater than a user-defined threshold (\code{duration_threshold}), separate time series that can be considered effectively independent, even if they are derived from the same level of a grouping factor. Using these two criteria, time series can be flagged using three methods which different modelling approaches may require.
 #'
-#' @param x A vector of timestamps, either as an integer/numeric object, a \code{\link[base]{DateTimeClasses}} or a \code{\link[base]{Date}}.
+#' @param x A vector of time stamps, either as an integer/numeric object, a \code{\link[base]{DateTimeClasses}} or a \code{\link[base]{Date}}.
 #' @param fct (optional) A grouping factor defining independent segments of time series (e.g. individuals).
 #' @param dat (optional) A dataframe with a column \code{x} and, optionally, a column \code{fct}, can be supplied instead of \code{x} and \code{fct}.
 #' @param duration_threshold A numeric input defining the number of units (if \code{x} is an integer/numeric) or the number of minutes (if \code{x} is \code{\link[base]{DateTimeClasses}} or a \code{\link[base]{Date}}) between records after which separated time series are considered effectively 'independent'. This could be informed by the autocorrelation function of the residuals of a model without any autocorrelation.
@@ -19,13 +19,13 @@
 #'        seq.POSIXt(as.POSIXct("2016-01-02 18:00:00"), as.POSIXct("2016-01-03"), by = "5 hours")
 #' )
 #'
-#' #### Example (1) Supply a vector of timestamps to flag independent sections of time series
+#' #### Example (1) Supply a vector of time stamps to flag independent sections of time series
 #' flag_ts(
 #'   x = t,
 #'   duration_threshold = 8*60,
 #'   flag = 1:3)
 #'
-#' #### Example (2) Supply a dataframe with a timestamp column instead
+#' #### Example (2) Supply a dataframe with a time stamp column instead
 #' flag_ts(dat = data.frame(x = t),
 #'         duration_threshold = 8*60,
 #'         flag = 1:3)
@@ -39,7 +39,7 @@
 #'   duration_threshold = 8*60,
 #'   flag = 1:3)
 #'
-#' #### Example (4) Supply time series and a factor in a dataframe organised by fct then timestamp
+#' #### Example (4) Supply time series and a factor in a dataframe organised by fct then time stamp
 #' flag_ts(dat = data.frame(x = t2, fct = fct_levels),
 #'         duration_threshold = 8*60,
 #'         flag = 1:3)
@@ -101,7 +101,7 @@ flag_ts <-
     #########################################
     #### Implement flagging
 
-    #### Order the dataframe by individual and then timestamp
+    #### Order the dataframe by individual and then time stamp
     # This must be completed outside the function - otherwise, when we return the column
     # ... "start_event" the values will be in the wrong order.
     # dat <- dat %>% arrange(.data[[id_column]], .data[[timestamp_column]])
@@ -122,8 +122,8 @@ flag_ts <-
         if(is.unsorted(df$x)){
           stop("Inputted data ('x' (and 'fct', if applicable) or 'dat', must be ordered by 'fct', if applicable', then 'x'.")
         }
-        # Use the serial_difference function to define the duration from one timestamp to the next.
-        # If timestamp input, we'll implement units = "mins"
+        # Use the serial_difference function to define the duration from one time stamp to the next.
+        # If time stamp input, we'll implement units = "mins"
         df$duration <- serial_difference(df$x, units = "mins")
         # Define the positions at which duration minutes exceeds the inputted threshold
         # Add one to these positions because the serial_duration returns the duration from one position

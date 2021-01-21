@@ -2,7 +2,7 @@
 #' @description This function averages a time series (i.e., all of the values of a response variable collected through time) in each of a series of user-specified bins. The function can handle independent time series (e.g., for multiple individuals), average numeric explanatory variables alongside the response, incorporate other 'static' variables (e.g., the sex of each individual) and implement different types of averages.
 #' @param dat A dataframe which includes observations collected over time.
 #' @param split (optional) A character that defines the name of the column in \code{dat} that distinguishes independent time series.
-#' @param timestamp A character that defines the name of the column in \code{dat} that contains timestamps, to be grouped into bins.
+#' @param timestamp A character that defines the name of the column in \code{dat} that contains time stamps, to be grouped into bins.
 #' @param response A character that defines the name of the column in \code{dat} that contains the values of the response to be averaged in each bin.
 #' @param breaks A number or vector which defines the number of unique cut points or the unique cut points themselves at which each independent time series is cut into bins. This is passed to \code{\link[base]{cut}}.
 #' @param fun A function used to calculate the average response and the average value of any other other numeric variable specified in \code{average} in each bin.
@@ -12,7 +12,7 @@
 #' @param order A character vector of column names that defines the order of desired columns in the returned dataframe.
 #' @param verbose A logical input that defines whether or not to return messages to the console to monitor function progress.
 #' @param ... Additional arguments passed to \code{\link[base]{cut}}.
-#' @return The function returns a dataframe in which timestamps have been aggregated into a sequence of bins and the value of the response and any other numeric columns requested have been averaged over all the data in each bin. For static variables (e.g., the sex of an individual), the first observation for each independent time series may also be included.
+#' @return The function returns a dataframe in which time stamps have been aggregated into a sequence of bins and the value of the response and any other numeric columns requested have been averaged over all the data in each bin. For static variables (e.g., the sex of an individual), the first observation for each independent time series may also be included.
 #' @examples
 #' dat_flapper_av <- average_ts(dat = dat_flapper,
 #'                              split = "id",
@@ -84,7 +84,7 @@ average_ts <- function(dat,
     }
 
     ## Re-convert breaks to times...
-    # if(verbose) cat("... Step C: Converting breaks to timestamps via as_time...\n")
+    # if(verbose) cat("... Step C: Converting breaks to time stamps via as_time...\n")
     dat_av[, timestamp] <- as_time(dat_av[, timestamp])
 
     ## Add back the first record of any columns specified in 'first':

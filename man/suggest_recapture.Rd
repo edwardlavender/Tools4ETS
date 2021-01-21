@@ -33,7 +33,7 @@ suggest_recapture(
 A dataframe with 4 columns: 'timestamp' (as inputted), 'depth' (as inputted), 'recapture_window' (a logical value specifying whether the position is inside a recapture window, defined by \code{window}), and 'above_depth_threshold' (a logical value which specifies the positions at which the depth is shallower than the depth threshold). A plot can also be returned, with depth (negated) shown over time. Red lines show the recapture window under consideration and blue lines show any possible moments of recapture in this window.
 }
 \description{
-This function highlights potential recapture events on unknown dates based on a depth threshold; for each day in the depth time series, all the timestamps in which the individual was above this depth are considered possible recapture events. These timestamps can be saved by the function and inspected graphically.
+This function highlights potential recapture events on unknown dates based on a depth threshold; for each day in the depth time series, all the time stamps in which the individual was above this depth are considered possible recapture events. These time stamps can be saved by the function and inspected graphically.
 }
 \examples{
 #### Example (1): Suggest recapture events for a single individual

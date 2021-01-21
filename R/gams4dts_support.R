@@ -180,7 +180,7 @@ gams4dts_bam_model <-
 #'
 #' @param dat A dataframe to be thinned.
 #' @param id_column A character input defining the column name in \code{dat} which distinguishes individuals (i.e. \code{"individual"}).
-#' @param timestamp_column A character input defining the column name in \code{dat} which contains timestamps (i.e. \code{"timestamp"}).
+#' @param timestamp_column A character input defining the column name in \code{dat} which contains time stamps (i.e. \code{"timestamp"}).
 #' @param start_event_id_column A character input defining the column name in \code{dat} which identifies start events (i.e. \code{"start_event_id"}).
 #' @param start_event_logic_column A character input defining the column name in \code{dat} which defines start events with TRUE/FALSE (i.e. \code{"start_event"})
 #' @param method A character input defining the thinning method to be implemented. Supported options are: \code{"swa"}, \code{"sma"} or \code{"sps"}.
@@ -293,7 +293,7 @@ gams4dts_thin_ts <-
       thin$depth <- round(thin$depth, digits = 1)
 
       # Ensure timestamp_window is recognised as.POSIXct object
-      # And add half of the number of seconds between timestamps
+      # And add half of the number of seconds between time stamps
       # ... because the average depth is best represented at the depth of the middle of the adjusted timewindows
       # ... (not at the start or the end).
       # In this way, temporal covariates are also calculated appropriately.
@@ -366,7 +366,7 @@ gams4dts_thin_ts <-
 
 
       #### tidal height
-      # If tidal_height gave been specified, obtain these for timestamp
+      # If tidal_height gave been specified, obtain these for time stamp
       if("tidal_height" %in% parameters$swa$covariates){
         # thin$tidal_height
         # close if() statement
@@ -374,7 +374,7 @@ gams4dts_thin_ts <-
 
 
       #### lunar phase
-      # If lunar_phase have been specified, obtain these for timestamp
+      # If lunar_phase have been specified, obtain these for time stamp
       # ... using the lunar package
       if("lunar_phase" %in% parameters$swa$covariates){
         # calculate lunar phase
@@ -386,7 +386,7 @@ gams4dts_thin_ts <-
 
 
       #### julian day
-      # If julian_day has been specified, calculate this for each timestamp
+      # If julian_day has been specified, calculate this for each time stamp
       # ... using lubridate package
       if("julian_day" %in% parameters$swa$covariates){
         # add julian day to dataframe

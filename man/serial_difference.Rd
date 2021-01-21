@@ -7,7 +7,7 @@
 serial_difference(x, na.rm = FALSE, ...)
 }
 \arguments{
-\item{x}{A vector of numbers or timestamps (i.e. \code{\link[base]{Dates}} or \code{\link[base]{DateTimeClasses}}) supported by \code{\link[base]{difftime}}.}
+\item{x}{A vector of numbers or time stamps (i.e. \code{\link[base]{Dates}} or \code{\link[base]{DateTimeClasses}}) supported by \code{\link[base]{difftime}}.}
 
 \item{na.rm}{A logical input defining whether or not to remove NAs from the output vector. If \code{FALSE}, the last value is \code{NA} because a difference cannot be calculated between the final observation and the 'next' observation. If \code{TRUE}, this \code{NA} (and any other NAs) are removed.}
 
@@ -17,7 +17,7 @@ serial_difference(x, na.rm = FALSE, ...)
 The function returns a vector of differences. Each value is the difference between one value and the next value in a sequence.
 }
 \description{
-This function provides a quick method to calculate the duration between sequential observations. The function is based on \code{\link[Tools4ETS]{difference}} which can calculate the difference between numeric objects or timestamps (i.e. \code{\link[base]{Dates}} or \code{\link[base]{DateTimeClasses}}).
+This function provides a quick method to calculate the duration between sequential observations. The function is based on \code{\link[Tools4ETS]{difference}} which can calculate the difference between numeric objects or time stamps (i.e. \code{\link[base]{Dates}} or \code{\link[base]{DateTimeClasses}}).
 }
 \examples{
 #### Define some time series

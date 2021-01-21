@@ -50,7 +50,7 @@ time series. These include:
     fraction of the year in days.
   - **Rates of change.** `difference()` and `serial_difference()`
     compute the difference between two values and consecutive pairs of
-    values in a sequence (numbers or timestamps) respectively.
+    values in a sequence (numbers or time stamps) respectively.
   - **Matching time series.** `match_ts_nearest()`,
     `match_ts_nearest_by_key()` and `pair_ts()` match time series (i.e.,
     to add observations from one time series into another).  
@@ -101,7 +101,7 @@ This includes functions for simulating *de novo* time series with known
 properties; namely:
 
   - **Dataframe assembly.** `assemble_ts()` can be used to simulate time
-    series with timestamps for multiple factor levels (if applicable),
+    series with time stamps for multiple factor levels (if applicable),
     possibly at different resolutions, over different durations and/or
     with breaks.
   - **Define parameters.** `parameterise_smooth()` can be used to define

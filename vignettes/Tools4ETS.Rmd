@@ -80,7 +80,7 @@ set.seed(1)
 
 ## Example dataset
 
-`Tools4ETS` contains an example ecological time series in the form of a dataframe with depth (m) and temperature ($^\circ C$) observations at defined timestamps collected from two flapper skate, _Dipturus intermedius_, off the West Coast of Scotland by Scottish Natural Heritage and Marine Scotland Science. For visualisation purposes, we'll define a new column, `dn` which gives the depth of each individual expressed as a negative number. We'll also create a subsetted dataframe including just one individual, which we'll use for some visualisations. 
+`Tools4ETS` contains an example ecological time series in the form of a dataframe with depth (m) and temperature ($^\circ C$) observations at defined time stamps collected from two flapper skate, _Dipturus intermedius_, off the West Coast of Scotland by Scottish Natural Heritage and Marine Scotland Science. For visualisation purposes, we'll define a new column, `dn` which gives the depth of each individual expressed as a negative number. We'll also create a subsetted dataframe including just one individual, which we'll use for some visualisations. 
 
 ```{r}
 # Examine dat_flapper
@@ -260,7 +260,7 @@ dat_flapper$sun_angle <-
 
 ### Suggesting unknown recaptures: `suggest_recapture()`
 
-`Tools4ETS` provides two functions which help the user to identify recapture events. In the absence of any available information to restrict algorithmic searches for recapture events, the function `suggest_recapture()` provides a starting point by highlighting all timestamps in which the recorded depth was shallower than a user-specified threshold. Each putative recapture event can be plotted, with the algorithm pausing between plots if `prompt = TRUE` to facilitate examination of the time series around putative recapture events. In the following example, I exemplify the use of `suggest_recapture()` for the example depth time series. Further details are available in the help file (`?suggest_recapture`).
+`Tools4ETS` provides two functions which help the user to identify recapture events. In the absence of any available information to restrict algorithmic searches for recapture events, the function `suggest_recapture()` provides a starting point by highlighting all time stamps in which the recorded depth was shallower than a user-specified threshold. Each putative recapture event can be plotted, with the algorithm pausing between plots if `prompt = TRUE` to facilitate examination of the time series around putative recapture events. In the following example, I exemplify the use of `suggest_recapture()` for the example depth time series. Further details are available in the help file (`?suggest_recapture`).
 
 ```{r, fig.width = 7, fig.height = 4}
 #### Define plotting window 
@@ -681,7 +681,7 @@ The first figure shows the observed (thinned) time series used for modelling, wi
 
 ### Diagnostic residual plots
 
-To examine the extent to which model assumptions are met, diagnostic residual plots are also useful. `prettyGraphics::pretty_residuals()` contains a useful function for plotting standard residual plots, as well as residuals against one or more variables, timestamps and the autocorrelation function of residuals. 
+To examine the extent to which model assumptions are met, diagnostic residual plots are also useful. `prettyGraphics::pretty_residuals()` contains a useful function for plotting standard residual plots, as well as residuals against one or more variables, time stamps and the autocorrelation function of residuals. 
 
 ```{r, fig.width = 7, fig.height = 10}
 pp <- par(mfrow = c(4, 2), oma = c(2, 2, 1, 1), mar = c(3, 3, 3, 3))
@@ -719,11 +719,11 @@ Simulations are a valuable tool which can address important questions regarding 
 
 ## Simulation workflow
 
-To simulate ecological time series, the workflow is to (a) assemble a dataframe with timestamps and covariate values, (b) define parameters and/or functions relating covariates to a response (possibly based on previous model outputs) and (c) use this information to simulate the values of a response. Comparisons of model-based inferences among different simulation/model scenarios can contexualise ecological inferences. 
+To simulate ecological time series, the workflow is to (a) assemble a dataframe with time stamps and covariate values, (b) define parameters and/or functions relating covariates to a response (possibly based on previous model outputs) and (c) use this information to simulate the values of a response. Comparisons of model-based inferences among different simulation/model scenarios can contexualise ecological inferences. 
 
 ### Assembling a dataframe: `assemble_ts()`
 
-The first step is to assemble a dataframe with timestamps and covariate values which can be used to simulate a response. `assemble_ts()` assembles a dataframe with timestamps and factor levels (if applicable), possibly at varying resolutions, over different durations and with breaks. Usually, the user then needs to add covariates to this dataframe. However, since `Tools4ETS` was motivated by depth time series, commonly assumed drivers of depth time series (i.e., sex, length, sun angle, lunar phase and Julian day) can be computed internally via the `covariates` argument.
+The first step is to assemble a dataframe with time stamps and covariate values which can be used to simulate a response. `assemble_ts()` assembles a dataframe with time stamps and factor levels (if applicable), possibly at varying resolutions, over different durations and with breaks. Usually, the user then needs to add covariates to this dataframe. However, since `Tools4ETS` was motivated by depth time series, commonly assumed drivers of depth time series (i.e., sex, length, sun angle, lunar phase and Julian day) can be computed internally via the `covariates` argument.
 
 We will use simulated data to investigate aspects of data structure and post-processing for the models we considered previously. Thus, we will begin by simulating a dataframe similar to that used to fit models above (i.e., `dfp_thin1`), with 14 days of observations for 2 individuals with observations made every 20 minutes:
 

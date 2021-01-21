@@ -22,7 +22,7 @@ gams4dts_thin_ts(
 
 \item{id_column}{A character input defining the column name in \code{dat} which distinguishes individuals (i.e. \code{"individual"}).}
 
-\item{timestamp_column}{A character input defining the column name in \code{dat} which contains timestamps (i.e. \code{"timestamp"}).}
+\item{timestamp_column}{A character input defining the column name in \code{dat} which contains time stamps (i.e. \code{"timestamp"}).}
 
 \item{start_event_id_column}{A character input defining the column name in \code{dat} which identifies start events (i.e. \code{"start_event_id"}).}
 

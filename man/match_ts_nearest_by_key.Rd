@@ -7,13 +7,13 @@
 match_ts_nearest_by_key(d1, d2, key_col, time_col)
 }
 \arguments{
-\item{d1}{A dataframe which includes a column that defines factor levels and a column that defines timestamps. The names of these columns need to match those in \code{d2}.}
+\item{d1}{A dataframe which includes a column that defines factor levels and a column that defines time stamps. The names of these columns need to match those in \code{d2}.}
 
-\item{d2}{A dataframe which includes a column that defines factor levels and a column that defines timestamps. The names of these columns need to match those in \code{d1}.}
+\item{d2}{A dataframe which includes a column that defines factor levels and a column that defines time stamps. The names of these columns need to match those in \code{d1}.}
 
 \item{key_col}{A character that defines the column name in \code{d1} and \code{d2} that distinguishes factor levels.}
 
-\item{time_col}{A character that defines the column name in \code{d1} and \code{d2} that defines timestamps.}
+\item{time_col}{A character that defines the column name in \code{d1} and \code{d2} that defines time stamps.}
 }
 \value{
 For a dataframe comprising observations from a series of factor levels (e.g., individuals) collected through time, the function returns a vector of positions in a second dataframe which, for the appropriate factor level, are nearest in time.
@@ -66,7 +66,7 @@ d2 <- data.frame(t = as.POSIXct(c("2016-01-01 21:00:00",
 d1$position_in_d2 <- match_ts_nearest_by_key(d1, d2, key_col = "key", time_col = "t")
 # Show that the index adds the correct key
 d1$key_in_d2 <- d2$key[d1$position_in_d2]
-# Show that the index adds the correct timestamp for that key
+# Show that the index adds the correct time stamp for that key
 d1$t_in_d2 <- d2$t[d1$position_in_d2]
 # We can now safely add values from d2 to d1:
 d1$val_in_d2 <- d2$vals[d1$position_in_d2]

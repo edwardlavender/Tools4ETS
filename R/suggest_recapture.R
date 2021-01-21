@@ -1,5 +1,5 @@
 #' @title Explore potential, unrecorded recapture events within depth time series
-#' @description This function highlights potential recapture events on unknown dates based on a depth threshold; for each day in the depth time series, all the timestamps in which the individual was above this depth are considered possible recapture events. These timestamps can be saved by the function and inspected graphically.
+#' @description This function highlights potential recapture events on unknown dates based on a depth threshold; for each day in the depth time series, all the time stamps in which the individual was above this depth are considered possible recapture events. These time stamps can be saved by the function and inspected graphically.
 #'
 #' @param data A dataframe with two named columns: 'timestamp' (in POSIXct format) and 'depth' (of a given individual).
 #' @param threshold_depth A numeric value which defines the depth threshold; i.e. the depth such that when the animal is at or above (shallower) than this depth, a recapture event may have occurred and should be checked.

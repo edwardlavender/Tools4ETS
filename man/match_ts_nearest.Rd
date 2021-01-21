@@ -7,9 +7,9 @@
 match_ts_nearest(times, lookup)
 }
 \arguments{
-\item{times}{A vector of timestamps for which you want to identify the position of the nearest timestamp in another vector (\code{lookup}).}
+\item{times}{A vector of time stamps for which you want to identify the position of the nearest time stamp in another vector (\code{lookup}).}
 
-\item{lookup}{A vector of timestamps for which you will determine the position of the nearest timestamp to each time in \code{times}.}
+\item{lookup}{A vector of time stamps for which you will determine the position of the nearest time stamp to each time in \code{times}.}
 }
 \value{
 For a sequence of times (\code{times}), the function returns a vector of the positions of the nearest times in another sequence (\code{lookup}).

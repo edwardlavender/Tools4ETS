@@ -16,7 +16,7 @@ break_ts(
 )
 }
 \arguments{
-\item{dat}{A dataframe to be broken. As a minimum, the dataframe should include a column which defines timestamps (see below).}
+\item{dat}{A dataframe to be broken. As a minimum, the dataframe should include a column which defines time stamps (see below).}
 
 \item{timestamp}{A character string defining the column name in \code{dat} which contains times. \code{timestamp} can be an object of class numeric, integer or \code{\link[base]{DateTimeClasses}}.}
 
@@ -42,7 +42,7 @@ This function 'breaks' a time series by introducing gaps either around (a) \code
 
 #### Simulate some data
 # First, we will consider a single, continuous, regular time series:
-# Define a sequence of timestamps
+# Define a sequence of time stamps
 t <- seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-10"), by = "2 mins")
 # Define a dataframe
 dat <- data.frame(timestamp = t)

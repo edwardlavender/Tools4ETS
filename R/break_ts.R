@@ -1,7 +1,7 @@
 #' @title Break a time series and introduce gaps
 #' @description This function 'breaks' a time series by introducing gaps either around (a) \code{n} randomly chosen positions or (b) user-defined positions. The width of each gap is determined by user-supplied functions which define the amount of time around each position to be removed. Datasets comprising multiple, independent time series can be broken by different amounts and/or at different positions. This can be useful to explore the effects of gaps in real-world data for model inferences (e.g. a model's ability to correctly infer the effects of covariates acting at different scales for different individuals with different amounts of missing data).
 #'
-#' @param dat A dataframe to be broken. As a minimum, the dataframe should include a column which defines timestamps (see below).
+#' @param dat A dataframe to be broken. As a minimum, the dataframe should include a column which defines time stamps (see below).
 #' @param timestamp A character string defining the column name in \code{dat} which contains times. \code{timestamp} can be an object of class numeric, integer or \code{\link[base]{DateTimeClasses}}.
 #' @param ind A character string defining the column name in \code{dat} which distinguishes unique time series (see also \code{\link[Tools4ETS]{flag_ts}} and the code{flag} argument).
 #' @param n A number or a numeric vector defining the number of breaks in each unique time series. Alternatively, \code{pos} can be provided (see below).
@@ -16,7 +16,7 @@
 #'
 #' #### Simulate some data
 #' # First, we will consider a single, continuous, regular time series:
-#' # Define a sequence of timestamps
+#' # Define a sequence of time stamps
 #' t <- seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-10"), by = "2 mins")
 #' # Define a dataframe
 #' dat <- data.frame(timestamp = t)
