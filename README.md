@@ -1,16 +1,16 @@
 
-# Tools for Ecological Time-series (Tools4ETS)
+# Tools for Ecological Time Series (Tools4ETS)
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
-`Tools4ETS` is an `R` package which provides tools for ecological
-time-series. This includes data exploration, time-series processing, the
-computation of simple statistics from time-series or models of
-time-series and simulations to guide model-based ecological inference.
-`Tools4ETS` was motivated by analyses of new, high-resolution depth
-time-series for a Critically Endangered elasmobranch.
+`Tools4ETS` is an `R` package which provides tools for ecological time
+series. This includes data exploration, time series processing, the
+computation of simple statistics from time series or models of time
+series and simulations to guide model-based ecological inference.
+`Tools4ETS` was motivated by analyses of new, high-resolution depth time
+series for a Critically Endangered elasmobranch.
 
 <img src="vignettes/Tools4ETS_README_fig.png"/>
 
@@ -33,7 +33,7 @@ introduction to the `GAMS4DTS()` function (see below).
 The `R` package
 [`prettyGraphics`](https://github.com/edwardlavender/prettyGraphics) was
 designed to complement `Tools4ETS` via the provision of tools for rapid
-time-series visualisation in relation to covariates, across factor
+time series visualisation in relation to covariates, across factor
 levels (e.g. individuals) and timescales with
 `prettyGraphics::pretty_ts()` and an interactive R Shiny application
 (`prettyGraphics::vis_ts()`).
@@ -41,7 +41,7 @@ levels (e.g. individuals) and timescales with
 ## Data processing
 
 `Tools4ETS` streamlines common data processing operations for ecological
-time-series. These include:
+time series. These include:
 
   - **Define time categories**. `hour_nearest()` and `hour_dbl()` define
     the nearest integer hour and the time of day respectively. `mmyy()`
@@ -51,25 +51,25 @@ time-series. These include:
   - **Rates of change.** `difference()` and `serial_difference()`
     compute the difference between two values and consecutive pairs of
     values in a sequence (numbers or timestamps) respectively.
-  - **Matching time-series.** `match_ts_nearest()`,
-    `match_ts_nearest_by_key()` and `pair_ts()` match time-series (i.e.,
-    to add observations from one time-series into another).  
-  - **Flagging time-series.** `flag_ts()` can be used to flag
-    independent sections of time-series in a dataset due to the presence
-    of different factor levels (e.g. individuals) and/or breaks in
-    time-series. Different flag types can be added, reflecting the
+  - **Matching time series.** `match_ts_nearest()`,
+    `match_ts_nearest_by_key()` and `pair_ts()` match time series (i.e.,
+    to add observations from one time series into another).  
+  - **Flagging time series.** `flag_ts()` can be used to flag
+    independent sections of time series in a dataset due to the presence
+    of different factor levels (e.g. individuals) and/or breaks in time
+    series. Different flag types can be added, reflecting the
     requirements of different modelling approaches. `add_unit_id()` is
-    used to add unique unit IDs to a time-series.
-  - **Thinning time-series.** `thin_ts()` can be used to thin a dataset,
-    accounting for independent time-series. `thin_ts_iter()` implements
+    used to add unique unit IDs to a time series.
+  - **Thinning time series.** `thin_ts()` can be used to thin a dataset,
+    accounting for independent time series. `thin_ts_iter()` implements
     `thin_ts()` iteratively to explore the change in autocorrelation and
-    data volume with thinning. `average_ts()` summarises a time-series
+    data volume with thinning. `average_ts()` summarises a time series
     in bins.
-  - **Breaking time-series.** `break_ts()` can be used to induce breaks
-    in time-series.
+  - **Breaking time series.** `break_ts()` can be used to induce breaks
+    in time series.
 
 `Tools4ETS` includes additional functions designed specifically for
-processing depth time-series, including the identification and
+processing depth time series, including the identification and
 description of recapture events (`suggest_recapture()` and
 `define_recapture()`) and the definition common covariates (e.g. via
 `define_photoperiod()`).
@@ -77,11 +77,11 @@ description of recapture events (`suggest_recapture()` and
 ## Simple statistics
 
 A few functions facilitate the computation of simple statistics from
-time-series data or models. These include:
+time series data or models. These include:
 
   - **Calculate cumulative frequencies.** `cum_dates()` is used to
-    calculate the cumulative number of events by each date in a
-    time-series.
+    calculate the cumulative number of events by each date in a time
+    series.
   - **Estimating the strength of autocorrelation.** `estimate_AR1()` is
     used to estimate the autoregressive order 1 (AR1) parameter from the
     autocorrelation function (ACF) of a model’s residuals.
@@ -97,12 +97,12 @@ the use of simulations to explore the consequences of data structure,
 processing and modelling decisions for model performance and ecological
 inferences.
 
-This includes functions for simulating *de novo* time-series with known
+This includes functions for simulating *de novo* time series with known
 properties; namely:
 
-  - **Dataframe assembly.** `assemble_ts()` can be used to simulate
-    time-series dataframes with timestamps for multiple factor levels
-    (if applicable), possibly at different resolutions, over different
+  - **Dataframe assembly.** `assemble_ts()` can be used to simulate time
+    series dataframes with timestamps for multiple factor levels (if
+    applicable), possibly at different resolutions, over different
     durations and/or with breaks.
   - **Define parameters.** `parameterise_smooth()` can be used to define
     functions/parameters which relate covariates to a response and to
@@ -115,7 +115,7 @@ properties; namely:
     variance.
 
 A interactive application designed specifically to explore the use of
-GAMs as a tool for modelling depth time-series (`GAMS4DTS()`) via the
+GAMs as a tool for modelling depth time series (`GAMS4DTS()`) via the
 comparison of simulated datasets and model inferences under different
 conditions is included as well.
 
@@ -139,11 +139,11 @@ modelling approach in ecology; namely:
 ## Interactive applications
 
 `Tools4ETS` includes an interactive Shiny-Dashboard application for the
-simulation and modelling of depth time-series using GAMs (`GAMS4DTS()`).
+simulation and modelling of depth time series using GAMs (`GAMS4DTS()`).
 
 ## Disclaimer
 
 `Tools4ETS` is a new package at an early stage of evolution. Package
 development has been particularly motivated by high-resolution movement
-time-series collected from a Critically Endangered elasmobranch. Please
+time series collected from a Critically Endangered elasmobranch. Please
 report issues, comments or suggestions\!

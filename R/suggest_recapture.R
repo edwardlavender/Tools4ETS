@@ -1,10 +1,10 @@
-#' @title Explore potential, unrecorded recapture events within depth time-series
-#' @description This function highlights potential recapture events on unknown dates based on a depth threshold; for each day in the depth time-series, all the timestamps in which the individual was above this depth are considered possible recapture events. These timestamps can be saved by the function and inspected graphically.
+#' @title Explore potential, unrecorded recapture events within depth time series
+#' @description This function highlights potential recapture events on unknown dates based on a depth threshold; for each day in the depth time series, all the timestamps in which the individual was above this depth are considered possible recapture events. These timestamps can be saved by the function and inspected graphically.
 #'
 #' @param data A dataframe with two named columns: 'timestamp' (in POSIXct format) and 'depth' (of a given individual).
 #' @param threshold_depth A numeric value which defines the depth threshold; i.e. the depth such that when the animal is at or above (shallower) than this depth, a recapture event may have occurred and should be checked.
 #' @param plot A logical input which defines whether or not to create a plot.
-#' @param window A numeric value which defines the number of seconds either side of first and last potential 'recapture' event on any given day for which the depth time-series is plotted. The default is 43200 s (i.e. 12 hours).
+#' @param window A numeric value which defines the number of seconds either side of first and last potential 'recapture' event on any given day for which the depth time series is plotted. The default is 43200 s (i.e. 12 hours).
 #' @param ndates_warning A numeric value defining the number of dates with putative recapture events above which the function will warn the user to reconsider \code{prompt = TRUE}.
 #' @param prompt A logical value which defines whether or not to pause following the display of each graph. If TRUE, the user needs to press Enter prior to moving on to the next recapture event.
 #' @param ... Extra arguments passed to \code{\link[prettyGraphics]{pretty_plot}}, excluding \code{xlim} and \code{pretty_axis_args} which are handled internally.

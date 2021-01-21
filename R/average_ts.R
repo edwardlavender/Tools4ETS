@@ -1,18 +1,18 @@
-#' @title Summarise a time-series in bins
-#' @description This function averages a time-series (i.e., all of the values of a response variable collected through time) in each of a series of user-specified bins. The function can handle independent time-series (e.g., for multiple individuals), average numeric explanatory variables alongside the response, incorporate other 'static' variables (e.g., the sex of each individual) and implement different types of averages.
+#' @title Summarise a time series in bins
+#' @description This function averages a time series (i.e., all of the values of a response variable collected through time) in each of a series of user-specified bins. The function can handle independent time series (e.g., for multiple individuals), average numeric explanatory variables alongside the response, incorporate other 'static' variables (e.g., the sex of each individual) and implement different types of averages.
 #' @param dat A dataframe which includes observations collected over time.
-#' @param split (optional) A character that defines the name of the column in \code{dat} that distinguishes independent time-series.
+#' @param split (optional) A character that defines the name of the column in \code{dat} that distinguishes independent time series.
 #' @param timestamp A character that defines the name of the column in \code{dat} that contains timestamps, to be grouped into bins.
 #' @param response A character that defines the name of the column in \code{dat} that contains the values of the response to be averaged in each bin.
-#' @param breaks A number or vector which defines the number of unique cut points or the unique cut points themselves at which each independent time-series is cut into bins. This is passed to \code{\link[base]{cut}}.
+#' @param breaks A number or vector which defines the number of unique cut points or the unique cut points themselves at which each independent time series is cut into bins. This is passed to \code{\link[base]{cut}}.
 #' @param fun A function used to calculate the average response and the average value of any other other numeric variable specified in \code{average} in each bin.
-#' @param first (optional) A character vector that defines the name(s) of the column(s) in \code{dat} for which the first observation for each independent time-series should be retained in the averaged dataframe. This is useful for 'static' variables which do not change through time (e.g., the sex of each individual).
+#' @param first (optional) A character vector that defines the name(s) of the column(s) in \code{dat} for which the first observation for each independent time series should be retained in the averaged dataframe. This is useful for 'static' variables which do not change through time (e.g., the sex of each individual).
 #' @param average (optional) A character vector that defines the name(s) of any other column(s) in \code{dat} that need to be averaged in each bin, like \code{response}.
 #' @param as_time A function that converts a character vector of breaks into a vector of times. The default function is \code{as.POSIXct}.
 #' @param order A character vector of column names that defines the order of desired columns in the returned dataframe.
 #' @param verbose A logical input that defines whether or not to return messages to the console to monitor function progress.
 #' @param ... Additional arguments passed to \code{\link[base]{cut}}.
-#' @return The function returns a dataframe in which timestamps have been aggregated into a sequence of bins and the value of the response and any other numeric columns requested have been averaged over all the data in each bin. For static variables (e.g., the sex of an individual), the first observation for each independent time-series may also be included.
+#' @return The function returns a dataframe in which timestamps have been aggregated into a sequence of bins and the value of the response and any other numeric columns requested have been averaged over all the data in each bin. For static variables (e.g., the sex of an individual), the first observation for each independent time series may also be included.
 #' @examples
 #' dat_flapper_av <- average_ts(dat = dat_flapper,
 #'                              split = "id",
@@ -50,21 +50,21 @@ average_ts <- function(dat,
     }
   })
 
-  #### Split time-series into independent sections
+  #### Split time series into independent sections
   if(!is.null(split)){
-    if(verbose) cat("Step 1: Splitting time-series into independent segments...\n")
+    if(verbose) cat("Step 1: Splitting time series into independent segments...\n")
     dat_ls <- split(dat, dat[, split])
   } else{
     dat_ls <- list(dat_ls)
   }
 
-  #### Average each independent time-series
-  ## Loop over each independent time-series...
-  if(verbose) cat("Step 2: Averaging each independent time-series...\n")
+  #### Average each independent time series
+  ## Loop over each independent time series...
+  if(verbose) cat("Step 2: Averaging each independent time series...\n")
   dat_ls <- pbapply::pblapply(dat_ls, function(dat){
 
-    ## Cut time-series into breaks
-    # if(verbose) cat(".. Step A: Cutting time-series into breaks...\n")
+    ## Cut time series into breaks
+    # if(verbose) cat(".. Step A: Cutting time series into breaks...\n")
     if(any("bin" %in% colnames(dat))) warning("dat$bin column is being overwritten...\n")
     dat$bin <- cut(x = dat[, timestamp], breaks = breaks,...)
 
@@ -106,8 +106,8 @@ average_ts <- function(dat,
     return(dat_av)
   })
 
-  #### Join all independent time-series
-  if(verbose) cat("Step 3: Joining all independent time-series...\n")
+  #### Join all independent time series
+  if(verbose) cat("Step 3: Joining all independent time series...\n")
   dat_av <- dplyr::bind_rows(dat_ls)
 
   #### Order columns

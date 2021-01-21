@@ -33,11 +33,11 @@ thin_ts_iter(
 \arguments{
 \item{dat}{A dataframe which is thinned and used to fit the model on the first iteration.}
 
-\item{ind}{A character which defines the column name in \code{dat} which uniquely distinguishes each independent time-series (e.g. \code{flag3} returned by \code{\link[Tools4ETS]{flag_ts}}). If \code{NULL}, \code{dat} is assumed to comprise a single time-series. This is passed to \code{\link[Tools4ETS]{thin_ts}}.}
+\item{ind}{A character which defines the column name in \code{dat} which uniquely distinguishes each independent time series (e.g. \code{flag3} returned by \code{\link[Tools4ETS]{flag_ts}}). If \code{NULL}, \code{dat} is assumed to comprise a single time series. This is passed to \code{\link[Tools4ETS]{thin_ts}}.}
 
-\item{flag1}{A character which defines the column name in \code{dat} which defines the start of each independent time-series with \code{TRUE}. This is passed to \code{\link[Tools4ETS]{thin_ts}}.}
+\item{flag1}{A character which defines the column name in \code{dat} which defines the start of each independent time series with \code{TRUE}. This is passed to \code{\link[Tools4ETS]{thin_ts}}.}
 
-\item{first}{A numeric value which defines the starting position in each independent time-series from which every \code{nth} observation will be selected. This is passed to \code{\link[Tools4ETS]{thin_ts}}. Unlike \code{\link[Tools4ETS]{thin_ts}}, this should be a single number. However, \code{\link[Tools4ETS]{thin_ts_iter}} can be implemented using different values for \code{first} under the same degree of thinning to compare results among different thinned subsets of data.}
+\item{first}{A numeric value which defines the starting position in each independent time series from which every \code{nth} observation will be selected. This is passed to \code{\link[Tools4ETS]{thin_ts}}. Unlike \code{\link[Tools4ETS]{thin_ts}}, this should be a single number. However, \code{\link[Tools4ETS]{thin_ts_iter}} can be implemented using different values for \code{first} under the same degree of thinning to compare results among different thinned subsets of data.}
 
 \item{AR1_req}{A numeric input which defines the desired number to which the AR1 parameter should be reduced by thinning.}
 
@@ -99,7 +99,7 @@ d <- data.frame(x = x, y = y)
 # Visualise simulated observations
 graphics::plot(d$x, d$y, type = "l")
 
-#### Flag independent sections of time-series
+#### Flag independent sections of time series
 d <- cbind(d, flag_ts(x = d$x, duration_threshold = 2880, flag = 1:3))
 head(d)
 

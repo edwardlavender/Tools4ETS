@@ -20,9 +20,9 @@ define_photoperiod(
 
 \item{end_date}{The end date, as a \code{\link[base]{Date}} object, to which photoperiod will be calculated. If \code{NULL}, the end date is taken as the last date (in time) in user-supplied vector of dates (see \code{match_date}).}
 
-\item{lat}{A numeric input which defines the latitude (decimal degrees) at which to calculate the sunlight times for each interval (see \code{interval}) on each day of the time-series. This is passed to \code{\link[suncalc]{getSunlightTimes}}. The location is assumed to be constant at least for each day of the time-series.}
+\item{lat}{A numeric input which defines the latitude (decimal degrees) at which to calculate the sunlight times for each interval (see \code{interval}) on each day of the time series. This is passed to \code{\link[suncalc]{getSunlightTimes}}. The location is assumed to be constant at least for each day of the time series.}
 
-\item{lon}{A numeric input which defines the longitude (decimal degrees) at which to calculate the sunlight times for each interval (see \code{interval}) on each day of the time-series. This is passed to \code{\link[suncalc]{getSunlightTimes}}. The location is assumed to be constant at least for each day of time-series.}
+\item{lon}{A numeric input which defines the longitude (decimal degrees) at which to calculate the sunlight times for each interval (see \code{interval}) on each day of the time series. This is passed to \code{\link[suncalc]{getSunlightTimes}}. The location is assumed to be constant at least for each day of time series.}
 
 \item{interval}{A character vector with two elements which define the sunrise and sunset times (n that order) between which photoperiod is calculated. This is passed to the \code{keep} argument of \code{\link[suncalc]{getSunlightTimes}} where further details are provided.}
 

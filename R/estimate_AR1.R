@@ -3,14 +3,14 @@
 #### estimate_AR1()
 
 #' @title Estimate the AR1 parameter from the autocorrelation function of a model's residuals
-#' @description This function estimates the AR1 parameter from the autocorrelation function of a model's residuals. For models of a single time-series, the AR1 parameter is the value of the autocorrelation function at lag = 1 (i.e., between sequential residuals). However, for multiple time-series, this value may be misleading if the AR1 parameter differs among independent time-series. In this case, the function calculates the AR1 parameter separately for each time-series and returns a summary.
+#' @description This function estimates the AR1 parameter from the autocorrelation function of a model's residuals. For models of a single time series, the AR1 parameter is the value of the autocorrelation function at lag = 1 (i.e., between sequential residuals). However, for multiple time series, this value may be misleading if the AR1 parameter differs among independent time series. In this case, the function calculates the AR1 parameter separately for each time series and returns a summary.
 #' @param resid A numeric vector of residuals.
 #' @param AR.start A logical variable, of the same length as \code{resid}, in which the first observation of each independent section of AR1 correlation is denoted \code{TRUE}.
-#' @param verbose A logical input which defines whether or not to print messages to the console. If \code{verbose = TRUE} and AR.start is not \code{NULL}, the function also returns a plot of the density of AR1 parameter values across independent time-series.
+#' @param verbose A logical input which defines whether or not to print messages to the console. If \code{verbose = TRUE} and AR.start is not \code{NULL}, the function also returns a plot of the density of AR1 parameter values across independent time series.
 #' @return The function returns a number which represents the estimated AR1 parameter.
 #'
 #' @examples
-#' #### Example (1): Simulate a single time-series and identify AR1 parameter
+#' #### Example (1): Simulate a single time series and identify AR1 parameter
 #' # Simulation parameters
 #' n <- 1000
 #' AR1_sim <- 0.9
@@ -26,8 +26,8 @@
 #' mAR0 <- mgcv::bam(y ~ s(t), data = d1)
 #' estimate_AR1(stats::resid(mAR0), AR.start = NULL)
 #'
-#' #### Example (2): Simulate two time-series with a single AR1 parameter:
-#' # Simulate time-series
+#' #### Example (2): Simulate two time series with a single AR1 parameter:
+#' # Simulate time series
 #' d2 <- d1
 #' d2$fct <- 2
 #' d2$y <- as.numeric(arima.sim(list(order = c(1,0,0), ar = AR1_sim),
@@ -40,8 +40,8 @@
 #' estimate_AR1(stats::resid(mAR0), AR.start = NULL)
 #' estimate_AR1(stats::resid(mAR0), AR.start = d$AR.start)
 #'
-#' #### Example (3): Simulate two time-series with two very different AR1 parameters:
-#' # Simulate time-series
+#' #### Example (3): Simulate two time series with two very different AR1 parameters:
+#' # Simulate time series
 #' d3 <- d1
 #' d3$fct <- 3
 #' d3$y <- as.numeric(arima.sim(list(order = c(1,0,0), ar = 0.2),
@@ -50,10 +50,10 @@
 #' d <- rbind(d1, d3)
 # Model using bam()
 #' mAR0 <- mgcv::bam(y ~ s(t), data = d)
-#' # Examine AR1 computed for whole time-series or as a mean from each independent time-series
+#' # Examine AR1 computed for whole time series or as a mean from each independent time series
 #' # Both reflect a compromise between the lower and higher autocorrelation
 #' # ... but the second output makes it clear that we have very different levels of autocorrelation
-#' # ... in the time-series that we may need to account for.
+#' # ... in the time series that we may need to account for.
 #' estimate_AR1(stats::resid(mAR0), AR.start = NULL)
 #' estimate_AR1(stats::resid(mAR0), AR.start = d$AR.start)
 #'
@@ -73,7 +73,7 @@ estimate_AR1 <- function(resid, AR.start = NULL, verbose = TRUE){
     resid_ls <- split(resid, f = split_f)
     rhos <- sapply(resid_ls, function(r) return(extract_AR1_from_acf(r)))
     if(verbose) {
-      cat("Summary statistics for AR1 values from each independent time-series: \n")
+      cat("Summary statistics for AR1 values from each independent time series: \n")
       print(summary(rhos))
       prettyGraphics::pretty_plot(stats::density(rhos), type = "l", xlab = "AR1", ylab = "Density")
     }

@@ -3,8 +3,8 @@
 #'
 #' @param start_date The start date, as a \code{\link[base]{Date}} object, from which photoperiod will be calculated. If \code{NULL}, the start date is taken as the first date (in time) in user-supplied vector of dates (see \code{match_date}).
 #' @param end_date The end date, as a \code{\link[base]{Date}} object, to which photoperiod will be calculated. If \code{NULL}, the end date is taken as the last date (in time) in user-supplied vector of dates (see \code{match_date}).
-#' @param lat A numeric input which defines the latitude (decimal degrees) at which to calculate the sunlight times for each interval (see \code{interval}) on each day of the time-series. This is passed to \code{\link[suncalc]{getSunlightTimes}}. The location is assumed to be constant at least for each day of the time-series.
-#' @param lon  A numeric input which defines the longitude (decimal degrees) at which to calculate the sunlight times for each interval (see \code{interval}) on each day of the time-series. This is passed to \code{\link[suncalc]{getSunlightTimes}}. The location is assumed to be constant at least for each day of time-series.
+#' @param lat A numeric input which defines the latitude (decimal degrees) at which to calculate the sunlight times for each interval (see \code{interval}) on each day of the time series. This is passed to \code{\link[suncalc]{getSunlightTimes}}. The location is assumed to be constant at least for each day of the time series.
+#' @param lon  A numeric input which defines the longitude (decimal degrees) at which to calculate the sunlight times for each interval (see \code{interval}) on each day of the time series. This is passed to \code{\link[suncalc]{getSunlightTimes}}. The location is assumed to be constant at least for each day of time series.
 #' @param interval A character vector with two elements which define the sunrise and sunset times (n that order) between which photoperiod is calculated. This is passed to the \code{keep} argument of \code{\link[suncalc]{getSunlightTimes}} where further details are provided.
 #' @param units A character input which defines the units in which the photoperiod is returned. This is passed to \code{\link[base]{difftime}}. Options are: "auto", "secs", "mins", "hours", "days" or "weeks".
 #' @param type A number (1, 2 or 3) which defines whether or not to return (1) the photoperiod (in user-defined units), (2) the difference in photoperiod between sequential dates (in user-defined units) or (3) the rate of change in photoperiod (in user-defined units) per day. This is relevant if \code{match_date} is provided (see below).
@@ -67,8 +67,6 @@
 ##########################################
 ##########################################
 #### define_photoperiod()
-
-# assume a single location across time-series
 
 define_photoperiod <-
   function(start_date = NULL,

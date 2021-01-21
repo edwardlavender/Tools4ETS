@@ -2,7 +2,7 @@
 % Please edit documentation in R/suggest_recapture.R
 \name{suggest_recapture}
 \alias{suggest_recapture}
-\title{Explore potential, unrecorded recapture events within depth time-series}
+\title{Explore potential, unrecorded recapture events within depth time series}
 \usage{
 suggest_recapture(
   data,
@@ -21,7 +21,7 @@ suggest_recapture(
 
 \item{plot}{A logical input which defines whether or not to create a plot.}
 
-\item{window}{A numeric value which defines the number of seconds either side of first and last potential 'recapture' event on any given day for which the depth time-series is plotted. The default is 43200 s (i.e. 12 hours).}
+\item{window}{A numeric value which defines the number of seconds either side of first and last potential 'recapture' event on any given day for which the depth time series is plotted. The default is 43200 s (i.e. 12 hours).}
 
 \item{prompt}{A logical value which defines whether or not to pause following the display of each graph. If TRUE, the user needs to press Enter prior to moving on to the next recapture event.}
 
@@ -33,7 +33,7 @@ suggest_recapture(
 A dataframe with 4 columns: 'timestamp' (as inputted), 'depth' (as inputted), 'recapture_window' (a logical value specifying whether the position is inside a recapture window, defined by \code{window}), and 'above_depth_threshold' (a logical value which specifies the positions at which the depth is shallower than the depth threshold). A plot can also be returned, with depth (negated) shown over time. Red lines show the recapture window under consideration and blue lines show any possible moments of recapture in this window.
 }
 \description{
-This function highlights potential recapture events on unknown dates based on a depth threshold; for each day in the depth time-series, all the timestamps in which the individual was above this depth are considered possible recapture events. These timestamps can be saved by the function and inspected graphically.
+This function highlights potential recapture events on unknown dates based on a depth threshold; for each day in the depth time series, all the timestamps in which the individual was above this depth are considered possible recapture events. These timestamps can be saved by the function and inspected graphically.
 }
 \examples{
 #### Example (1): Suggest recapture events for a single individual

@@ -211,7 +211,7 @@ gams4dts_thin_ts <-
     # id_column and timestamp column
     id_column = "individual",
     timestamp_column = "timestamp",
-    # Define the name of the column column which, for each individual, defines independent time-series
+    # Define the name of the column column which, for each individual, defines independent time series
     # (Needed for sps and sma methods)
     start_event_id_column = "start_event_id",
     start_event_logic_column = "start_event",
@@ -431,15 +431,15 @@ gams4dts_thin_ts <-
                  # filter the dataframe (dat) to focus on that individual:
                  id_df <- dat[which(dat[, id_column] == id), ]
 
-                 # Create a list of time-series for each individual
-                 # Each element in this list is a thinned time-series,
+                 # Create a list of time series for each individual
+                 # Each element in this list is a thinned time series,
                  # ... with a starting position corresponding to one of the
                  # ... positions specified in parameters$sps$first
                  id_ls <-
                    # Loop over every supplied starting position:
                    lapply(parameters$sps$first, function(first_val){
 
-                     # Loop over every unique time-series to create a thinned
+                     # Loop over every unique time series to create a thinned
                      # ... dataframe which starts at a specific 'first' value:
                      thin_from_specific_first <-
                        # loop over every unique start_event...
@@ -448,11 +448,11 @@ gams4dts_thin_ts <-
                                 # subset id_df to only consider those rows:
                                 id_df_sbt <- id_df[which(id_df[start_event_id_column] == seid), ]
                                 # determine the rows we want to keep for that specific individual
-                                # ...within the current time-series:
+                                # ...within the current time series:
                                 row_retain <- seq(first_val, nrow(id_df_sbt), by = parameters$sps$nth)
                                 # create a temporary dataframe
                                 dtmp <- data.frame(id_df_sbt[row_retain, ])
-                                # Ensure that the first row is recognised as the start of an independent time-series
+                                # Ensure that the first row is recognised as the start of an independent time series
                                 # Using start_event_logic column:
                                 dtmp[1, start_event_logic_column] <- TRUE
                                 # return dtmp
@@ -508,7 +508,7 @@ gams4dts_thin_ts <-
                  # filter the dataframe (dat) to focus on that individual:
                  id_df <- dat[which(dat[, id_column] == id), ]
 
-                 # loop over every unique time-series...
+                 # loop over every unique time series...
                  id_df_thin <-
                    lapply(unique(id_df[start_event_id_column]),
                           # loop over every unique start_event (start_event_id: seid)...
@@ -526,12 +526,12 @@ gams4dts_thin_ts <-
                                             units = "secs") %>% as.numeric()
 
                             # NB: the current assumption is that the duration between successive readings is constant
-                            # this is required to define a 'time-series' object in R.
+                            # this is required to define a 'time series' object in R.
                             # However, if the duration between detections is not always constant
                             # ... we can implement an additional loop here which
-                            # ... loops over each sub-time-series, and then pieces them together afterwards (not yet implemented)
+                            # ... loops over each sub-time series, and then pieces them together afterwards (not yet implemented)
 
-                            # Define a time-series object:
+                            # Define a time series object:
                             # NB: depth column is assumed to be called "depth"
                             tsy <- stats::ts(data = id_df_sbt[, "depth"],
                                              start = as.numeric(id_df_sbt[1, timestamp_column]),
@@ -594,8 +594,8 @@ gams4dts_thin_ts <-
 #########################################
 #### barplot_ts_sex()
 
-#' @title Create a barplot of the number of individuals of each sex in time-series
-#' @description This function produces a barplot showing the number of individuals of each sex in a time-series. To do this, the function takes in a dataframe which contains a column distinguishing individuals and a column defining their sex, which are specified as character strings. The function then identifies the sex of each unique individual, sums the number of individuals of each sex and produces a barplot. This function is primarily intended for use in \code{\link[Tools4ETS]{GAMS4DTS}}.
+#' @title Create a barplot of the number of individuals of each sex in time series
+#' @description This function produces a barplot showing the number of individuals of each sex in a time series. To do this, the function takes in a dataframe which contains a column distinguishing individuals and a column defining their sex, which are specified as character strings. The function then identifies the sex of each unique individual, sums the number of individuals of each sex and produces a barplot. This function is primarily intended for use in \code{\link[Tools4ETS]{GAMS4DTS}}.
 #'
 #' @param dat A dataframe which contains a column which defines unique individuals and a column which defines their sex. Multiple observations from the same individual are supported because the function obtains the sex of each unique individual once.
 #' @param id_column A character input which defines the name of the column in \code{dat} which distinguishes individuals.

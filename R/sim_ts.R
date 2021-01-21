@@ -9,7 +9,7 @@
 #' @param compute_lp A named list which is used to compute the linear predictor. The name of each element should correspond to the name of a variable which is found in \code{dat}. Each element should consist of (a) a function which takes in 'x', the values of that variable in \code{dat} and any other parameters, and (b) a named list of parameters and parameter values.
 #' @param sim_obs A function which takes in the values of the linear predictor for each factor level and simulates the values of the response from the linear predictor.
 #' @param dat A dataframe which contains variables used to predict the values of a response.
-#' @param fct (optional) A character input which defines the name of a column in \code{dat} which distinguishes different time-series (i.e., those for different individuals).
+#' @param fct (optional) A character input which defines the name of a column in \code{dat} which distinguishes different time series (i.e., those for different individuals).
 #' @param seed (optional) A number passed to \code{\link[base]{set.seed}} which ensures simulated observations are reproducible.
 #'
 #' @return A numeric vector of the simulated response variable
@@ -18,7 +18,7 @@
 #'
 #' #### Simulate a dataframe which we will use to simulate the depth of a
 #' # ... hypothetical animal through time.
-#' # We will simulate a small time-series (2 days in length) for two individuals,
+#' # We will simulate a small time series (2 days in length) for two individuals,
 #' # ... one male and one female.
 #' # We will include sex, length, sun_angle, lunar_phase and julian_day in the dataframe:
 #' set.seed(2)
@@ -75,7 +75,7 @@
 #'     fct = "individual",
 #'     seed = 1)
 #'
-#' # Visualise simulated depth time-series
+#' # Visualise simulated depth time series
 #' plot(dat$timestamp, dat$depth, type = "n")
 #' lines(dat$timestamp[dat$individual == 1], dat$depth[dat$individual == 1])
 #' lines(dat$timestamp[dat$individual == 2], dat$depth[dat$individual == 2])

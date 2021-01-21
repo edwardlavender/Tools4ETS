@@ -74,7 +74,7 @@ parameterise_smooth(
 
 \item{add_rug_args}{A named list of arguments passed to \code{\link[graphics]{rug}} to customise the rug.}
 
-\item{add_moons}{A logical input which defines whether or not to add moons to a plot. This is useful for visualising the effects of lunar phase in models of animal movement time-series.}
+\item{add_moons}{A logical input which defines whether or not to add moons to a plot. This is useful for visualising the effects of lunar phase in models of animal movement time series.}
 
 \item{add_moons_args}{A named list of arguments passed to \code{\link[prettyGraphics]{add_moons}}.}
 

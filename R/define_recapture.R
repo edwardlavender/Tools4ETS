@@ -1,7 +1,7 @@
-#' @title Identify and describe recapture events from depth time-series on known dates
-#' @description Identifying 'recapture' events in depth time-series (i.e. moments when electronically tagged animals are (re)caught, brought to the surface and possibly released again) is often useful. This function uses a (semi-)automatic approach to define the precise time of recapture on a set of pre-known dates when the individual was recaptured; note that this assumes the individual was only caught once on any given date. (Identifying recapture events without pre-defined windows in which these are known to have occurred is challenging, but \code{\link[Tools4ETS]{suggest_recapture}} implements one approach.) The function can use three methods to define likely times of recapture on inputted dates. Under the automatic approach, the time of recapture identified by the first method is taken as correct and saved, along with all of the positions in a user-defined window around this recapture time that encapsulate the recapture event. The user can inspect a plot of depth ~ time to visually assess the performance of these algorithms. Under the semi-automated approach, the user can use point-and-click on the plot to re-define the time of recapture, which is often difficult to define exactly without manual input (although the algorithm will usually come close), and/or other timestamps during the recapture process which are biologically important. The function returns a list which includes the estimated times of recapture events and, depending on user inputs, may include a processed dataframe from which all positions around estimated recapture positions have been removed.
+#' @title Identify and describe recapture events from depth time series on known dates
+#' @description Identifying 'recapture' events in depth time series (i.e. moments when electronically tagged animals are (re)caught, brought to the surface and possibly released again) is often useful. This function uses a (semi-)automatic approach to define the precise time of recapture on a set of pre-known dates when the individual was recaptured; note that this assumes the individual was only caught once on any given date. (Identifying recapture events without pre-defined windows in which these are known to have occurred is challenging, but \code{\link[Tools4ETS]{suggest_recapture}} implements one approach.) The function can use three methods to define likely times of recapture on inputted dates. Under the automatic approach, the time of recapture identified by the first method is taken as correct and saved, along with all of the positions in a user-defined window around this recapture time that encapsulate the recapture event. The user can inspect a plot of depth ~ time to visually assess the performance of these algorithms. Under the semi-automated approach, the user can use point-and-click on the plot to re-define the time of recapture, which is often difficult to define exactly without manual input (although the algorithm will usually come close), and/or other timestamps during the recapture process which are biologically important. The function returns a list which includes the estimated times of recapture events and, depending on user inputs, may include a processed dataframe from which all positions around estimated recapture positions have been removed.
 
-#' @param data_depth A dataframe in which recapture events need to be identified based on depth or temperature time-series. This must contain the following named columns: a unique identifier for each individual ('id'); timestamps in POSIXct format ('timestamp'); depth ('depth'); and (optionally) temperature ('temp'). Note that depth must be a positive number.
+#' @param data_depth A dataframe in which recapture events need to be identified based on depth or temperature time series. This must contain the following named columns: a unique identifier for each individual ('id'); timestamps in POSIXct format ('timestamp'); depth ('depth'); and (optionally) temperature ('temp'). Note that depth must be a positive number.
 #' @param data_recapture A dataframe which specifies the dates on which recapture events are known to have occurred, but for which the precise timing needs to be resolved. This must contain the following named columns: a unique identifier for each individual ('id'), that matches IDs in \code{data_depth}, and the date ('Date').
 #' @param method A numeric vector that defines the method(s) used to define the timing of recapture events: \code{1}, identifies the time of minimum depth (i.e. the shallowest moment); \code{2}, identifies the time preceding the highest average decrease in depth (i.e., movement shallower); and \code{3} specifies the time of maximum temperature. See Details for further information.
 #' @param bin A string that defines the duration of the bin over which the mean change in depth is calculated. This is required if method 2 is included. The default is \code{"10 mins"}.
@@ -10,10 +10,10 @@
 #' @param define_time_before A function which takes a single argument (the recapture time, in POSIXct format) and outputs a time (in POSIXct format) which defines the lower bound of a recapture window. The default is a function which returns a time 2 hours before a given recapture window.
 #' @param define_time_after A function, as above, which defines the upper bound of a recapture window. The default is a function which returns midnight on the day of recapture.
 #' @param inspect_plot A logical input which defines whether or not to create a plot of depth (negated) ~ timestamp, with the recapture window and the identified time(s) of recapture highlighted. This is useful for visualising the performance of the default options for defining the time of recapture.
-#' @param before4plot A numeric input defining the number of seconds before the recapture time, estimated using the first method inputted, which is used to define the lower x limit of the plot. The default is 3600 (i.e. the time-series plot will begin from one hour before the estimated recapture time).
-#' @param after4plot A numeric input, as above, used to define the upper x limit of the plot. The default is 3600 (i.e. the time-series plot will extend until one hour after the estimated recapture time).
+#' @param before4plot A numeric input defining the number of seconds before the recapture time, estimated using the first method inputted, which is used to define the lower x limit of the plot. The default is 3600 (i.e. the time series plot will begin from one hour before the estimated recapture time).
+#' @param after4plot A numeric input, as above, used to define the upper x limit of the plot. The default is 3600 (i.e. the time series plot will extend until one hour after the estimated recapture time).
 #' @param ylim A numeric vector of two which specifies the y limits of the plot. Note that depth is negated for plotting purposes (see \code{inspect_plot}), so \code{ylim} needs to be negated too. The default is \code{ylim = c(-250, 0)}.
-#' @param vcols A vector of colours. The recapture time estimated by each method is added to the time-series plot as a vertical line, with the specified colour.
+#' @param vcols A vector of colours. The recapture time estimated by each method is added to the time series plot as a vertical line, with the specified colour.
 #' @param type,pch,col,bg,cex,... Additional graphical customisation options passed to \code{\link[prettyGraphics]{pretty_plot}}, excluding \code{xlim}, \code{pretty_axis_args} and \code{main} which are handled internally.
 #' @param prompt A logical input which defines whether or not to pause following the creation of a plot (see above). If \code{prompt = TRUE}, the function proceeds once the user has digested the plot and pressed Enter. Otherwise, the user can press Esc to end the algorithm.
 #' @param manual_flag A logical input which defines whether or not to manually flag points on the plot. This is useful because the function's estimate of the recapture time may not be exactly correct and may need to be refined by the user, and because the user may want to define flag points in the recapture window which represent the times of biologically important events. If \code{TRUE}, the function pauses whilst the user clicks points on the plot to be saved.
@@ -27,7 +27,7 @@
 #' @examples
 #'
 #' #### Method
-#' # We will precisely identify recapture events in the two example flapper skate time-series,
+#' # We will precisely identify recapture events in the two example flapper skate time series,
 #' # ... based on knowledge of the following recapture dates:
 #' # Individual A was recaught on "2016-05-16"
 #' # Individual B was recaught on "2016-05-10"
@@ -41,7 +41,7 @@
 #' #### Example (1): Define recaptures for two individuals on known dates
 #' define_recap <-
 #'   define_recapture(
-#'     # Supply depth time-series and recapture dataframes
+#'     # Supply depth time series and recapture dataframes
 #'     data_depth = dat_flapper,
 #'     data_recapture = dat_recap,
 #'     # Implement method 1:3
@@ -241,7 +241,7 @@ define_recapture <-
 
 
         ###################################################
-        #### Plot the time-series
+        #### Plot the time series
 
         if(!inspect_plot & manual_flag){
           warning(paste0("inspect_plot = ", inspect_plot, " so manual_flag = ", manual_flag, " is ignored."))

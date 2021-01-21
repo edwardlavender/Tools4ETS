@@ -62,7 +62,7 @@ difference <- function(x2, x1, f = NULL,...){
 #' @return The function returns a vector of differences. Each value is the difference between one value and the next value in a sequence.
 #'
 #' @examples
-#' #### Define some time-series data
+#' #### Define some time series
 #' d1 <- c(seq.POSIXt(as.POSIXct("2016-01-01"), as.POSIXct("2016-01-29"), by = "2 mins"),
 #'         seq.POSIXt(as.POSIXct("2016-01-30"), as.POSIXct("2016-02-03"), by = "20 mins"),
 #'         seq.POSIXt(as.POSIXct("2016-04-01"), as.POSIXct("2016-05-01"), by = "days")

@@ -3,12 +3,12 @@
 #### simulate_posterior_obs()
 
 #' @title Simulate 'observed' values and prediction uncertainty from a Gaussian \code{\link[mgcv]{bam}} or \code{\link[mgcv]{gam}} model
-#' @description  This function enables the user to simulate new 'observed' values from a Gaussian \code{\link[mgcv]{bam}} or \code{\link[mgcv]{gam}} model, including for models with an AR1 structure. There are three main options. The first option is for the user to simulate a single realisation from a model. Under this scenario (\code{type = "snapshot"}), the function samples a vector of observed values from a Gaussian distribution with a mean vector equal to the expected values and a standard deviation equal to the estimated sigma parameter (i.e. the standard deviation of residuals), accounting for autocorrelation in the sampling process if necessary. One reason as to why this is useful is to investigate whether the estimate of the residual standard deviation is appropriate: while the simulated time-series will not reproduce the observed time-series, the simulated time-series should approximately reproduce the observed variation in the time-series. However, this method only provides a single 'snapshot' realisation of a model, which does not capture uncertainty or calculate prediction intervals. When \code{type = "envelope"}, the function calculates the posterior distribution of predicted values in a two stage process which accounts for (a) uncertainty in the mean (possibly via uncertainty in the underlying fitted coefficients, see below) and (b) uncertainty in the predictions due to variation around expected values. To calculate a posterior distribution for the mean (i.e., expected values), there are two methods. Under \code{mu_method = 1}, the assumption is that the uncertainty in the expected values can be characterised by a Gaussian distribution. For each observation, \code{n} possible mean values are sampled from a Gaussian distribution with a mean equal to the expected value for that observation and a SD equal to the estimated SE around that mean for that observation. \code{mu_method = 2} is more sophisticated. Under \code{mu_method = 2}, uncertainty in the fitted coefficients is characterised by a multivariate normal distribution, with mean vector given by fitted coefficients and a covariance matrix equal to their (Bayesian) covariance matrix. For each observation, the function then samples \code{n} new fitted coefficient vectors from this multivariate distribution. Each sample is combined with the linear predictor matrix to generate a single simulated mean for each observation. This method is implemented by \code{\link[Tools4ETS]{simulate_posterior_mu}}. With a posterior distribution for expected values, the function then samples \code{n} new 'observed' values using expected values, accounting for autocorrelation if necessary. The function returns the posterior distribution of simulated observed values, either in full (i.e., a matrix with a row for each observation and \code{n} realised values for new predicted values for that observation), a summary computed by \code{\link[Tools4ETS]{summarise_posterior}} (i.e., for each observation, the mean of the posterior distribution and a lower and upper quantile), or both.
+#' @description  This function enables the user to simulate new 'observed' values from a Gaussian \code{\link[mgcv]{bam}} or \code{\link[mgcv]{gam}} model, including for models with an AR1 structure. There are three main options. The first option is for the user to simulate a single realisation from a model. Under this scenario (\code{type = "snapshot"}), the function samples a vector of observed values from a Gaussian distribution with a mean vector equal to the expected values and a standard deviation equal to the estimated sigma parameter (i.e. the standard deviation of residuals), accounting for autocorrelation in the sampling process if necessary. One reason as to why this is useful is to investigate whether the estimate of the residual standard deviation is appropriate: while the simulated time series will not reproduce the observed time series, the simulated time series should approximately reproduce the observed variation in the time series. However, this method only provides a single 'snapshot' realisation of a model, which does not capture uncertainty or calculate prediction intervals. When \code{type = "envelope"}, the function calculates the posterior distribution of predicted values in a two stage process which accounts for (a) uncertainty in the mean (possibly via uncertainty in the underlying fitted coefficients, see below) and (b) uncertainty in the predictions due to variation around expected values. To calculate a posterior distribution for the mean (i.e., expected values), there are two methods. Under \code{mu_method = 1}, the assumption is that the uncertainty in the expected values can be characterised by a Gaussian distribution. For each observation, \code{n} possible mean values are sampled from a Gaussian distribution with a mean equal to the expected value for that observation and a SD equal to the estimated SE around that mean for that observation. \code{mu_method = 2} is more sophisticated. Under \code{mu_method = 2}, uncertainty in the fitted coefficients is characterised by a multivariate normal distribution, with mean vector given by fitted coefficients and a covariance matrix equal to their (Bayesian) covariance matrix. For each observation, the function then samples \code{n} new fitted coefficient vectors from this multivariate distribution. Each sample is combined with the linear predictor matrix to generate a single simulated mean for each observation. This method is implemented by \code{\link[Tools4ETS]{simulate_posterior_mu}}. With a posterior distribution for expected values, the function then samples \code{n} new 'observed' values using expected values, accounting for autocorrelation if necessary. The function returns the posterior distribution of simulated observed values, either in full (i.e., a matrix with a row for each observation and \code{n} realised values for new predicted values for that observation), a summary computed by \code{\link[Tools4ETS]{summarise_posterior}} (i.e., for each observation, the mean of the posterior distribution and a lower and upper quantile), or both.
 #'
 #' @param model A model from which to simulate (see \code{\link[mgcv]{predict.gam}}).
 #' @param newdata A dataframe from which to make predictions (see \code{\link[mgcv]{predict.gam}}).
 #' @param rho A numeric value which defines the \code{rho} value from an \code{\link[mgcv]{bam}} model. For models without an AR1 structure, the default value (\code{rho = 0}) is appropriate.
-#' @param ind A logical vector, of the same length as the number of rows in \code{newdata}, which defines independent sections of time-series (see \code{\link[mgcv]{bam}} and the \code{AR.start} argument).
+#' @param ind A logical vector, of the same length as the number of rows in \code{newdata}, which defines independent sections of time series (see \code{\link[mgcv]{bam}} and the \code{AR.start} argument).
 #' @param type A character input which defines the type of simulation. Options are: (1) \code{"snapshot"}, which returns a single realisation of the model; or (b) \code{"envelope"}, which performs multiple simulations and returns a posterior distribution of outcomes.
 #' @param mu_method A numeric input (\code{1} or \code{2}) which defines the method used to simulate the mean, as described in the function Description. \code{mu_method = 2} is recommended.
 #' @param seed A numeric value to set the seed.
@@ -93,7 +93,7 @@
 #'     rho = AR1,
 #'     ind = NULL,
 #'    type = "snapshot")
-#' # Examine a time-series of uncorrelated observations, correlated observations and
+#' # Examine a time series of uncorrelated observations, correlated observations and
 #' # ... simulated observations which include autocorrelation:
 #' d$index <- 1:nrow(d)
 #' pp <- par(mfrow = c(2, 3))
@@ -417,7 +417,7 @@ simulate_posterior_obs <-
     newdata,
     # specify rho
     rho,
-    # specify independent time-series,
+    # specify independent time series,
     ind = NULL,
     # Specify type as "snapshot" or "envelope"
     type = "snapshot",
@@ -465,9 +465,9 @@ simulate_posterior_obs <-
         obs_sim <- stats::rnorm(n = nrw_nd, mean = mu$fit, sd = sigma)
 
       #### For correlated observations:
-      # Loop over each independent time-series and define autocorrelated observations using arima.sim()
+      # Loop over each independent time series and define autocorrelated observations using arima.sim()
       } else{
-        # Define a list to loop over based on independent time-series
+        # Define a list to loop over based on independent time series
         if(is.null(ind)){
           mu_ls <- list(mu_dat)
         } else{
@@ -477,7 +477,7 @@ simulate_posterior_obs <-
           }
           mu_ls <- split(mu_dat, f = ind)
         }
-        # Define a list of simulated observations, one element for each independent time-series
+        # Define a list of simulated observations, one element for each independent time series
         obs_sim_ls <-
           lapply(mu_ls, function(dind){
             # simulate observations using arima.sim
@@ -534,7 +534,7 @@ simulate_posterior_obs <-
 
       # B) Considering correlated data...
       } else{
-        # Split the posterior_mu matrix into a list of independent time-series
+        # Split the posterior_mu matrix into a list of independent time series
         # so we generate a dataframe with n variables and nrw_nd observations
         posterior_mu_df <- as.data.frame(posterior_mu)
         pp_df <- as.data.frame(pp)
@@ -545,17 +545,17 @@ simulate_posterior_obs <-
           posterior_mu_df_ls <- split(posterior_mu_df, f = ind)
           pp_df_ls <- split(pp_df, f = ind)
         }
-        # Loop over each independent time-series; we generate a list with
-        # ... an element for each independent time-series, with each element consisting
+        # Loop over each independent time series; we generate a list with
+        # ... an element for each independent time series, with each element consisting
         # ... of a dataframe with n columns and a number of observations
         ppls <- mapply(pp_df_ls, posterior_mu_df_ls, FUN = function(ppdf, pmdf){
-          # Define the number of observations in that time-series
+          # Define the number of observations in that time series
           n_pmdf <- nrow(pmdf)
           # For each column in the subsetted posterior_mu matrix (now dataframe) i.e., a simulated mu value,
           # ... add autocorrelated errors
           for(j in 1:n){
             ppdf[, j] <- pmdf[, j] +
-              # Use as.numeric, otherwise recognised as time-series which can return unneccessary
+              # Use as.numeric, otherwise recognised as time series which can return unneccessary
               # ... warnings down the line (e.g.
               # ... 'In bind_rows_(x, .id) :
               # ... Vectorizing 'ts' elements may not preserve their attributes)
