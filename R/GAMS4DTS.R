@@ -814,7 +814,7 @@ ui <-
 
         tabItem(tabName = "model_define",
                 h1("Define the model"),
-                h4("You have now simulated a depth time series dataset. The next step is to define a model for this time series. At first, it is advised to keep the model similar to the truth (i.e. what you have simulated), to check whether you correctly recover what you expect. Then, you can start to make the data-generating process asssumed by the model different from the simulated data-generating process and explore the consequences. (Remember, in reality, the data-generating process is unknown, so this process will help you understand model performance when the true data-generating process is unknown.)"),
+                h4("You have now simulated a depth time-series dataset. The next step is to define a model for this time series. At first, it is advised to keep the model similar to the truth (i.e. what you have simulated), to check whether you correctly recover what you expect. Then, you can start to make the data-generating process asssumed by the model different from the simulated data-generating process and explore the consequences. (Remember, in reality, the data-generating process is unknown, so this process will help you understand model performance when the true data-generating process is unknown.)"),
 
                 box(title = "Define the inputs to your model",
                     width = 3,

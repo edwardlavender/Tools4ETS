@@ -39,7 +39,7 @@ The `R` package [`prettyGraphics`](https://github.com/edwardlavender/prettyGraph
 
 ## Simple statistics
 
-A few functions facilitate the computation of simple statistics from time series data or models. These include: 
+A few functions facilitate the computation of simple statistics from time series or models. These include: 
 
 * **Calculate cumulative frequencies.** `cum_dates()` is used to calculate the cumulative number of events by each date in a time series. 
 * **Estimating the strength of autocorrelation.** `estimate_AR1()` is used to estimate the autoregressive order 1 (AR1) parameter from the autocorrelation function (ACF) of a model's residuals. `acf_in_white_noise()` can be used to compute confidence intervals around an ACF. `estimate_AR1_with_k()` explores the effects of basis dimension on the residual autocorrelation for generalised additive models. 
@@ -50,7 +50,7 @@ A few functions facilitate the computation of simple statistics from time series
 
 This includes functions for simulating _de novo_ time series with known properties; namely: 
 
-* **Dataframe assembly.** `assemble_ts()` can be used to simulate time series dataframes with timestamps for multiple factor levels (if applicable), possibly at different resolutions, over different durations and/or with breaks. 
+* **Dataframe assembly.** `assemble_ts()` can be used to simulate time series with timestamps for multiple factor levels (if applicable), possibly at different resolutions, over different durations and/or with breaks. 
 * **Define parameters.** `parameterise_smooth()` can be used to define functions/parameters which relate covariates to a response and to compare simulated smooths to those inferred by GAMs. `sim_sine()` simulates and visualises periodic, sinusoidal functions.
 * **Response simulation.** `sim_ts()` can be used to simulate the values of a response variable given a user-defined model. For simulations including residual autocorrelation, `sigma_arima()` facilitates the simulation of autocorrelated observations with known variance. 
 

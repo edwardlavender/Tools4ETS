@@ -77,7 +77,7 @@ description of recapture events (`suggest_recapture()` and
 ## Simple statistics
 
 A few functions facilitate the computation of simple statistics from
-time series data or models. These include:
+time series or models. These include:
 
   - **Calculate cumulative frequencies.** `cum_dates()` is used to
     calculate the cumulative number of events by each date in a time
@@ -101,9 +101,9 @@ This includes functions for simulating *de novo* time series with known
 properties; namely:
 
   - **Dataframe assembly.** `assemble_ts()` can be used to simulate time
-    series dataframes with timestamps for multiple factor levels (if
-    applicable), possibly at different resolutions, over different
-    durations and/or with breaks.
+    series with timestamps for multiple factor levels (if applicable),
+    possibly at different resolutions, over different durations and/or
+    with breaks.
   - **Define parameters.** `parameterise_smooth()` can be used to define
     functions/parameters which relate covariates to a response and to
     compare simulated smooths to those inferred by GAMs. `sim_sine()`

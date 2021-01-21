@@ -57,7 +57,7 @@ hour_nearest <- function(time){
 #### mmyy()
 
 #' @title Define month-year categories from time series
-#' @description This function defines month-year categories from time series data (i.e., \code{\link[base]{Date}} and \code{\link[base]{DateTimeClasses}} objects).
+#' @description This function defines month-year categories from time series (i.e., \code{\link[base]{Date}} and \code{\link[base]{DateTimeClasses}} objects).
 #'
 #' @param x An vector of class \code{\link[base]{Date}} or \code{\link[base]{DateTimeClasses}}.
 #' @param levels A logical input which defines whether or not to return a factor with chronologically ordered levels (i.e., levels ordered by year then month, for the inputted \code{x}) or a character (\code{levels = FALSE}).

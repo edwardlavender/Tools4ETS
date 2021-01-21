@@ -2,7 +2,7 @@
 % Please edit documentation in R/assemble_ts.R
 \name{assemble_ts}
 \alias{assemble_ts}
-\title{Simulate a time series dataframe}
+\title{Simulate a time series}
 \usage{
 assemble_ts(
   start_date,
