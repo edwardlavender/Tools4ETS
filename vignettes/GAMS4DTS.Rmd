@@ -77,7 +77,7 @@ knitr::include_graphics("workflow.png")
 
 ## Dataframe Assembly
 
-The first step towards simulating and modelling depth time series is to assemble a basic dataframe structure that defines, for each individual, a sequence of timesteps and associated covariate values, at which depth can be simulated. The *Dataframe Assembly* tab displays the options for simulating depth time series and the assembled dataframe. Behind the scenes, dataframe assembly is facilitated by `assemble_ts()` (see `?Tools4ETS::assemble_ts`). 
+The first step towards simulating and modelling depth time series is to assemble a basic dataframe structure that defines, for each individual, a sequence of time steps and associated covariate values, at which depth can be simulated. The *Dataframe Assembly* tab displays the options for simulating depth time series and the assembled dataframe. Behind the scenes, dataframe assembly is facilitated by `assemble_ts()` (see `?Tools4ETS::assemble_ts`). 
 
 In this tab, the user must specify:
 
@@ -102,7 +102,7 @@ The other arguments that `assemble_ts()` takes assume their default values. The 
   </tr> 
   <tr>
     <td>timestamp</td>
-    <td>A time in POSIXct format, which defines each unique observation/timestep, at the specified resolution.</td>
+    <td>A time in POSIXct format, which defines each unique observation/time step, at the specified resolution.</td>
  </tr>
    <tr>
     <td>hourofday</td>
@@ -179,9 +179,9 @@ To simulate depths, it is necessary to define the likelihood distribution and a 
 * Parameters of the likelihood distribution. Having defined a likelihood distribution, additional parameters may need to be defined. For the Gaussian distribution, the sigma parameter ($\sigma$) is required to be specified by the user (see above).
 * Model intercept ($\alpha$). This is the mean depth (m) across all individuals (or, all females, if `sex` has been included as a covariate) across the time series.
 * Random intercept term ($\sigma_2$). In a random intercepts model, each individual can have a different intercept, with the distribution of intercepts across individuals ($i$) around the model intercept ($\alpha$) assumed to follow a Gaussian distribution with a mean of 0 and a standard deviation of $\sigma_2$ specified by the user, i.e., $\delta_{alpha, i} \sim N(0, \sigma_2)$.
-* Serial autocorrelation parameter ($\rho$). In models, there is usually variation around the expected value of the response variable (residual variation, $\epsilon$). In a simple model with a Gaussian likelihood, this residual variation is assumed to be normally distributed and the extent of this variation is captured by the $\sigma$ parameter (see above). However, in models of time series, especially those in which the response variable has been observed at high frequency, there is often a correlation between the residual at one timestep and previous timesteps. In an autoregressive order 1 (AR1) model, the residual variation is partitioned into two components: a deterministic component that depends on the correlation ($\rho$) between the residual at one time step and the previous timestep ($\epsilon_{t-1}$), and a stochastic component that relates to the current timestep ($\sigma$). Thus, the simple model above, $depth \sim N(E(depth|\psi), \sigma)$, becomes $depth \sim N(E(depth|\psi)+ \rho \epsilon_{t-1}, \sigma)$. This is the only correlation structure currently supported by `GAMS4DTS`.
+* Serial autocorrelation parameter ($\rho$). In models, there is usually variation around the expected value of the response variable (residual variation, $\epsilon$). In a simple model with a Gaussian likelihood, this residual variation is assumed to be normally distributed and the extent of this variation is captured by the $\sigma$ parameter (see above). However, in models of time series, especially those in which the response variable has been observed at high frequency, there is often a correlation between the residual at one time step and previous time steps. In an autoregressive order 1 (AR1) model, the residual variation is partitioned into two components: a deterministic component that depends on the correlation ($\rho$) between the residual at one time step and the previous time step ($\epsilon_{t-1}$), and a stochastic component that relates to the current time step ($\sigma$). Thus, the simple model above, $depth \sim N(E(depth|\psi), \sigma)$, becomes $depth \sim N(E(depth|\psi)+ \rho \epsilon_{t-1}, \sigma)$. This is the only correlation structure currently supported by `GAMS4DTS`.
 
-These inputs are used to simulate depths using the `sim_ts()` function. In a model with a Gaussian likelihood, the assumption is that the depth of individual $i$ at timestep $t$ is drawn from a Gaussian distribution, defined by parameters $\mu_{i, t}$ and $\sigma$; i.e.: 
+These inputs are used to simulate depths using the `sim_ts()` function. In a model with a Gaussian likelihood, the assumption is that the depth of individual $i$ at time step $t$ is drawn from a Gaussian distribution, defined by parameters $\mu_{i, t}$ and $\sigma$; i.e.: 
 
 \begin{equation}
 depth_{i, t} \sim N \left( \mu_{i, t}, \sigma \right)

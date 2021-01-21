@@ -6,7 +6,7 @@
 #' @param ind A character string defining the column name in \code{dat} which distinguishes unique time series (see also \code{\link[Tools4ETS]{flag_ts}} and the code{flag} argument).
 #' @param n A number or a numeric vector defining the number of breaks in each unique time series. Alternatively, \code{pos} can be provided (see below).
 #' @param pos A list of positions at which to break each unique time series. This can be provided instead of \code{n} for more control.
-#' @param before A list containing a function/functions which define(s) the number of timesteps before each break position to be included in the break.
+#' @param before A list containing a function/functions which define(s) the number of time steps before each break position to be included in the break.
 #' @param after As above, but after the break position.
 #' @param output A numeric value defining the output type. If \code{output = 1}, the function returns a named list. This comprises: (1) 'breaks', a vector of TRUE/FALSE statements indicating the positions in \code{dat} that lie within break windows; (2) 'pos_breaks', a numeric vector of positions at which \code{dat} is broken; and (3) 'dat_broken', the dataframe in which these positions have been removed. If \code{output = 2}, only 'dat_broken' is returned.
 #'

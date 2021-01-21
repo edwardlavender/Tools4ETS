@@ -26,7 +26,7 @@ break_ts(
 
 \item{pos}{A list of positions at which to break each unique time series. This can be provided instead of \code{n} for more control.}
 
-\item{before}{A list containing a function/functions which define(s) the number of timesteps before each break position to be included in the break.}
+\item{before}{A list containing a function/functions which define(s) the number of time steps before each break position to be included in the break.}
 
 \item{after}{As above, but after the break position.}
 
