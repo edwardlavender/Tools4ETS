@@ -51,7 +51,7 @@ A few functions facilitate the computation of simple statistics from time series
 This includes functions for simulating _de novo_ time series with known properties; namely: 
 
 * **Dataframe assembly.** `assemble_ts()` can be used to simulate time series with time stamps for multiple factor levels (if applicable), possibly at different resolutions, over different durations and/or with breaks. 
-* **Define parameters.** `parameterise_smooth()` can be used to define functions/parameters which relate covariates to a response and to compare simulated smooths to those inferred by GAMs. `sim_sine()` simulates and visualises periodic, sinusoidal functions.
+* **Define parameters.** `parameterise_smooth()` can be used to define functions/parameters which relate covariates to a response and to compare simulated smooths to those inferred by GAMs. `sim_sinusoid()` simulates and visualises periodic, sinusoidal functions.
 * **Response simulation.** `sim_ts()` can be used to simulate the values of a response variable given a user-defined model. For simulations including residual autocorrelation, `sigma_arima()` facilitates the simulation of autocorrelated observations with known variance. 
 
 A interactive application designed specifically to explore the use of GAMs as a tool for modelling depth time series (`GAMS4DTS()`) via the comparison of simulated datasets and model inferences under different conditions is included as well. 
