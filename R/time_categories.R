@@ -117,12 +117,12 @@ mmyy <- function(x, levels = TRUE){
 #' @param yday A numeric input specifying the Julian day (the number of days since January 1st).
 #' @param origin A character date (YYYY-MM-DD) that defines the first day of the year from which Julian day has been calculated.
 #' @param verbose A logical input that defines whether or not to print the date, month and season.
-#' @param return_list A logical input that defines whether or not to return the date, month  and year in a list.
+#' @param ... Additional arguments (none implemented).
+#'
+#' @return The function invisibly returns a list of the date, month and year.
 #'
 #' @examples
 #' yday2date(16)
-#' yday2date(16, return_list = FALSE)
-#' yday2date(16, verbose = FALSE)
 #'
 #' @author Edward Lavender
 #' @export
@@ -131,8 +131,7 @@ yday2date <-
   function(
     yday,
     origin = "2016-01-01",
-    verbose = TRUE,
-    return_list = FALSE){
+    verbose = TRUE,...){
 
     #### Define date, month and season
     # Define the date, based on a supplied origin:
@@ -151,12 +150,10 @@ yday2date <-
     }
 
     #### Return output
-    # Return a list of the outputs if specified
-    if(return_list){
-      ls <- list(date = date, month = month, season = season)
-      return(ls)
-    } # close if(return_list){
-  } # close function
+    ls <- list(date = date, month = month, season = season)
+    return(invisible(ls))
+
+  }
 
 
 #######################################

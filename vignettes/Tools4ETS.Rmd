@@ -120,8 +120,7 @@ pretty_ts(x = dat_flapper$timestamp,
         y1 = dat_flapper$dn,
         fct = dat_flapper$id,
         fct_level = "A",
-        pretty_axis_args = pretty_axis_args, 
-        return_list = FALSE)
+        pretty_axis_args = pretty_axis_args)
 
 #### The result is identical to prettyGraphics::pretty_plot()
 # ... but pretty_ts() employs other functions in the prettyGraphics package 
@@ -146,8 +145,7 @@ pretty_ts(x = dat_flapper$timestamp,
         fct_level = "A",
         pretty_axis_args = pretty_axis_args,
         add_lines_args = list(pretty_axis_args = list(axis = list(las = TRUE))),
-        subplot_args = list(size = c(0.1, 1.6)), 
-        return_list = FALSE
+        subplot_args = list(size = c(0.1, 1.6))
         ) 
 
 #### E.g. Add a second variable as a new axis by adjusting
@@ -161,8 +159,7 @@ pretty_ts(x = dat_flapper$timestamp,
         y2_method = "by_new_axis",
         add_lines_args_y2 = list(col = "red"),
         pretty_axis_args = pretty_axis_args,
-        pretty_axis_args_y2 = list(side = 4, pretty = list(n = 5), axis = list(las = TRUE)), 
-        return_list = FALSE
+        pretty_axis_args_y2 = list(side = 4, pretty = list(n = 5), axis = list(las = TRUE))
         )
 
 #### E.g. Add shading marking different values of a factor variable
@@ -177,8 +174,7 @@ pretty_ts(x = dat_flapper$timestamp,
         pretty_axis_args = pretty_axis_args,
         add_shading_type = "diel",
         add_shading_dtb_args = list(type_args = list(lon = 56.41535, lat = -5.47184)),
-        add_shading_args = list(border = FALSE), 
-        return_list = FALSE
+        add_shading_args = list(border = FALSE)
 ) 
 
 #### E.g. Add summary statistics
@@ -191,8 +187,7 @@ pretty_ts(x = dat_flapper$timestamp,
         summarise_in_bins_args =
           list(bin = "days", funs = list(quantile89l = function(x){ quantile(x, 0.055)},
                                          quantile89u = function(x){ quantile(x, 0.945)})),
-        add_lines_args_summaries = list(list(col = "red"), list(col = "blue")), 
-        return_list = FALSE
+        add_lines_args_summaries = list(list(col = "red"), list(col = "blue"))
         ) 
 
 #### E.g. Add model predictions via
@@ -207,8 +202,7 @@ pretty_ts(x = dat_flapper$timestamp,
         fct_level = "A",
         pretty_axis_args = pretty_axis_args,
         list_CIs_args = list(pred = pred, fadj = function(x){ x * -1}),
-        add_error_envelope_args = list(), 
-        return_list = FALSE
+        add_error_envelope_args = list()
         )
 
 #### Zooming in and out is easy via the power of pretty_axis()
@@ -221,8 +215,7 @@ pretty_ts(x = dat_flapper$timestamp,
         pretty_axis_args = list(side = c(3, 2),
                                 lim = list(x = c(t1, t2), y = NULL),
                                 pretty = list(n = 5),
-                                axis = list(las = TRUE)), 
-        return_list = FALSE
+                                axis = list(las = TRUE))
         ) 
 
 #### There are many more customisation options
@@ -538,8 +531,7 @@ pretty_ts(x = dfp_thin1$timestamp,
         list_CIs_args = list(pred = pred, fadj = function(x){-x}),
         pretty_axis_args = list(side = c(3, 2), axis = list(las = TRUE)), 
         mtext_args = list(list(side = 2, text = "Depth (m)", line = 2), 
-                          list(side = 3, text = "Time (days)", line = 2)),
-        return_list = FALSE
+                          list(side = 3, text = "Time (days)", line = 2))
         )
 # Add back full data 
 posA <- which(dfp$id == "A")
@@ -581,8 +573,7 @@ pretty_ts(x = dfp_thin1$timestamp,
         list_CIs_args = list(pred = pred, fadj = function(x){-x}),
         pretty_axis_args = list(side = c(3, 2), axis = list(las = TRUE)), 
         mtext_args = list(list(side = 2, text = "Depth (m)", line = 2), 
-                          list(side = 3, text = "Time (days)", line = 2)),
-        return_list = FALSE
+                          list(side = 3, text = "Time (days)", line = 2))
         )
 ```
 
@@ -645,7 +636,6 @@ paa <- list(side = c(3, 2), axis = list(las = TRUE))
 pretty_ts(x = dfp_thin1_A$timestamp,
         y1 = dfp_thin1_A$dn,
         pretty_axis_args = paa, 
-        return_list = FALSE, 
         y2 = dfp_thin1_A$sun_angle, 
         y2_method = "by_new_axis", 
         add_lines_args_y2 = list(y2 = dfp_thin1_A$sun_angle, f = grDevices::colorRampPalette(c("dimgrey", "red"))),
@@ -655,8 +645,7 @@ pretty_ts(x = dfp_thin1_A$timestamp,
 #### Plot a realisation from the model 
 pretty_ts(x = dfp_thin1_A$timestamp,
         y1 = PS$obs_sim*-1,
-        pretty_axis_args = paa, 
-        return_list = FALSE
+        pretty_axis_args = paa
         )
 
 #### Plot prediction intervals 
@@ -667,8 +656,7 @@ pretty_ts(x = dfp_thin1_A$timestamp,
                                           CI_gp = list(col = "lightgrey", border = FALSE), 
                                           fitted_gp = list(col = "red")
                                           ), 
-        pretty_axis_args = paa, 
-        return_list = FALSE
+        pretty_axis_args = paa
         )
 
 #### Labels 
@@ -899,8 +887,8 @@ lapply(list("depthAR0", "depthAR1"), function(response){
           y1 = dat1[, response] * -1,
           fct = dat1$individual,
           fct_level = "1",
-          pretty_axis_args = list(side = c(3, 2)), 
-          return_list = FALSE)
+          pretty_axis_args = list(side = c(3, 2))
+          )
 }) %>% invisible()
 par(pp)
 mtext(side = 3, text = "Time (days)", font = 2, outer = TRUE, line = -2)
@@ -1455,8 +1443,8 @@ mapply(depth_ls, names(depth_ls), FUN = function(depth, driver){
           pretty_axis_args = list(side = 1:2, axis = list(las = TRUE)),
           xlab = "Time (months)", ylab = "Depth (m)",
           type = "l",
-          lwd = 0.5,
-          return_list = FALSE)
+          lwd = 0.5
+          )
   pretty_plot(dat1_cs3[, driver], depth,
               cex = 0.5,
               col = "grey",

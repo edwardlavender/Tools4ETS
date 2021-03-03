@@ -4,7 +4,7 @@
 \alias{yday2date}
 \title{Convert a Julian day to a date/month/season}
 \usage{
-yday2date(yday, origin = "2016-01-01", verbose = TRUE, return_list = FALSE)
+yday2date(yday, origin = "2016-01-01", verbose = TRUE, ...)
 }
 \arguments{
 \item{yday}{A numeric input specifying the Julian day (the number of days since January 1st).}
@@ -13,15 +13,16 @@ yday2date(yday, origin = "2016-01-01", verbose = TRUE, return_list = FALSE)
 
 \item{verbose}{A logical input that defines whether or not to print the date, month and season.}
 
-\item{return_list}{A logical input that defines whether or not to return the date, month  and year in a list.}
+\item{...}{Additional arguments (none implemented).}
+}
+\value{
+The function invisibly returns a list of the date, month and year.
 }
 \description{
 This function converts a Julian day to a date/month/season in any given year. This is useful, for instance, when making inferences from models of a response ~ Julian day, if you want to quickly draw inferences from models in terms of time units that are more familiar.
 }
 \examples{
 yday2date(16)
-yday2date(16, return_list = FALSE)
-yday2date(16, verbose = FALSE)
 
 }
 \author{

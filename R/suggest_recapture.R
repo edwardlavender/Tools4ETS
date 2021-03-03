@@ -120,8 +120,7 @@ suggest_recapture <-
             axis_ls <- prettyGraphics::pretty_plot(x2plot, y2plot*-1,
                                                    xlim = xlim,
                                                    pretty_axis_args = list(side = 3:2,
-                                                                           control_axis = list(las = TRUE)),
-                                                   return_list = TRUE,...)
+                                                                           control_axis = list(las = TRUE)),...)
 
             # Add lines demarking each recapture event
             for(i in 1:length(x)){

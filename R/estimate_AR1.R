@@ -75,7 +75,7 @@ estimate_AR1 <- function(resid, AR.start = NULL, verbose = TRUE){
     if(verbose) {
       cat("Summary statistics for AR1 values from each independent time series: \n")
       print(summary(rhos))
-      prettyGraphics::pretty_plot(stats::density(rhos), type = "l", xlab = "AR1", ylab = "Density")
+      if(length(rhos) > 1 ) prettyGraphics::pretty_plot(stats::density(rhos), type = "l", xlab = "AR1", ylab = "Density")
     }
     rho <- mean(rhos)
   }
