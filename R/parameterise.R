@@ -298,7 +298,7 @@ parameterise_smooth <-
       }
 
       if(add_moons){
-        dam <- list(side = 3, position = axis_ls[[2]]$lim[2], outer = TRUE, nv = 100, radius1 = 0.1, units = "radians")
+        dam <- list(side = 3, pos = axis_ls[[2]]$lim[2], outer = TRUE, nv = 100, radius = 0.1, units = "radians")
         add_moons_args <- list_merge(dam, add_moons_args)
         do.call(prettyGraphics::add_moons, add_moons_args)
       }

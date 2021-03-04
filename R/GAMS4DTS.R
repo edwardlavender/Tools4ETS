@@ -1322,7 +1322,7 @@ server <- function(input, output) {
                             add_rug = TRUE,
                             term = "lunar_phase",
                             add_moons = TRUE,
-                            add_moons_args = list(radius1 = 0.05),
+                            add_moons_args = list(radius = 0.05),
                             dat = dat(),
                             mtext_args = list(list(side = 1, text = "Lunar Phase (rad)", line = 2.5, cex = cex.lab),
                                               list(side = 2, text = "Change in depth (m)", line = 2.5, cex = cex.lab))
@@ -1661,7 +1661,7 @@ server <- function(input, output) {
              mtext_args = list(list(side = 1, text = "Time", line = 2.5, cex = cex.lab),
                                list(side = 2, text = "Lunar Phase (rad)", line = 2.5, cex = cex.lab)
              ),
-             add_moons_args = list(side = 2, radius1 = 5000)
+             add_moons_args = list(side = 2, radius = 5000)
      )
    )
 
@@ -1932,7 +1932,7 @@ server <- function(input, output) {
                          shift_predictions = 0,
                          add_rug = TRUE,
                          add_moons = TRUE,
-                         add_moons_args = list(radius1 = 0.05),
+                         add_moons_args = list(radius = 0.05),
                          pretty_axis_args = list(side = c(1, 2),
                                                  lim = list(x = dat_ts_axis$lunar_phase$lim, y = NULL),
                                                  pretty = list(n = 5),
