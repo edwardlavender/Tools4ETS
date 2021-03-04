@@ -70,13 +70,13 @@ utils::str(summary3)
 plot(d$x, d$y)
 # 95 \% CIs with mean
 names(summary1)[1] <- "fit"
-prettyGraphics::add_error_envelope(x = nd$x, CI = summary1)
+prettyGraphics::add_error_envelope(x = nd$x, ci = summary1)
 # 89\% CIs:
 names(summary3)[1] <- "fit"
 prettyGraphics::add_error_envelope(x = nd$x,
-                                  CI = summary3,
-                                   CI_gp = list(col = "dimgrey",
-                                                border = FALSE
+                                   ci = summary3,
+                                   add_ci = list(col = "dimgrey",
+                                                 border = FALSE
                                    )
 )
 

@@ -268,12 +268,11 @@ parameterise_smooth <-
 
         #### Add fitted values and CI envelope
         amp <- list(x = p$x,
-                    CI = CI,
-                    fCI = "poly",
-                    CI_gp = list(col = "lightgrey", border = FALSE),
-                    add_fitted = TRUE,
-                    fitted_gp = list(col = "black", lwd = 1, lty = 1)
-        )
+                    ci = CI,
+                    type = "poly",
+                    add_ci = list(col = "lightgrey", border = FALSE),
+                    add_fit = list(col = "black", lwd = 1, lty = 1)
+                    )
         add_error_envelope_args <- list_merge(amp, add_error_envelope_args)
         do.call(prettyGraphics::add_error_envelope, add_error_envelope_args)
 

@@ -103,7 +103,7 @@ sim4 <-
     return = "summary")
 plot(d$x, d$y)
 names(sim4)[1] <- "fit"
-prettyGraphics::add_error_envelope(x = nd$x, CI = sim4)
+prettyGraphics::add_error_envelope(x = nd$x, ci = sim4)
 
 #### Example (5): Both the full posterior matrix and the summary can be returned:
 sim5 <-

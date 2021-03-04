@@ -45,7 +45,7 @@
 #'     return = "summary")
 #' plot(d$x, d$y)
 #' names(sim_mu)[1] <- "fit"
-#' prettyGraphics::add_error_envelope(x = nd$x, CI = sim_mu)
+#' prettyGraphics::add_error_envelope(x = nd$x, ci = sim_mu)
 #' # But what about our confidence in predictions? This is where
 #' # ... simulate_posterior_obs() comes in.
 #'
@@ -194,9 +194,9 @@
 #'     n = 250,
 #'     return = "summary")
 #' names(sim_mu_AR1)[1] <- "fit"
-#' prettyGraphics::add_error_envelope(x = nd$x, CI = sim_mu_AR1,
-#'                                   CI_gp = list(col = "dimgrey",
-#'                                                 border = FALSE))
+#' prettyGraphics::add_error_envelope(x = nd$x, ci = sim_mu_AR1,
+#'                                    add_ci = list(col = "dimgrey",
+#'                                                  border = FALSE))
 #'
 #' #### Examine the effects of accounting for autocorrelation on CIs and prediction intervals
 #'
@@ -242,14 +242,14 @@
 #' # Plot
 #' plot(d$x, d$yAR, cex = 0.1, col = "grey")
 #' prettyGraphics::add_error_envelope(nd$x, sim_pos6_AR0_PI,
-#'                                    CI_gp = list(col = "red",
+#'                                    add_ci = list(col = "red",
 #'                                                 border = FALSE),
-#'                                    add_fitted = FALSE
+#'                                    add_fit = NULL
 #' )
 #' prettyGraphics::add_error_envelope(nd$x, sim_pos6_AR1_PI,
-#'                                   CI_gp = list(col = "blue",
-#'                                                 border = FALSE),
-#'                                    add_fitted = FALSE
+#'                                    add_ci = list(col = "blue",
+#'                                                  border = FALSE),
+#'                                    add_fit = NULL
 #' )
 #' # Prediction intervals are very similar. This is because the overall residual variation
 #' # ... is similar inm both cases, which we can see if we compare the two original models:
@@ -300,10 +300,10 @@
 #' names(sim_pos7_mu1)[1] <- "fit"
 #' names(sim_pos7_mu2)[1] <- "fit"
 #' prettyGraphics::add_error_envelope(nd$x, sim_pos7_mu1,
-#'                                   CI_gp = list(col = "red", border = FALSE))
+#'                                    add_ci = list(col = "red", border = FALSE))
 #' prettyGraphics::add_error_envelope(nd$x, sim_pos7_mu2,
-#'                                    CI_gp = list(col = "skyblue",
-#'                                    border = FALSE))
+#'                                    add_ci = list(col = "skyblue",
+#'                                                  border = FALSE))
 #' # similar results in this case.
 #'
 #' #### Problematic example 1
@@ -673,7 +673,7 @@ simulate_posterior_obs <-
 #'     return = "summary")
 #' plot(d$x, d$y)
 #' names(sim4)[1] <- "fit"
-#' prettyGraphics::add_error_envelope(x = nd$x, CI = sim4)
+#' prettyGraphics::add_error_envelope(x = nd$x, ci = sim4)
 #'
 #' #### Example (5): Both the full posterior matrix and the summary can be returned:
 #' sim5 <-
@@ -820,13 +820,13 @@ simulate_posterior_mu <-
 #' plot(d$x, d$y)
 #' # 95 % CIs with mean
 #' names(summary1)[1] <- "fit"
-#' prettyGraphics::add_error_envelope(x = nd$x, CI = summary1)
+#' prettyGraphics::add_error_envelope(x = nd$x, ci = summary1)
 #' # 89% CIs:
 #' names(summary3)[1] <- "fit"
 #' prettyGraphics::add_error_envelope(x = nd$x,
-#'                                   CI = summary3,
-#'                                    CI_gp = list(col = "dimgrey",
-#'                                                 border = FALSE
+#'                                    ci = summary3,
+#'                                    add_ci = list(col = "dimgrey",
+#'                                                  border = FALSE
 #'                                    )
 #' )
 #'

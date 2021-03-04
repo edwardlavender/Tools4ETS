@@ -652,10 +652,10 @@ pretty_ts(x = dfp_thin1_A$timestamp,
 pretty_ts(x = dfp_thin1_A$timestamp,
         y1 = dfp_thin1_A$dn,
         add_error_envelope_args = list(x = dfp_thin1_A$timestamp,
-                                          CI = PI,
-                                          CI_gp = list(col = "lightgrey", border = FALSE), 
-                                          fitted_gp = list(col = "red")
-                                          ), 
+                                       ci = PI,
+                                       add_ci = list(col = "lightgrey", border = FALSE), 
+                                       add_fit = list(col = "red")
+                                       ), 
         pretty_axis_args = paa
         )
 
@@ -1010,10 +1010,10 @@ pbapply::pbmapply(list(mod_dat1_depthAR0, mod_dat1_depthAR1),
           pretty_axis_args = list(side = c(3, 2), lim = list(NULL, c(-300, 100)), axis= list(las = TRUE)),
           add_lines_args = list(lwd = 0.5),
           add_error_envelope_args = list(x = nd$timestamp,
-                                            CI = sim_obs,
-                                            fCI = "lines",
-                                            CI_gp = list(col = "red")
-                                            )
+                                         ci = sim_obs,
+                                         type = "lines",
+                                         add_ci = list(col = "red")
+                                         )
           )
 }) %>% invisible()
 mtext(side = 3, text = "Time (days)", outer = TRUE, font = 2)

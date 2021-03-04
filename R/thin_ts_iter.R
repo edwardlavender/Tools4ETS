@@ -266,12 +266,11 @@ thin_ts_iter <-
       #### Add acf CIs (added at this stage so CI envelope is the 'bottom' layer)
       # Define arguments
       damp <- list(x = thinreqCI$x,
-                   CI = thinreqCI,
-                   fCI = "poly",
-                   CI_gp = list(col = "lightgrey", border = FALSE),
-                   add_fitted = FALSE,
-                   fitted_gp = list()
-      )
+                   ci = thinreqCI,
+                   type = "poly",
+                   add_ci = list(col = "lightgrey", border = FALSE),
+                   add_fit = NULL
+                   )
       add_error_envelope_args <- list_merge(damp, add_error_envelope_args)
       # Add CI envelope
       do.call(prettyGraphics::add_error_envelope, add_error_envelope_args)
