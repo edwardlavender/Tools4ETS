@@ -1,165 +1,191 @@
-#' @title Explore potential, unrecorded recapture events within depth time series
-#' @description This function highlights potential recapture events on unknown dates based on a depth threshold; for each day in the depth time series, all the time stamps in which the individual was above this depth are considered possible recapture events. These time stamps can be saved by the function and inspected graphically.
+#' @title Explore putative, unrecorded recapture events within depth time series
+#' @description For animals tagged with archival tags, this function highlights putative, unrecorded recapture events (when tagged individuals may have been captured by recreational anglers). To do this, the function bins each individual's time series into a series of time windows. In each window, the function identifies all of the time steps when the individual's depth was shallower than a specified \code{threshold}: these are `putative capture events'. Windows that contain putative capture event(s) are termed capture windows. For each capture window, the depth time series can be inspected visually to clarify whether or not movement into shallow water is likely to reflect capture (e.g., if putative capture events occurred at a reasonable time of day and the shape of changes in depth are consistent with that expected to be caused by capture). The function returns a list, with one element for each capture window, that contains the depth time series within that window.
 #'
-#' @param data A dataframe with two named columns: 'timestamp' (in POSIXct format) and 'depth' (of a given individual).
-#' @param threshold_depth A numeric value which defines the depth threshold; i.e. the depth such that when the animal is at or above (shallower) than this depth, a recapture event may have occurred and should be checked.
-#' @param plot A logical input which defines whether or not to create a plot.
-#' @param window A numeric value which defines the number of seconds either side of first and last potential 'recapture' event on any given day for which the depth time series is plotted. The default is 43200 s (i.e. 12 hours).
-#' @param ndates_warning A numeric value defining the number of dates with putative recapture events above which the function will warn the user to reconsider \code{prompt = TRUE}.
-#' @param prompt A logical value which defines whether or not to pause following the display of each graph. If TRUE, the user needs to press Enter prior to moving on to the next recapture event.
-#' @param ... Extra arguments passed to \code{\link[prettyGraphics]{pretty_plot}}, excluding \code{xlim} and \code{pretty_axis_args} which are handled internally.
+#' @param data A dataframe of depth time series. This must contain a POSIXct vector of time stamps (`timestamp') and a numeric vector of absolute depths (`depth'). A column can be included to distinguish levels of a grouping factor (e.g., individuals) (see \code{fct}).
+#' @param fct (optional) A character that defines the name of a column in \code{data} that distinguishes levels of a grouping factor (e.g., individuals).
+#' @param threshold A number that defines the depth threshold; depth(s) shallower than \code{threshold} are flagged as putative capture event(s).
+#' @param window A number that defines the duration (s) of capture windows.
+#' @param plot A logical input that defines whether or not to plot, for each capture window, depth (which is internally negated for plotting) against time, with putative capture events flagged.
+#' @param pretty_axis_args If \code{plot = TRUE}, \code{pretty_axis_args} is named list, passed to \code{\link[prettyGraphics]{pretty_axis}}, to control plot axes.
+#' @param buffer A number, or a vector of two numbers, used to adjust the time (s) of the first and last putative capture events in each capture window to define x axis limits. For example, \code{buffer = c(60, 90)} minuses 60 s from the time of the first capture event in a window and adds 90 s to the time of the last capture event in the window and these times are taken to define the x limits of the plot.
+#' @param add_threshold_markers (optional) If \code{plot = TRUE}, \code{add_threshold_markers} is a named list, passed to \code{\link[graphics]{lines}}, used to flag the time steps when the depth was shallower than the \code{threshold} on the plot using vertical lines. \code{add_threshold_markers = list()} implements default graphical options. \code{add_threshold_markers = NULL} suppresses this option.
+#' @param add_additional (optional) If \code{plot = TRUE}, \code{add_additional} is function used to add additional elements to each plot. This must accept two arguments, even if they are ignored: an index (the capture window number) and the data within the capture window that is plotted.
+#' @param prompt If \code{plot = TRUE}, \code{prompt} is a logical input that defines whether or not to pause function execution between sequential plots.
+#' @param prompt_warning If \code{plot = TRUE} and \code{prompt = TRUE}, \code{prompt_warning} is a number that defines the number of capture windows with putative capture events above which the function will warn the user to reconsider \code{prompt = TRUE}.
+#' @param ... Additional arguments passed to \code{\link[prettyGraphics]{pretty_plot}}, excluding \code{xlim}, which is controlled via \code{window} and \code{buffer}.
 #'
-#' @return A dataframe with 4 columns: 'timestamp' (as inputted), 'depth' (as inputted), 'recapture_window' (a logical value specifying whether the position is inside a recapture window, defined by \code{window}), and 'above_depth_threshold' (a logical value which specifies the positions at which the depth is shallower than the depth threshold). A plot can also be returned, with depth (negated) shown over time. Red lines show the recapture window under consideration and blue lines show any possible moments of recapture in this window.
+#' @details This function was motivated by the need to identify putative, unrecorded recreational angling events for tagged flapper skate (\emph{Dipturus intermedius}) during individuals' time at liberty. The skate are typically targeted by recreational anglers over areas of deep (> 100 m) water, so angling events are visible as dramatic spikes in the depth time series caused by ascent into shallow water.
 #'
-#' @author Edward Lavender
+#' For each individual's time series, the function groups observations into a series of \code{window}s and identifies all of the time steps within each window when the depth was shallower than the \code{threshold}. For each capture window (a window that contains putative capture event(s)), a dataframe of the depth time series/putative capture events within that window is returned. If \code{plot = TRUE}, for each window, a plot of the depth time series also returned with all moments when the depth was shallower than the threshold flagged for visible inspection. Putative capture events can then be evaluated according to the time of day when they occurred, the shape of the depth time series or other relevant factors.
+#'
+#' @return The function returns a list, with one element for each capture window, that contains the depth time series within that window. If \code{plot = TRUE}, for each window, a plot of the depth time series also returned.
 #'
 #' @examples
-#' #### Example (1): Suggest recapture events for a single individual
-#' suggested_recap <-
-#'   suggest_recapture(data = dat_flapper[dat_flapper$id == "A", ],
-#'                     threshold_depth = 1,
-#'                     plot = TRUE,
-#'                     window = 60 * 60 * 12,
-#'                     xlab = "Timestamp",
-#'                     ylab = "Depth",
-#'                     prompt = FALSE,
-#'                     ndates_warning = 100,
-#'                     type = "l"
-#'   )
-#' utils::str(suggested_recap)
+#' #### Example (1): Implement function with default options
+#' # One potential capture event identified
+#' events <- suggest_recapture(data = dat_flapper, fct = "id", prompt = FALSE)
+#' utils::str(events)
 #'
-#' #### Example (2) Suggest recapture events for multiple individuals by implementing lapply()
-#' dat_flapper_ls <- split(dat_flapper, f = dat_flapper$id)
-#' suggested_recap_ls <-
-#'   lapply(dat_flapper_ls, function(df){
-#'     suggested_recap <-
-#'       suggest_recapture(data = df,
-#'                         threshold_depth = 1,
-#'                         plot = TRUE,
-#'                         window = 60 * 60 * 12,
-#'                         xlab = "Timestamp",
-#'                         ylab = "Depth",
-#'                         prompt = FALSE,
-#'                         ndates_warning = 100,
-#'                         type = "l"
-#'       )
-#'     return(suggested_recap)
-#'   })
-#' utils::str(suggested_recap_ls)
+#' #### Example (2): Adjust capture threshold
+#' events <- suggest_recapture(data = dat_flapper,
+#'                             fct = "id",
+#'                             threshold = 10,
+#'                             prompt = FALSE)
 #'
+#' #### Example (3) Adjust capture window size
+#' # Adjust capture window
+#' events <- suggest_recapture(data = dat_flapper,
+#'                             fct = "id",
+#'                             threshold = 20,
+#'                             window = 60*60*24*7,
+#'                             prompt = FALSE)
+#' # Adjust plot x limits via buffer
+#' events <- suggest_recapture(data = dat_flapper,
+#'                             fct = "id",
+#'                             threshold = 20,
+#'                             window = 60*60*24*7,
+#'                             buffer = 60*60*24*2,
+#'                             prompt = FALSE)
+#'
+#' #### Example (4): Customise plot
+#'
+#' ## Adjust vertical flags via add_threshold_markers
+#' events <- suggest_recapture(data = dat_flapper,
+#'                             add_threshold_markers = list(col = "red"),
+#'                             fct = "id",
+#'                             prompt = FALSE)
+#'
+#' ## Use add_additional e.g, to provide useful plot titles
+#' # Define a function, which must depend on an index and the data, to add plot titles
+#' # These will depend on the capture window index and
+#' # ... we will add a * to flag putative events that occurred during the day
+#' # ... (which are more likely to reflect actual capture events).
+#' add_main <- function(index, data){
+#'   # Define title
+#'   title <- paste0("[", index, "]")
+#'   # Identify events during the day and add this to title
+#'   day <- data[data$depth <= 5, ]
+#'   if(nrow(day) > 0){
+#'     day$hour <- hour_dbl(day$timestamp)
+#'     day <- day[day$hour >= 8 & day$hour <= 20, ]
+#'   }
+#'   if(nrow(day) > 0){
+#'     title <- paste0(title, "*")
+#'   }
+#'   # Add plot title to plot
+#'   mtext(side = 3, text = title, line = 1.25, font = 2)
+#' }
+#' # Implement function
+#' events <- suggest_recapture(data = dat_flapper,
+#'                             threshold = 10,
+#'                             fct = "id",
+#'                             add_additional = add_main,
+#'                             prompt = FALSE)
+#'
+#' ## Pass additional arguments via ...
+#' events <- suggest_recapture(data = dat_flapper,
+#'                             fct = "id",
+#'                             prompt = FALSE,
+#'                             type = "l")
+#'
+#' @seealso \code{\link[Tools4ETS]{define_recapture}} defines the precise time of known capture events.
+#' @author Edward Lavender
 #' @export
-#'
 
+suggest_recapture <- function(data,
+                              fct = NULL,
+                              threshold = 1,
+                              window = 60 * 60 * 12,
+                              plot = TRUE,
+                              pretty_axis_args = list(side = 3:2),
+                              buffer = 60*60,
+                              add_threshold_markers = list(col = "blue", lty = 3),
+                              add_additional = NULL,
+                              prompt = TRUE,
+                              prompt_warning = 100,
+                              ...){
 
-##########################################################
-##########################################################
-#### suggest_recapture
+  #### Check inputs
+  check_names(input = data, req = c("timestamp", "depth", fct))
+  check...("xlim",...)
 
-suggest_recapture <-
-  function(data,
-           threshold_depth = 1,
-           plot = TRUE,
-           window = 60*60*12,
-           prompt = TRUE,
-           ndates_warning = 100,
-           ...){
+  #### Isolate potential capture events based on depth threshold
+  # This returns a dataframe with the times of all moments when depth <= threshold
+  if(!is.null(fct)) data$fct <- data[, fct] else data$fct <- 1L
+  events <- data
+  events$capture <- events$depth <= threshold
+  events <- events[events$capture, ]
 
-    #### Define dataframe to be returned
-    dat <- data
-    dat$above_depth_threshold <- FALSE
-    dat$recapture_window <- FALSE
+  #### If there are no possible events, return a message
+  if(nrow(events) < 1) {
+    message("No possible capture events identified.")
+    return(invisible())
+  }
 
-    #### Define dates
-    tz <- attributes(data$timestamp)$tzone
-    data$date <- as.Date(data$timestamp, tz = tz)
+  #### Define a list of capture windows
+  # This is used to isolate the depth time series for each bin that contains capture event(s)
+  events$bin <- as.character(cut(events$timestamp, paste0(window, " sec")))
+  events$key <- paste0(events$fct, "-", events$bin)
+  capture_windows <- split(events, events$key)
 
-    #### Define positions where depth is < threshold
-    pos_less_than_thresh <- which(data$depth < threshold_depth)
-    times_less_than_thresh <- data$timestamp[pos_less_than_thresh]
-    dates_less_than_thresh <- unique(as.Date(times_less_than_thresh, tz = tz))
-    ldates <- length(dates_less_than_thresh)
+  #### Check plotting prompt
+  if(plot){
+    if(prompt & !is.null(prompt_warning)){
+      if(length(capture_windows) >= prompt_warning){
+        adj_prompt <-
+          utils::askYesNo(paste0("The number of capture window(s) is ",
+                                 length(capture_windows),
+                                 ". Do you want to change prompt = TRUE to prompt = FALSE?"))
+        if(adj_prompt) prompt <- FALSE
+      }
+    }
+  }
 
-    #### If there are dates when depth is less than the threshold...
-    if(ldates > 0){
+  #### Define a list of depth time series within each capture window
+  # We can plot events too.
+  out <- lapply(1:length(capture_windows), function(i){
 
-      #### Warning about prompt based on the number of dates
-      if(prompt){
-        if(ldates > ndates_warning){
-          adj_prompt <-
-            utils::askYesNo(paste0("The number of dates with recapture events is ",
-                                   ldates,
-                                   ". Do you want to change prompt = TRUE to prompt = FALSE?"))
-          if(adj_prompt){
-            prompt <- FALSE
-          }
-        }
+    #### Isolate capture_window
+    capture_window <- capture_windows[[i]]
+
+    #### Define xlim (for data subsetting and plotting)
+    xlim <- range(capture_window$timestamp)
+    if(length(buffer) == 1) buffer <- rep(buffer, 2)
+    xlim[1] <- xlim[1] - buffer[1]
+    xlim[2] <- xlim[2] + buffer[2]
+
+    #### Get data around capture events in capture window
+    data_for_window <- data[data$fct == capture_window$fct[1] &
+                             data$timestamp >= xlim[1] &
+                             data$timestamp <= xlim[2], ]
+
+    #### Make plot of putative capture
+    if(plot){
+
+      ## Blank plot
+      axis_ls <- prettyGraphics::pretty_plot(data_for_window$timestamp, abs(data_for_window$depth)*-1,
+                                             xlim = xlim,
+                                             pretty_axis_args = pretty_axis_args,...)
+
+      ## Add lines demarking each recapture event
+      if(!is.null(add_threshold_markers)){
+        lapply(split(capture_window, 1:nrow(capture_window)), function(e){
+          add_threshold_markers$x <- rep(e$timestamp, 2)
+          add_threshold_markers$y <- axis_ls[[2]]$lim
+          do.call(graphics::lines, add_threshold_markers)
+        })
       }
 
-      #### Loop over each date and create a plot, if requested
-      if(plot){
-        out <-
-          lapply(dates_less_than_thresh, function(dd){
+      ## Add additional elements to plot according to the index and the data
+      if(!is.null(add_additional)) add_additional(i, data_for_window)
+      if(prompt & i < length(capture_windows)) readline(prompt = "Press [enter] to move on to the interval with possible recapture event(s) or [Esc] to exit...")
+    }
 
-            #### Define positions of potential recaptures on that date
-            pos <- which(data$date == dd & data$depth < threshold_depth)
+    ##### Process and return data
+    data_for_window$fct <- NULL
+    return(data_for_window)
+  })
 
-            #### Define graph limits
-            x <- data$timestamp[pos]
-            xlim <- range(x)
-            xlim[1] <- xlim[1] - window
-            xlim[2] <- xlim[2] + window
-
-            #### Redefine pos for plotting
-            pos2plot <- which(data$timestamp >= xlim[1] & data$timestamp <= xlim[2])
-            x2plot <- data$timestamp[pos2plot]
-            xlim_old <- xlim
-            xlim <- range(x2plot)
-            y2plot <- data$depth[pos2plot]
-
-            # Plot a graph
-            axis_ls <- prettyGraphics::pretty_plot(x2plot, y2plot*-1,
-                                                   xlim = xlim,
-                                                   pretty_axis_args = list(side = 3:2,
-                                                                           control_axis = list(las = TRUE)),...)
-
-            # Add lines demarking each recapture event
-            for(i in 1:length(x)){
-              graphics::lines(rep(x[i], 2), axis_ls[[2]]$lim, col = "blue", lty = 2)
-            }
-            # Add lines delimiting the window
-            for(i in 1:2){
-              graphics::lines(rep(xlim_old[i], 2), axis_ls[[2]]$lim, col = "red", lty = 3)
-            }
-            # Add lines delimiting the day
-            # dd2 <- dd + 1
-            # dd1 <- as.POSIXct(dd, tz = tz)
-            # dd2 <- as.POSIXct(dd2, tz = tz)
-            # graphics::abline(v = as.numeric(c(dd1, dd2)), col = "black")
-
-            if(prompt){
-              readline(prompt = "Press [enter] to move on to the next date with possible recapture event(s) or [Esc] to exit...")
-            }
-
-          }) # close lapply()
-      } # close if(plot)
-
-      #### Update dataframe
-      dat$above_depth_threshold[pos_less_than_thresh] <- TRUE
-      pos_within_window <- lapply(times_less_than_thresh, function(t){
-        pww <- which(dat$timestamp >= (t - window) & dat$timestamp <= (t + window))
-        return(pww)
-        })
-      pos_within_window <- as.vector(unlist(pos_within_window))
-      dat$recapture_window[pos_within_window] <- TRUE
-
-    } # close if(ldates > 0)
-
-    #### Return dataframe
-    return(dat)
-
-  } # close function
-
-
-#### End of function.
-##########################################################
-##########################################################
+  #### Return list of depth time series around each capture event window
+  return(out)
+}

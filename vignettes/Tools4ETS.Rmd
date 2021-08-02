@@ -256,29 +256,19 @@ dat_flapper$sun_angle <-
 `Tools4ETS` provides two functions which help the user to identify recapture events. In the absence of any available information to restrict algorithmic searches for recapture events, the function `suggest_recapture()` provides a starting point by highlighting all time stamps in which the recorded depth was shallower than a user-specified threshold. Each putative recapture event can be plotted, with the algorithm pausing between plots if `prompt = TRUE` to facilitate examination of the time series around putative recapture events. In the following example, I exemplify the use of `suggest_recapture()` for the example depth time series. Further details are available in the help file (`?suggest_recapture`).
 
 ```{r, fig.width = 7, fig.height = 4}
-#### Define plotting window 
-pp <- par(mfrow = c(1, 2))
-
-#### Define a list of dataframes, one for each individual 
-dat_flapper_ls <- split(dat_flapper, f = dat_flapper$id)
-
-#### Loop over each individual's dataframe and identify moments when depth < 5 m 
+pp <- par(mfrow = c(1, 2), oma = c(2, 2, 2, 2))
 suggested_recap_ls <-
-  lapply(dat_flapper_ls, function(df){
-    suggested_recap <-
-      suggest_recapture(data = df,
-                        threshold_depth = 5,
-                        plot = TRUE,
+      suggest_recapture(data = dat_flapper,
+                        fct = "id",
+                        threshold = 5,
                         window = 60 * 60 * 12,
                         prompt = FALSE,
-                        ndates_warning = 100,
+                        add_additional = 
+                          function(i,...) mtext(side = 3, LETTERS[i], line = 1, adj = -0.2, font = 2),
                         type = "l", 
-                        xlab = "", ylab = "",
-                        mtext_args = list(list(side = 3, text = "Time (hours)", line = 2.5), 
-                                          list(side = 2, text = "Depth (m)", line = 2.5))
-      )
-    return(suggested_recap)
-  })
+                        xlab = "", ylab = "")
+mtext(side = 3, text = "Time (hours)", line = 1, outer = TRUE)
+mtext(side = 2, text = "Depth (m)", line = 0, outer = TRUE)
 par(pp)
 ```
 
