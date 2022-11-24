@@ -8,8 +8,10 @@ sim_ts(
   alpha = 0,
   alpha_sigma_random = 0,
   compute_lp = list(),
-  sim_obs = function(lpi) {     lpi + stats::arima.sim(list(order = c(1, 0, 0), ar =
-    0.95), n = length(lpi), sd = 50) },
+  sim_obs = function(lpi) {
+     lpi + stats::arima.sim(list(order = c(1, 0, 0), ar =
+    0.95), n = length(lpi), sd = 50)
+ },
   dat,
   fct = NULL,
   seed = NULL

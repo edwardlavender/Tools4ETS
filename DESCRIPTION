@@ -10,8 +10,6 @@ Imports:
     utils, pbapply, rlist,
     fasttime, lubridate,
     lunar, suncalc, 
-    maptools,
-    TeachingDemos, plotrix,
     shiny, shinyWidgets, shinydashboard, DT,
     smooth, mgcv, MASS,
     prettyGraphics
@@ -25,5 +23,5 @@ URL: http://github.com/edwardlavender/Tools4ETS
 BugReports: http://github.com/edwardlavender/Tools4ETS/issues
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.2
 VignetteBuilder: knitr

@@ -11,9 +11,13 @@ define_recapture(
   bin = "10 mins",
   bound_am = 60 * 60 * 8,
   bound_pm = 60 * 60 * 17,
-  define_time_before = function(recapture_time) {     recapture_time - 2 * 60 * 60 },
-  define_time_after = function(recapture_time) {     as.POSIXct(as.Date(recapture_time)
-    + 1, tz = "UTC") },
+  define_time_before = function(recapture_time) {
+     recapture_time - 2 * 60 * 60
+ },
+  define_time_after = function(recapture_time) {
+     as.POSIXct(as.Date(recapture_time)
+    + 1, tz = "UTC")
+ },
   inspect_plot = TRUE,
   before4plot = 3600,
   after4plot = 3600,

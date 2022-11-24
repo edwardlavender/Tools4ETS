@@ -10,8 +10,12 @@ break_ts(
   ind = NULL,
   n = 1,
   pos = list(),
-  before = list(function(break_t) {     break_t - 43200 }),
-  after = list(function(break_t) {     break_t + 43200 }),
+  before = list(function(break_t) {
+     break_t - 43200
+ }),
+  after = list(function(break_t) {
+     break_t + 43200
+ }),
   output = 1
 )
 }

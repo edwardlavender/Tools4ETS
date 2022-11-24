@@ -13,8 +13,12 @@ thin_ts_iter(
   nth = 0,
   increment = 1,
   eval_mod,
-  resid_method = function(mod) {     stats::resid(mod) },
-  est_AR1 = function(mod) {     stats::acf(stats::resid(mod), plot = FALSE)$acf[2] },
+  resid_method = function(mod) {
+     stats::resid(mod)
+ },
+  est_AR1 = function(mod) {
+     stats::acf(stats::resid(mod), plot = FALSE)$acf[2]
+ },
   thin_ts_iter_ls = NULL,
   plot = TRUE,
   p1_pretty_axis_args = list(side = 1:2, pretty = list(n = 5)),

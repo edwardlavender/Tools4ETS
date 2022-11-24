@@ -11,8 +11,8 @@ gams4dts_thin_ts(
   start_event_id_column = "start_event_id",
   start_event_logic_column = "start_event",
   method = c("swa", "sma", "sps"),
-  parameters = list(swa = list(time_mins = 60, latitude = 56.41041, longitude =
-    5.469723, covariates = c("sex", "length", "sun_angle", "tidal_height", "lunar_phase",
+  parameters = list(swa = list(time_mins = 60, latitude = 56.41041, longitude = 5.469723,
+    covariates = c("sex", "length", "sun_angle", "tidal_height", "lunar_phase",
     "julian_day"), independence_threshold = 720), sps = list(first = c(1, 2), nth = 10),
     sma = list())
 )

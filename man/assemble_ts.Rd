@@ -15,8 +15,8 @@ assemble_ts(
   latitude,
   tz = "UTC",
   covariates = NULL,
-  parameters = list(start_date = list(ndays = max_duration_days - 1, prob = NULL,
-    replace = TRUE), duration_days = list(prob = NULL, replace = TRUE), resolution_mins =
+  parameters = list(start_date = list(ndays = max_duration_days - 1, prob = NULL, replace
+    = TRUE), duration_days = list(prob = NULL, replace = TRUE), resolution_mins =
     list(prob = NULL, replace = TRUE), sex = list(Pf = 0.5, replace = TRUE), length =
     list(shape = 25, scale = 4, plot_density_curve = TRUE))
 )

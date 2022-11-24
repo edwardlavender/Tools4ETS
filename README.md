@@ -1,9 +1,10 @@
 
 # Tools for Ecological Time Series (Tools4ETS)
 
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Project Status: Inactive – The project has reached a stable, usable
+state but is no longer being actively developed; support/maintenance
+will be provided as time
+allows.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#inactive)
 
 `Tools4ETS` is an `R` package which provides tools for ecological time
 series. This includes data exploration, time series processing, the
@@ -23,8 +24,9 @@ You can install the development version of `Tools4ETS` from
 devtools::install_github("edwardlavender/Tools4ETS", dependencies = TRUE, build_vignette = TRUE)
 ```
 
-To access the vignettes, use `vignette("Tools4ETS", package =
-"Tools4ETS")` for a general introduction to the package and
+To access the vignettes, use
+`vignette("Tools4ETS", package = "Tools4ETS")` for a general
+introduction to the package and
 `vignette("GAMS4DTS", package = "Tools4ETS")` for a specific
 introduction to the `GAMS4DTS()` function (see below).
 
@@ -43,30 +45,30 @@ levels (e.g. individuals) and timescales with
 `Tools4ETS` streamlines common data processing operations for ecological
 time series. These include:
 
-  - **Define time categories**. `hour_nearest()` and `hour_dbl()` define
-    the nearest integer hour and the time of day respectively. `mmyy()`
-    defines (ordered) month-year categories. `yday2date()` flicks from
-    Julian days to dates/months/seasons. `yday_dbl()` defines the
-    fraction of the year in days.
-  - **Rates of change.** `difference()` and `serial_difference()`
-    compute the difference between two values and consecutive pairs of
-    values in a sequence (numbers or time stamps) respectively.
-  - **Matching time series.** `match_ts_nearest()`,
-    `match_ts_nearest_by_key()` and `pair_ts()` match time series (i.e.,
-    to add observations from one time series into another).  
-  - **Flagging time series.** `flag_ts()` can be used to flag
-    independent sections of time series in a dataset due to the presence
-    of different factor levels (e.g. individuals) and/or breaks in time
-    series. Different flag types can be added, reflecting the
-    requirements of different modelling approaches. `add_unit_id()` is
-    used to add unique unit IDs to a time series.
-  - **Thinning time series.** `thin_ts()` can be used to thin a dataset,
-    accounting for independent time series. `thin_ts_iter()` implements
-    `thin_ts()` iteratively to explore the change in autocorrelation and
-    data volume with thinning. `average_ts()` summarises a time series
-    in bins.
-  - **Breaking time series.** `break_ts()` can be used to induce breaks
-    in time series.
+- **Define time categories**. `hour_nearest()` and `hour_dbl()` define
+  the nearest integer hour and the time of day respectively. `mmyy()`
+  defines (ordered) month-year categories. `yday2date()` flicks from
+  Julian days to dates/months/seasons. `yday_dbl()` defines the fraction
+  of the year in days.
+- **Rates of change.** `difference()` and `serial_difference()` compute
+  the difference between two values and consecutive pairs of values in a
+  sequence (numbers or time stamps) respectively.
+- **Matching time series.** `match_ts_nearest()`,
+  `match_ts_nearest_by_key()` and `pair_ts()` match time series (i.e.,
+  to add observations from one time series into another).  
+- **Flagging time series.** `flag_ts()` can be used to flag independent
+  sections of time series in a dataset due to the presence of different
+  factor levels (e.g. individuals) and/or breaks in time series.
+  Different flag types can be added, reflecting the requirements of
+  different modelling approaches. `add_unit_id()` is used to add unique
+  unit IDs to a time series.
+- **Thinning time series.** `thin_ts()` can be used to thin a dataset,
+  accounting for independent time series. `thin_ts_iter()` implements
+  `thin_ts()` iteratively to explore the change in autocorrelation and
+  data volume with thinning. `average_ts()` summarises a time series in
+  bins.
+- **Breaking time series.** `break_ts()` can be used to induce breaks in
+  time series.
 
 `Tools4ETS` includes additional functions designed specifically for
 processing depth time series, including the identification and
@@ -79,16 +81,16 @@ description of recapture events (`suggest_recapture()` and
 A few functions facilitate the computation of simple statistics from
 time series or models. These include:
 
-  - **Calculate cumulative frequencies.** `cum_dates()` is used to
-    calculate the cumulative number of events by each date in a time
-    series.
-  - **Estimating the strength of autocorrelation.** `estimate_AR1()` is
-    used to estimate the autoregressive order 1 (AR1) parameter from the
-    autocorrelation function (ACF) of a model’s residuals.
-    `acf_in_white_noise()` can be used to compute confidence intervals
-    around an ACF. `estimate_AR1_with_k()` explores the effects of basis
-    dimension on the residual autocorrelation for generalised additive
-    models.
+- **Calculate cumulative frequencies.** `cum_dates()` is used to
+  calculate the cumulative number of events by each date in a time
+  series.
+- **Estimating the strength of autocorrelation.** `estimate_AR1()` is
+  used to estimate the autoregressive order 1 (AR1) parameter from the
+  autocorrelation function (ACF) of a model’s residuals.
+  `acf_in_white_noise()` can be used to compute confidence intervals
+  around an ACF. `estimate_AR1_with_k()` explores the effects of basis
+  dimension on the residual autocorrelation for generalised additive
+  models.
 
 ## Simulations
 
@@ -100,20 +102,18 @@ inferences.
 This includes functions for simulating *de novo* time series with known
 properties; namely:
 
-  - **Dataframe assembly.** `assemble_ts()` can be used to simulate time
-    series with time stamps for multiple factor levels (if applicable),
-    possibly at different resolutions, over different durations and/or
-    with breaks.
-  - **Define parameters.** `parameterise_smooth()` can be used to define
-    functions/parameters which relate covariates to a response and to
-    compare simulated smooths to those inferred by GAMs.
-    `sim_sinusoid()` simulates and visualises periodic, sinusoidal
-    functions.
-  - **Response simulation.** `sim_ts()` can be used to simulate the
-    values of a response variable given a user-defined model. For
-    simulations including residual autocorrelation, `sigma_arima()`
-    facilitates the simulation of autocorrelated observations with known
-    variance.
+- **Dataframe assembly.** `assemble_ts()` can be used to simulate time
+  series with time stamps for multiple factor levels (if applicable),
+  possibly at different resolutions, over different durations and/or
+  with breaks.
+- **Define parameters.** `parameterise_smooth()` can be used to define
+  functions/parameters which relate covariates to a response and to
+  compare simulated smooths to those inferred by GAMs. `sim_sinusoid()`
+  simulates and visualises periodic, sinusoidal functions.
+- **Response simulation.** `sim_ts()` can be used to simulate the values
+  of a response variable given a user-defined model. For simulations
+  including residual autocorrelation, `sigma_arima()` facilitates the
+  simulation of autocorrelated observations with known variance.
 
 A interactive application designed specifically to explore the use of
 GAMs as a tool for modelling depth time series (`GAMS4DTS()`) via the
@@ -124,18 +124,17 @@ conditions is included as well.
 simulation from generalised additive models (GAMs), a widely used
 modelling approach in ecology; namely:
 
-  - **Posterior simulation of expected values.**
-    `simulate_posterior_mu()` can be used to simulate from the posterior
-    of a GAM to compute ecologically meaningful metrics, with confidence
-    intervals, which are not directly estimated by a model.
-  - **Posterior simulation of new observed values.**
-    `simulate_posterior_obs()` can be used to simulate new
-    ‘observations’ from a model, accounting for uncertainty in
-    fitted coefficients, expected values, predictions and
-    autocorrelation.
-  - **Summarising the posterior distribution.** `summarise_posterior()`
-    can be used to summarise posterior matrices (e.g. so that that they
-    can be plotted with `prettyGraphics::add_error_envelope()`.)
+- **Posterior simulation of expected values.** `simulate_posterior_mu()`
+  can be used to simulate from the posterior of a GAM to compute
+  ecologically meaningful metrics, with confidence intervals, which are
+  not directly estimated by a model.
+- **Posterior simulation of new observed values.**
+  `simulate_posterior_obs()` can be used to simulate new ‘observations’
+  from a model, accounting for uncertainty in fitted coefficients,
+  expected values, predictions and autocorrelation.
+- **Summarising the posterior distribution.** `summarise_posterior()`
+  can be used to summarise posterior matrices (e.g. so that that they
+  can be plotted with `prettyGraphics::add_error_envelope()`.)
 
 ## Interactive applications
 
@@ -147,4 +146,4 @@ simulation and modelling of depth time series using GAMs (`GAMS4DTS()`).
 `Tools4ETS` is a new package at an early stage of evolution. Package
 development has been particularly motivated by high-resolution movement
 time series collected from a Critically Endangered elasmobranch. Please
-report issues, comments or suggestions\!
+report issues, comments or suggestions!
